@@ -1,0 +1,65 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Shop Add</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate
+                Report
+        </a> -->
+    </div>
+    <p class="mb-4">
+        Add you new shop!
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Create/Generate</h6>
+        </div>
+        <div class="card-body">
+            <form id="add" data-parsley-validate enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" data-parsley-maxlength="20"
+                        placeholder="Enter name here (max 20 chars)." required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="location" name="location" data-parsley-maxlength="100"
+                        placeholder="Enter location here (max 100 chars)." required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_numbers">Phone numbers: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="phone_numbers" name="phone_numbers" data-parsley-maxlength="100"
+                        placeholder="Enter phone_numbers comma(,) seperated here (max 100 chars)." required>
+                </div>
+
+                <div class="failed"></div>
+
+                <input type="button" class="save btn btn-primary btn-user btn-block" value="Save">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const page = 'add';
+    const list_api_url = "{% url 'main:shop:api:v1:shop-list' %}";
+    const list_view_url = "{% url 'admin:admin_shop:shop_list' %}";
+</script>
+
+<script src="{% static 'admin_shop/js/shop.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

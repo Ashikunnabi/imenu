@@ -1,0 +1,47 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Get all orders in one place.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover row-select" id="orderDataTable">
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const order_api_url = "{% url 'main:user_panel:api:v1:order-list' %}";
+        const page = 'list';
+    </script>
+
+    <!-- User JS -->
+    <script src="{% static 'admin_order/js/order.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

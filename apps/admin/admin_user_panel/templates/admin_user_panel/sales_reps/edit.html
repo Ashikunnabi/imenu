@@ -1,0 +1,112 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Sales Reps</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Sales reps are responsible for maintaining better relationship with
+            dealers.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sales Reps Edit</h6>
+            </div>
+            <div class="card-body">
+                <form id="sales_reps_edit" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Name: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="name"
+                                       name="name"
+                                       data-parsley-maxlength="256"
+                                       placeholder="Enter name here (max 256 chars)."
+                                       required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Title: </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title"
+                                       name="title"
+                                       data-parsley-maxlength="256"
+                                       placeholder="Enter title here (max 256 chars)."
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email: <span
+                                        class="text-danger">*</span></label>
+                                <input type="email"
+                                       class="form-control"
+                                       id="email"
+                                       name="email"
+                                       placeholder="Enter email address here."
+                                       required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="phone"
+                                       name="phone"
+                                       data-parsley-maxlength="12"
+                                       placeholder="Enter phone number here (max 12 chars)."
+                                       required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image">Image: (<a href="#" target="_blank" id="editSalesRepsImage">Current File</a>)</label>
+                                <input type="file"
+                                       class="form-control"
+                                       id="image"
+                                       name="image"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const sales_reps_api_url = "{% url 'main:user_panel:api:v1:sales_reps-list' %}";
+        const sales_reps_list_url = "{% url 'admin:admin_user_panel:sales_reps_list' %}";
+        const uuid = "{{ uuid }}";
+    </script>
+
+    <!-- Sales Reps JS -->
+    <script src="{% static 'admin_user_panel/js/sales_reps.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

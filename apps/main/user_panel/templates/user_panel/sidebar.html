@@ -1,0 +1,29 @@
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'user_panel/css/style.css' %}">
+{% endblock %}
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li id="your_information">
+            <a href="{% url 'main:user_panel:my_account' %}">Account Information</a>
+        </li>
+        <li id="my_cart">
+            <a href="{% url 'main:user_panel:my_cart' %}">My Cart</a>
+        </li>
+        <li id="orders_cancellations">
+            <a href="{% url 'main:user_panel:orders_cancellations' %}">Orders/Cancellations</a>
+        </li>
+        <li id="finale_invoice">
+            <a href="{% url 'main:user_panel:finale_invoice' %}">Invoice</a>
+        </li>
+        <li id="return">
+            <a href="{% url 'main:user_panel:return' %}">Return</a>
+        </li>
+        {% comment %}
+        <li id="my_sales_reps">
+            <a href="{% url 'main:user_panel:my_sales_reps' %}">My Sales Reps</a>
+        </li>
+        {% endcomment %}
+    </ul>
+</div>

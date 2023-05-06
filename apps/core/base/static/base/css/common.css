@@ -1,0 +1,201 @@
+/*parsley js error message*/
+.parsley-errors-list {
+    color: red;
+}
+
+
+#aa-header .aa-header-bottom {
+    padding: 10px 0 0 0;
+}
+
+#menu,
+#aa-header .aa-header-bottom .aa-header-bottom-area .aa-search-box button,
+.scrollToTop,
+#aa-slider .aa-slider-area .seq .seq-next:hover, #aa-slider .aa-slider-area .seq .seq-next:focus {
+    background-color: #0A0000;
+}
+
+#aa-header .aa-header-bottom .aa-cartbox .aa-cart-link,
+h2,
+#aa-product-category .aa-sidebar .aa-sidebar-widget h3 {
+    color: #0A0000;
+}
+
+.scrollToTop {
+    border: 1px solid #0A0000;
+}
+
+#aa-product-category .aa-sidebar .aa-sidebar-widget h3 {
+    border-bottom: 1px solid #0A0000;
+}
+
+
+/*header search bar*/
+#aa-header .aa-header-bottom .aa-header-bottom-area .aa-search-box {
+    max-width: 650px !important;
+}
+
+.aa-product-catg li .aa-product-title {
+    color: #333;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+#searchbar-input-box {
+    padding-right: 107px !important;
+}
+
+#searchbar-submit-button {
+    height: 40px !important;
+}
+
+#searchbar-advanced-search-button {
+    color: gray !important;
+    background-color: white !important;
+    top: 1px !important;
+    right: 50px !important;
+    height: 38px !important
+}
+#searchbar-advanced-search-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#search_result {
+    background-color: white;
+    border: 1px solid #0A0000;
+    position: absolute;
+    width: -webkit-fill-available;
+    z-index: 9998;
+}
+
+#search_result ul li {
+    padding: .5em;
+    border: 1px solid #dfdfdf;
+    cursor: pointer;
+}
+
+#advanced_search {
+    background-color: white;
+    position: absolute;
+    width: -webkit-fill-available;
+    z-index: 9998;
+    padding: 10px;
+    -webkit-box-shadow: 0 9px 16px -3px rgba(0,0,0,0.32);
+    box-shadow: 0 9px 16px -3px rgba(0,0,0,0.32);
+}
+
+#advanced_search h5{
+    color: gray;
+}
+
+#advanced_search .options{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#advanced_search .options a{
+    width: 49%;
+    background: #0A0000;
+    text-align: center;
+    color: white!important;
+    line-height: 3;
+}
+
+#advanced_search .options a:hover{
+    opacity: 0.8;
+}
+
+#advanced_search table {
+    width: 100%;
+    border: none;
+    height: 50px;
+}
+
+#advanced_search table tbody tr th{
+    color: gray;
+    margin-right: 10%;
+}
+
+#advanced_search table tbody tr th{
+    color: gray;
+    margin-right: 10%;
+}
+
+#advanced_search span{
+    font-weight: bold;
+}
+
+#advanced_search .buttons{
+    margin: 30px 20px 10px;
+    text-align: right;
+}
+
+#advanced_search #search{
+    background: #0A0000;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+#advanced_search #reset{
+    color: gray;
+    cursor: pointer;
+}
+
+#advanced_search button{
+    background: white!important;
+}
+
+/*NOTICE SECTION*/
+.marquee {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.marquee span {
+    display: inline-block;
+    width: max-content;
+
+    padding-left: 100%;
+    /* show the marquee just outside the paragraph */
+    will-change: transform;
+    animation: marquee 15s linear infinite;
+}
+
+.marquee span:hover {
+    animation-play-state: paused
+}
+
+
+@keyframes marquee {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0);
+    }
+}
+
+
+/* Respect user preferences about animations */
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee span {
+        animation-iteration-count: 1;
+        animation-duration: 0.01;
+        /* instead of animation: none, so an animationend event is
+         * still available, if previously attached.
+         */
+        width: auto;
+        padding-left: 0;
+    }
+}

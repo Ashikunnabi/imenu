@@ -1,0 +1,375 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+    .card-body {
+        margin: 0;
+        padding: 0;
+        max-height: 90vh;
+        background-color: #f5f5f5;
+    }
+
+    .left {
+        flex-grow: 1;
+        height: 70vh;
+        min-width: 500px;
+    }
+
+    #products {
+        padding: 0;
+        height: 70vh;
+        overflow-y: auto;
+    }
+
+    .right {
+        flex-grow: 5;
+        height: 70vh;
+        padding: 5px;
+        overflow: hidden;
+    }
+
+    #product_image {
+        gap: 10px;
+        flex-wrap: wrap;
+        overflow-y: auto;
+        overflow-y: scroll;
+        height: calc(100% - 60px);
+        justify-content: space-evenly;
+    }
+
+    .left .product-name {
+        max-width: 200px;
+    }
+
+    .left .product-quantity,
+    .left .product-quantity input {
+        max-width: 50px;
+    }
+
+    /* Firefox */
+    .left .product-quantity input[type=number] {
+        border: none;
+        color: #858796;
+    }
+
+    .left #products table tfoot {
+        border-top: 2px solid;
+    }
+
+    .left #products table tfoot tr td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .right .product {
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        padding: 5px;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .right .product .stock {
+        position: absolute;
+        color: white;
+        padding: 2px;
+        background-color: green;
+        right: 0;
+    }
+
+    .right .product img {
+        width: 70%;
+    }
+
+    .right .product p {
+        width: inherit;
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        transform: translateX(0);
+        transition: 5s;
+    }
+
+    .right .product p:hover {
+        width: auto;
+        transform: translateX(calc(80px - 100%));
+    }
+
+    .right .product .price {
+        color: #4e73df;
+    }
+
+    .pos-footer {
+        height: 10vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .pos-footer div {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .pos-footer div:nth-child(1) {
+        background-color: #f27474;
+
+    }
+
+    .pos-footer div:nth-child(2) {
+        background-color: #36b9cc;
+
+    }
+
+    .pos-footer div:nth-child(3) {
+        background-color: #1cc88a;
+        font-size: 30px;
+
+    }
+
+    .pos-footer div:nth-child(4) {
+        background-color: #f6c23e;
+        font-size: 30px;
+
+    }
+
+    .product-summary {
+        width: 50%;
+        border: none;
+        color: #858796;
+    }
+
+    #complete_order,
+    #delete_order {
+        cursor: pointer;
+    }
+
+    #print_order_modal {
+        font-size: 10pt;
+    }
+
+    #print_order_modal .modal-dialog {
+        width: 302.36px;
+    }
+
+    #print_order_modal .table tfoot td {
+        padding: 0px 0.75rem;
+    }
+    .print_order_modal_body_shop_info {
+        text-align: center;
+    }
+    .print_order_modal_body_shop_info h4{
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    {% comment %}<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Point of Sale (POS)</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report
+        </a>
+    </div>
+    <p class="mb-4">
+        A point of sale, or POS, is a system for making sales in person. It's the device and/or software that you use to
+        process transactions and accept payments, likely from your retail store.
+    </p>{% endcomment %}
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary" style="float:left;">Point of Sale (POS) <small>Only for
+                    Customer Order</small>
+            </h6>
+            <div style="float:right;">
+                <input type="checkbox" id="auto_add_to_cart" checked>
+                <label for="auto_add_to_cart">Auto add to cart</label>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="d-flex" style="gap:20px;">
+                <div id="pos_section" class="left">
+                    <div class="row" style="flex-flow:column;">
+                        <div class="col">
+                            <div class="form-group">
+                                <div id="products" class="form-control">
+                                    <table class="table">
+                                        <thead class="thead-gray">
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cart">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>Sub Total</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="cart_subtotal">00.00</td>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Discount</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class="cart_discount product-summary"
+                                                        value="00.00"></td>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Tax</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><input type="text" class="cart_tax product-summary" value="00.00">
+                                                </td>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="cart_total">00.00</td>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <input type="button" id="update_stock_submit_button" class="btn btn-primary btn-user btn-block"
+                        value="Submit"> -->
+                </div>
+                <div class="right">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <input type="text" id="barcode_scan_data" class="form-control"
+                                    placeholder="Barcode scan" autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex" id="product_image">
+                    </div>
+                </div>
+            </div>
+            <div class="pos-footer">
+                <div id="delete_order">
+                    Clear Cart&nbsp;&nbsp;&nbsp;<i class="fas fa-trash"></i>
+                </div>
+                <div>
+                    <!-- Add Customer -->
+                </div>
+                <div>
+                    Total:&nbsp;&nbsp;<i class="fas fa-dollar-sign"></i>&nbsp;<span class="cart_total"></span>
+                </div>
+                <div id="complete_order">
+                    PAY NOW&nbsp;&nbsp;&nbsp;<i class="fas fa-angle-double-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Print Modal -->
+    <div class="modal fade" id="print_order_modal" tabindex="-1" role="dialog" aria-labelledby="print_order_modalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="print_order_modalTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="print_order_modal_body">
+                    <div class="print_order_modal_body_shop_info">
+                        <h4 class="name"></h4>
+                        <small class="address"></small><br>
+                        <small class="phone_numbers"></small><br>
+                        <div class="order_header">
+                            <small class="order_no"></small><br>
+                            <small class="datetime"></small>
+                        </div>
+                    </div>
+                    <table class="table" id="print_order_modal_table">
+                        <thead class="thead-gray">
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="print_order_products">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Sub Total</td>
+                                <td></td>
+                                <td></td>
+                                <td class="print_order_subtotal">00.00</td>
+                            </tr>
+                            <tr>
+                                <td>Discount</td>
+                                <td></td>
+                                <td></td>
+                                <td class="print_order_discount">00.00</td>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <td></td>
+                                <td></td>
+                                <td class="print_order_tax">00.00</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td></td>
+                                <td></td>
+                                <td class="print_order_total">00.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="print_order_modal_print_btn">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const list_api_url = "{% url 'main:shop:api:v1:shop-product-search' %}";
+    const shop_order_pos_api_url = "{% url 'main:shop:api:v1:shop-order-pos-list' %}";
+    const shop_order_pos_search_api_url = "{% url 'main:shop:api:v1:shop-order-pos-search' %}";
+    const shop_complete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-complete-order' %}";
+    const shop_delete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-delete-order' %}";
+</script>
+
+<!-- POS JS -->
+<script src="{% static 'admin_shop/js/pos.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

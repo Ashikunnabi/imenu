@@ -1,0 +1,45 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Manufacturer Invoice</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Add Manufacturer Order Invoice
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Available Invoice</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover row-select" id="manufacturerInvoiceDataTable">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const dealer_api_url = "{% url 'core:rbac:api:v1:dealer-list' %}";
+        const manufacturer_invoice_api_url = "{% url 'main:user_panel:api:v1:manufacturer_invoice-list' %}";
+    </script>
+
+    <!-- user JS -->
+    <script src="{% static 'admin_order/js/manufacturer_invoice.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

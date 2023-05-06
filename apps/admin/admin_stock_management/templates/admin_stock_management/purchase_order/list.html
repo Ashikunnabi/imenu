@@ -1,0 +1,57 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Purchase Order</h1>
+        <!-- <a href="#"
+           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        >
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a> -->
+    </div>
+    <p class="mb-4">
+        A purchase order is a commercial document and first official offer
+        issued by a buyer to a seller, indicating
+        types, quantities, and agreed prices for products or services. It is
+        used to control the purchasing of products
+        and services from external suppliers.
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Generated Purchase
+                Orders</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover row-select"
+                    id="purchaseOrderDataTable">
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>
+    const po_api_url = "{% url 'main:user_panel:api:v1:purchase_order-list' %}?is_ready_for_processing=1";
+    const po_add_url = "{% url 'admin:admin_order:purchase_order_add' %}";
+    const page = 'list';
+</script>
+
+<!-- Finale Invoice JS -->
+<script src="{% static 'admin_stock_management/js/purchase_order.js' %}?v={{JS_VERSION}}&s=stock-management"></script>
+{% endblock %}

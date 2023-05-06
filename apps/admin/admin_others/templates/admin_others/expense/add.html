@@ -1,0 +1,102 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Expenses</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Add your daily expenses
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Expense Add</h6>
+            </div>
+            <div class="card-body">
+                <form id="expense_add" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <label for="type">Expense Type:</label>
+                                <select
+                                       class="form-control"
+                                       id="type"
+                                       name="type"
+                                ></select>
+                            </div>
+
+                            <div>
+                                <label for="spender">Spender:</label>
+                                <select
+                                       class="form-control"
+                                       id="spender"
+                                       name="spender"
+                                ></select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="name">Description: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="description"
+                                       name="description"
+                                       data-parsley-maxlength="256"
+                                       placeholder="Enter description here (max 256 chars)."
+                                       required
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="name">Value: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="value"
+                                       name="value"
+                                       data-parsley-maxlength="256"
+                                       required
+                                >
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const page = 'add'
+        const expense_list_url = "{% url 'admin:admin_others:expense_list' %}";
+        const expense_api_url = "{% url 'main:user_panel:api:v1:expense-list' %}";
+        const expense_type_api_url = "{% url 'main:user_panel:api:v1:expense_type-list' %}";
+        const spender_api_url = "{% url 'core:rbac:api:v1:user-list' %}";
+    </script>
+
+    <!-- Sales Reps JS -->
+    <script src="{% static 'admin_others/js/expense.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Product</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report</a> -->
+    </div>
+    <p class="mb-4">
+        <!-- Only active product will be shown in home page.
+            Products are awesome for user experience.
+            Please make sure you have full HD product images. -->
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Product Edit</h6>
+        </div>
+        <div class="card-body">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab"
+                        aria-controls="nav-info" aria-selected="true">Basic Info</a>
+                    <a class="nav-item nav-link" id="nav-codes-tab" data-toggle="tab" href="#nav-codes" role="tab"
+                        aria-controls="nav-codes" aria-selected="false">Codes</a>
+                    <a class="nav-item nav-link" id="nav-documents-tab" data-toggle="tab" href="#nav-documents"
+                        role="tab" aria-controls="nav-documents" aria-selected="false">Documents</a>
+                        <a class="nav-item nav-link" id="nav-prices-tab" data-toggle="tab" href="#nav-prices"
+                            role="tab" aria-controls="nav-prices" aria-selected="false">Prices</a>
+                            <a class="nav-item nav-link" id="nav-warehouses-tab" data-toggle="tab" href="#nav-warehouses"
+                                role="tab" aria-controls="nav-warehouses" aria-selected="false">Warehouses</a>
+                    <a class="nav-item nav-link" id="nav-attributes-tab" data-toggle="tab" href="#nav-attributes"
+                        role="tab" aria-controls="nav-attributes" aria-selected="false">Attributes</a>
+                    <a class="nav-item nav-link" id="nav-units-tab" data-toggle="tab" href="#nav-units" role="tab"
+                        aria-controls="nav-units" aria-selected="false">Units</a>
+                    <a class="nav-item nav-link" id="nav-vats-tab" data-toggle="tab" href="#nav-vats" role="tab"
+                        aria-controls="nav-vats" aria-selected="false">Vats</a>
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                    <form id="product_edit" data-parsley-validate enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="code" class="font-weight-bold">Code: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control font-weight-bold" id="code" name="code"
+                                    data-parsley-maxlength="50" placeholder="Enter product code here (max 50 chars)."
+                                    required>
+                            </div>
+                            <div class="col-8">
+                                <div id="basic_info_qr_code"></div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <label for="name">Name: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" data-parsley-maxlength="50"
+                                placeholder="Enter product name here (max 50 chars)." required>
+                        </div>
+                        <div class="">
+                            <label for="short_description">Short Description:</label>
+                            <input type="text" class="form-control" id="short_description" name="short_description"
+                                data-parsley-maxlength="250"
+                                placeholder="Enter product short description here (max 50 chars).">
+                        </div>
+                        <div class="">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="family">Family:</label>
+                                <input type="text" class="form-control" id="family" name="family"
+                                    data-parsley-maxlength="50" placeholder="Enter product family here (max 50 chars).">
+                            </div>
+                            <div class="col-6">
+                                <label for="series">Series:</label>
+                                <input type="text" class="form-control" id="series" name="series"
+                                    data-parsley-maxlength="50" placeholder="Enter product series here (max 50 chars).">
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <label for="parent">Parent:</label>
+                            <select class="form-control" id="parent_uuid" name="parent_uuid"></select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="group">Group: <span class="text-danger">*</span></label>
+                                <select class="form-control" id="group_uuid" name="group_uuid" required></select>
+                            </div>
+                            <div class="col-4">
+                                <label for="brand">Brand: <span class="text-danger">*</span></label>
+                                <select class="form-control" id="brand_uuid" name="brand_uuid" required></select>
+                            </div>
+                            <div class="col-4">
+                                <label for="type">Type: <span class="text-danger">*</span></label>
+                                <select class="form-control" id="type_uuid" name="type_uuid" required></select>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <br>
+                            <div class="custom-control custom-checkbox small">
+                                <input type="checkbox" class="custom-control-input" id="is_active" name="is_active">
+                                <label class="custom-control-label" for="is_active">Active</label>
+                            </div>
+                            <br>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary float-right">
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="nav-codes" role="tabpanel" aria-labelledby="nav-codes-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductCode" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductDocument" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-prices" role="tabpanel" aria-labelledby="nav-prices-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductPrice" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-warehouses" role="tabpanel" aria-labelledby="nav-warehouses-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductWarehouse" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-attributes" role="tabpanel" aria-labelledby="nav-attributes-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductAttribute" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-units" role="tabpanel" aria-labelledby="nav-units-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductUnit" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-vats" role="tabpanel" aria-labelledby="nav-vats-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableProductVat" style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const page_type = "edit";
+    const uuid = "{{ uuid }}";
+    const api_urls = {
+        "product_list": "{% url 'main:inventory:api:v1:product-list-create' %}",
+        "product_code_list": "{% url 'main:inventory:api:v1:product-code-list-create' product_uuid=uuid %}",
+        "product_document_list": "{% url 'main:inventory:api:v1:product-document-list-create' product_uuid=uuid %}",
+        "product_attribute_list": "{% url 'main:inventory:api:v1:product-attribute-list-create' product_uuid=uuid %}",
+        "product_price_list": "{% url 'main:inventory:api:v1:product-price-list-create' product_uuid=uuid %}",
+        "product_warehouse_list": "{% url 'main:inventory:api:v1:product-warehouse-list-create' product_uuid=uuid %}",
+        "product_unit_list": "{% url 'main:inventory:api:v1:product-unit-list-create' product_uuid=uuid %}",
+        "product_vat_list": "{% url 'main:inventory:api:v1:product-vat-list-create' product_uuid=uuid %}",
+        "unit_list": "{% url 'main:inventory:api:v1:unit-list-create' %}",
+        "vat_list": "{% url 'main:inventory:api:v1:vat-list-create' %}",
+    }
+    const product_list_url = "{% url 'admin:admin_inventory:product_list' %}";
+</script>
+
+<!-- Product JS -->
+<script type="module" src="{% static 'admin_inventory/js/product.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

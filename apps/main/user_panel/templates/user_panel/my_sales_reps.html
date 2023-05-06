@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <style>
+        .container-fluid table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+
+        .container-fluid table td, .container-fluid table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .container-fluid table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .container-fluid table tr:hover {
+            background-color: #ddd;
+        }
+
+        .container-fluid table th {
+            padding-top: 12px;
+            padding-bottom: 12px; 
+            background-color: #ff6666;
+            color: white;
+            text-align: center;
+        }
+
+        .container-fluid table tbody tr td img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <div style="display: inline-block; width: 100%;">
+        <div id="wrapper">
+            <!-- Sidebar -->
+            {% include 'user_panel/sidebar.html' %}
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <button class="btn btn-primary" id="menu-toggle">Toggle
+                        Menu
+                    </button>
+                </nav>
+                <div class="container-fluid">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const sales_reps_api_url = "{% url 'main:user_panel:api:v1:sales_reps-sales-reps-dropdown-value' %}";
+        const uuid = "{{ request.user.uuid }}";
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- My account JS -->
+    <script src="{% static 'user_panel/js/my_sales_reps.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}
+

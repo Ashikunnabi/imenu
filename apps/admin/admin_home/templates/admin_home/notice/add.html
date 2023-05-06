@@ -1,0 +1,136 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Notice</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+           Share current events, updates with dealers.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Notice Add</h6>
+            </div>
+            <div class="card-body">
+                <form id="notice_add" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter nav category title here (max 50 chars)."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redirect_url">Redirect URL: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="redirect_url"
+                               name="redirect_url"
+                               value="javascript:;"
+                               data-parsley-maxlength="256"
+                               placeholder="Enter notice redirect url here (max 256 chars)."
+                               required
+                        >
+                        <label for="redirect_url">Hint: use <strong>javascript:;</strong> for no url.</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target">Open URL at: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="target"
+                               name="target"
+                               value="_self"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter notice URL open at (max 50 chars)."
+                               required
+                        >
+                        <label for="target">Hint: use <strong>_blank</strong> for opening link in a new tab otherwise use <strong>_self</strong></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color">Text Color: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="color"
+                               name="color"
+                               value="black"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter notice text color (max 50 chars)."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="background_color">Background Color: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="background_color"
+                               name="background_color"
+                               value="white"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter notice text background color (max 50 chars)."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order">Order Score: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="order"
+                               name="order"
+                               data-parsley-maxlength="256"
+                               placeholder="Enter order score of notice."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                            <label class="custom-control-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+
+                    <div class="failed"></div>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const notice_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+        const notice_list_url = "{% url 'admin:admin_home:notice_list' %}";
+        const page = 'add';
+    </script>
+
+    <!-- Notice JS -->
+    <script src="{% static 'admin_home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

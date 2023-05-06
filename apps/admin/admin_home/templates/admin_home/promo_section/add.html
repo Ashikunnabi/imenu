@@ -1,0 +1,106 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Promo Section</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Only active first 5 promo will be shown in home page.
+            Promo section is for advertising most attractive packages/categories.
+            Please make sure you have full HD promo images.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Promo Add</h6>
+            </div>
+            <div class="card-body">
+                <form id="promo_section_add" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter promo title here (max 50 chars)."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promo">Promo: <span class="text-danger">*</span></label>
+                        <textarea type="text"
+                                  class="form-control"
+                                  id="promo"
+                                  name="promo"
+                                  data-parsley-maxlength="256"
+                                  placeholder="Write a little promo (max 256 chars)."
+                                  required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redirect_url">Redirect URL: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="redirect_url"
+                               name="redirect_url"
+                               data-parsley-maxlength="256"
+                               placeholder="Enter promo redirect url here (max 256 chars)."
+                               required
+                        >
+                        <span>Hints: //{{ request.get_host }}/product-list/?category=1234AbCd or //{{ request.get_host }}/product-list/?brand=1234AbCd</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Full HD Image: <span class="text-danger">*</span></label>
+                        <input type="file"
+                               class="form-control"
+                               id="image"
+                               name="image"
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                            <label class="custom-control-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+
+                    <div class="failed"></div>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const promo_section_api_url = "{% url 'main:home:api:v1:promo_section-list' %}";
+        const promo_section_list_url = "{% url 'admin:admin_home:promo_section_list' %}";
+    </script>
+
+    <!-- Promo Section JS -->
+    <script src="{% static 'admin_home/js/promo_section.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

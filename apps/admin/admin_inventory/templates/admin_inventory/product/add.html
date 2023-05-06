@@ -1,0 +1,110 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Product</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report</a> -->
+    </div>
+    <p class="mb-4">
+        <!-- Only active product will be shown in home page.
+        Products are awesome for user experience.
+        Please make sure you have full HD product images. -->
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Product Add</h6>
+        </div>
+        <div class="card-body">
+            <form id="product_add" data-parsley-validate enctype="multipart/form-data">
+                <div class="form-product">
+                    <label for="code">Code: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="code" name="code" data-parsley-maxlength="50"
+                        placeholder="Enter product code here (max 50 chars)." required>
+                </div>
+                <div class="form-product">
+                    <label for="name">Name: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" data-parsley-maxlength="50"
+                        placeholder="Enter product name here (max 50 chars)." required>
+                </div>
+                <div class="form-product">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description" data-parsley-maxlength="50"
+                        placeholder="Enter product description here (max 50 chars).">
+                </div>
+                <div class="form-product">
+                    <label for="short_description">Short Description:</label>
+                    <input type="text" class="form-control" id="short_description" name="short_description" data-parsley-maxlength="50"
+                        placeholder="Enter product short description here (max 50 chars).">
+                </div>
+                    <div class="form-product">
+                    <label for="family">Family:</label>
+                    <input type="text" class="form-control" id="family" name="family" data-parsley-maxlength="50"
+                        placeholder="Enter product family here (max 50 chars).">
+                </div>
+                <div class="form-product">
+                    <label for="series">Series:</label>
+                    <input type="text" class="form-control" id="series" name="series" data-parsley-maxlength="50"
+                        placeholder="Enter product series here (max 50 chars).">
+                </div>
+
+                <div class="">
+                    <label for="parent">Parent:</label>
+                    <select class="form-control" id="parent_uuid" name="parent_uuid"></select>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="group">Group: <span class="text-danger">*</span></label>
+                        <select class="form-control" id="group_uuid" name="group_uuid" required></select>
+                    </div>
+                    <div class="col-4">
+                        <label for="brand">Brand: <span class="text-danger">*</span></label>
+                        <select class="form-control" id="brand_uuid" name="brand_uuid" required></select>
+                    </div>
+                    <div class="col-4">
+                        <label for="type">Type: <span class="text-danger">*</span></label>
+                        <select class="form-control" id="type_uuid" name="type_uuid" required></select>
+                    </div>
+                </div>
+
+                <div class="form-product">
+                    <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="is_active" name="is_active">
+                        <label class="custom-control-label" for="is_active">Active</label>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-primary float-right">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const page_type = "add";
+    const api_urls = {
+        "product_list": "{% url 'main:inventory:api:v1:product-list-create' %}",
+        "group_list": "{% url 'main:inventory:api:v1:group-list-create' %}",
+        "brand_list": "{% url 'main:inventory:api:v1:brand-list-create' %}",
+        "type_list": "{% url 'main:inventory:api:v1:type-list-create' %}",
+    }
+    const product_list_url = "{% url 'admin:admin_inventory:product_list' %}";
+</script>
+
+<!-- Product JS -->
+<script type="module" src="{% static 'admin_inventory/js/product.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

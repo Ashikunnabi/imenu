@@ -1,0 +1,26 @@
+#empty_cart {
+    display: none;
+}
+
+#empty_cart h3 {
+    color: #d4d4d4;
+    text-align: center;
+    padding: 100px;
+    border: 20px solid #d4d4d4;
+    border-radius: 1em;
+}
+.required {
+    color: red;
+}
+#delivery_address_section {
+    display: none;
+    justify-content: space-around;
+}
+
+#delivery_address_section table tr {
+    vertical-align: top;
+}
+
+#delivery_address_section table tr:nth-child(1) {
+    border-bottom: 5px solid #ff6666;
+}

@@ -1,0 +1,149 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Order</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Get all orders in one place.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Order Details</h6>
+            </div>
+            <div class="card-body">
+                <div id="order_detail"></div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-around">
+            <div class="card shadow mb-4 col-md-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Shipping Address</h6>
+                </div>
+                <div class="card-body">
+                    <div id="shipping_address"></div>
+                </div>
+            </div>
+            <div class="card shadow mb-4 col-md-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Billing Address</h6>
+                </div>
+                <div class="card-body">
+                    <div id="billing_address"></div>
+                </div>
+            </div>
+            <div class="card shadow mb-4 col-md-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Card Details</h6>
+                </div>
+                <div class="card-body">
+                    <div id="payment_details"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
+            </div>
+            <div class="card-body">
+                <form id="order_detail_form" data-parsley-validate>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input"
+                                           id="in_processing" name="in_processing">
+                                    <label class="custom-control-label"
+                                           for="in_processing">In Processing (User can not cancel order)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input"
+                                           id="is_delivered" name="is_delivered">
+                                    <label class="custom-control-label"
+                                           for="is_delivered">Delivered</label>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox small">
+                                    <input type="checkbox" class="custom-control-input"
+                                           id="is_cancelled" name="is_cancelled">
+                                    <label class="custom-control-label"
+                                           for="is_cancelled">Cancelled</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tracking_number">Tracking Number: </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="tracking_number"
+                                       name="tracking_number"
+                                       data-parsley-maxlength="256"
+                                       placeholder="Enter tracking number."
+                                >
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tracking_number_added_at">Tracking Number Add Date: </label>
+                                <input type="date"
+                                       class="form-control"
+                                       id="tracking_number_added_at"
+                                       name="tracking_number_added_at"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="submit"
+                           id="submit_changes"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const order_api_url = "{% url 'main:user_panel:api:v1:order-list' %}";
+        const uuid = "{{ uuid }}";
+        const page = 'edit';
+    </script>
+
+    <!-- user JS -->
+    <script src="{% static 'admin_order/js/order.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

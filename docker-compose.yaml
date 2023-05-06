@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    image: inventory_web
+    container_name: inventory_web
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html:cached
+    depends_on:
+      - db
+    networks:
+      - inventory_network
+
+  db:
+    image: postgres:13.0-alpine
+    container_name: inventory_db
+    restart: unless-stopped
+    volumes:
+      - inventory_postgres_data:/var/lib/postgresql/data
+      - inventory_postgres_data_dbback:/dbback
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      - inventory_network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    image: inventory_nginx
+    container_name: inventory_nginx
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html:cached
+    depends_on:
+      - web
+    ports:
+      - "8082:80"
+    networks:
+      - inventory_network
+
+networks:
+    inventory_network:
+        driver: bridge
+
+volumes:
+  inventory_postgres_data: {}
+  inventory_postgres_data_dbback: {}

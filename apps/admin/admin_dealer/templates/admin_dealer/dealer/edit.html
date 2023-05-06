@@ -1,0 +1,47 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dealer</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Control bands access for each dealer and set discount for brands
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Available Brands</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover row-select" id="brandDataTable">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const dealer_api_url = "{% url 'core:rbac:api:v1:dealer-list' %}";
+        const brand_api_url = "{% url 'main:inventory:api:v1:brand-list' %}";
+        const dealer_brand_api_url = "{% url 'main:inventory:api:v1:dealer_brand-list' %}";
+        const uuid = "{{ uuid }}";
+    </script>
+
+    <!-- user JS -->
+    <script src="{% static 'admin_dealer/js/dealer.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

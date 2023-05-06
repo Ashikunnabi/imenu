@@ -1,0 +1,70 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Page</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            List of pages available in the site.
+            Used in banner.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Page Add</h6>
+            </div>
+            <div class="card-body">
+                <form id="page_add" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title: <span class="text-danger">*</span></label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter page title here (max 50 chars)."
+                               required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                            <label class="custom-control-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+
+                    <div class="failed"></div>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const page_api_url = "{% url 'main:home:api:v1:page-list' %}";
+        const page_list_url = "{% url 'admin:admin_home:page_list' %}";
+    </script>
+
+    <!-- Page JS -->
+    <script src="{% static 'admin_home/js/page.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

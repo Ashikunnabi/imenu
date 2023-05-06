@@ -1,0 +1,124 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Carousel</h1>
+            {#        <a href="#"#}
+            {#           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
+            {#                class="fas fa-download fa-sm text-white-50"></i> Generate#}
+            {#            Report</a>#}
+        </div>
+        <p class="mb-4">
+            Only active carousel will be shown in home page.
+            Carousels are awesome for user experience.
+            Please make sure you have full HD carousel images.
+        </p>
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Carousel Edit</h6>
+            </div>
+            <div class="card-body">
+                <form id="carousel_edit" data-parsley-validate
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title: </label>
+                        <input type="text"
+                               class="form-control"
+                               id="title"
+                               name="title"
+                               data-parsley-maxlength="50"
+                               placeholder="Enter carousel title here (max 50 chars)."
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description: </label>
+                        <textarea type="text"
+                                  class="form-control"
+                                  id="description"
+                                  name="description"
+                                  data-parsley-maxlength="256"
+                                  placeholder="Write a little description (max 256 chars)."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discount">Discount: </label>
+                        <input type="number"
+                               class="form-control"
+                               id="discount"
+                               name="discount"
+                               placeholder="Enter discount percentage."
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redirect_url">Redirect URL: </label>
+                        <input type="text"
+                               class="form-control"
+                               id="redirect_url"
+                               name="redirect_url"
+                               data-parsley-maxlength="256"
+                               placeholder="Enter carousel redirect url here (max 256 chars)."
+                        >
+                        <span>Hints: //{{ request.get_host }}/product-list/?category=1234AbCd or //{{ request.get_host }}/product-list/?brand=1234AbCd</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Full HD Image (<a href="#" target="_blank" id="editCarouselCurrentImage">Current Image</a>):</label>
+                        <input type="file"
+                               class="form-control"
+                               id="image"
+                               name="image"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order">Order:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="order"
+                               name="order"
+                               placeholder="Enter order/position."
+                               value="999"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" id="is_active" name="is_active">
+                            <label class="custom-control-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+
+                    <div class="failed"></div>
+
+                    <input type="submit"
+                           class="btn btn-primary btn-user btn-block">
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        const carousel_api_url = "{% url 'main:home:api:v1:carousel-list' %}";
+        const carousel_list_url = "{% url 'admin:admin_home:carousel_list' %}";
+        const hashed_id = "{{ hashed_id }}";
+    </script>
+
+    <!-- Carousel JS -->
+    <script src="{% static 'admin_home/js/carousel.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

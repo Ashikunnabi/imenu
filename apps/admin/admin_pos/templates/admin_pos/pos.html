@@ -1,0 +1,111 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    {% comment %}<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Point of Sale (POS)</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report
+        </a>
+    </div>
+    <p class="mb-4">
+        A point of sale, or POS, is a system for making sales in person. It's the device and/or software that you use to
+        process transactions and accept payments, likely from your retail store.
+    </p>{% endcomment %}
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Point of Sale (POS) <small>Only for Sales order delivery</small></h6>
+        </div>
+        <div class="card-body">
+            <div class="d-flex" style="gap:20px;">
+                <div style="background-color:#f5f5f5;flex-grow:1;padding:10px;min-width:500px;">
+                    <div id="pos_section">
+                        <div class="row" style="flex-flow:column;">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="warehouse">Warehouse: <span class="text-danger">*</span></label><br>
+                                    <select style="width:100%;" id="warehouse" name="warehouse" required>
+                                        <option>Search warehouse</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="sales_order">Sales Order: <span class="text-danger">*</span></label><br>
+                                    <select style="width:100%;" id="sales_order" name="sales_order" required>
+                                        <option>Search sales order</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="barcode_scan_data">Product ID: <span
+                                            class="text-danger">*</span> (<small>Click the field below and scan using device</small>)</label><br>
+
+                                    <div class="input-group mb-2 mr-sm-2">
+                                        <input type="text" id="barcode_scan_data" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="products" style="width: 100%;">
+                                        Products: <span class="text-danger">*</span>
+                                        <i class="fas fa-sync" id="refresh_products"
+                                            style="color:white;background-color:#4e73df;padding:5px;border-radius:25px;float:right;cursor:pointer;"
+                                            title="Refresh for updating products"></i>
+                                    </label>
+                                    <div id="products" class="form-control"
+                                        style="height:500px;padding-top:0;overflow-y:auto;">
+                                        <table class="table">
+                                            <thead class="thead-gray">
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Qty</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="button" id="update_stock_submit_button" class="btn btn-primary btn-user btn-block"
+                            value="Submit">
+                    </div>
+                </div>
+                <div style="background-color:#f5f5f5;flex-grow:2;padding:10px;">
+                    <div style="gap:10px;flex-wrap:wrap;height:740px;overflow-y:auto;" class="d-flex"
+                        id="product_image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const warehouse_api_url = "{% url 'main:inventory:api:v1:warehouse-list' %}";
+    const sales_order_api_url = "{% url 'main:user_panel:api:v1:sales_order-list' %}";
+    const product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
+    const stock_transaction_api_url = "{% url 'main:inventory:api:v1:stock_transaction-list' %}";
+</script>
+
+<!-- POS JS -->
+<script src="{% static 'admin_pos/js/pos.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

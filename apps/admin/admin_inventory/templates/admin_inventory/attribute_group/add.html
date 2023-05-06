@@ -1,0 +1,69 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+    select.form-control[multiple] {
+        height: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">AttributeGroup</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report</a> -->
+    </div>
+    <p class="mb-4">
+        <!-- Only active brand will be shown in home page.
+        Brands are awesome for user experience.
+        Please make sure you have full HD brand images. -->
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">AttributeGroup Add</h6>
+        </div>
+        <div class="card-body">
+            <form id="attribute_group_add" data-parsley-validate enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" data-parsley-maxlength="50"
+                        placeholder="Enter name here (max 50 chars)." required>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                        <label class="custom-control-label" for="is_active">Active</label>
+                    </div>
+                </div>
+
+                <div class="failed"></div>
+
+                <input type="submit" class="btn btn-primary float-right">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const page_type = "add";
+    const api_urls = {
+        "attribute_group_list": "{% url 'main:inventory:api:v1:attribute-group-list-create' %}",
+    }
+    const attribute_group_list_url = "{% url 'admin:admin_inventory:attribute_group_list' %}";
+</script>
+
+<!-- Product AttributeGroup JS -->
+<script src="{% static 'admin_inventory/js/attribute_group.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

@@ -1,0 +1,477 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+<style>
+    .section1 {
+        text-align: right;
+        font-size: 30px;
+        font-weight: 700;
+        color: #4e73df;
+    }
+
+    .section2 {
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        text-align: right;
+        font-size: 16px;
+    }
+
+    .section2 .logo {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .section2 .logo #logo-button {
+        display: none;
+    }
+
+    .section2 .logo label {
+        margin-top: 10px;
+        padding: 5px;
+        background: #1172c2;
+        color: #fff;
+        font-size: 15px;
+        font-family: "Open Sans", sans-serif;
+        text-transform: Uppercase;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .section2 input {
+        text-align: right;
+        width: 100%;
+    }
+
+    .section2 textarea {
+        width: 100%;
+    }
+
+    .section3 a {
+        color: black;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .section4 {
+        display: flex;
+        gap: 50px;
+        justify-content: space-between;
+        color: black;
+        font-size: 16px;
+    }
+
+    .section4 div {
+        flex: 1;
+        border: 1px solid black;
+    }
+
+    .section4 div strong {
+        display: block;
+        color: white;
+        background: #4066d4;
+        padding: 0 10px;
+    }
+
+    .section4 p {
+        /* padding: 0 10px; */
+        margin: 0;
+    }
+
+    .section4 p textarea {
+        width: 100%;
+        height: 100px;
+        padding: 0 10px;
+        border: none;
+    }
+
+    .section5 {
+        color: black;
+        font-size: 16px;
+    }
+
+    .section5 table,
+    .section5 table tbody tr td input,
+    .section5 table tbody tr td textarea {
+        width: 100%;
+        padding-top: 5px;
+        font-size: 16px;
+    }
+
+    .section5 table thead tr,
+    .section5 table tbody tr {
+        border-bottom: 1px solid black;
+        /* font-size: 12px; */
+    }
+
+    /* .section5 table tbody tr td:nth-child(2) {
+        width: 50%;
+    } */
+
+    .section5 table tfoot tr {
+        border-top: 1px solid black;
+    }
+
+    #discount_percentage {
+        width: 35px;
+        text-align: center;
+        padding: 0;
+    }
+
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .update_stock {
+        cursor: pointer;
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        .sidebar, .heading {
+            display: none;
+        }
+
+        .card-body * {
+            visibility: visible;
+        }
+
+        .card-body {
+            top: 0px;
+            left: 0px;
+            width: 100%;
+        }
+
+        input,
+        textarea {
+            border: none;
+            outline: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        input::-webkit-calendar-picker-indicator {
+            display: none !important;
+            -webkit-appearance: none;
+        }
+
+
+        textarea {
+            resize: none;
+        }
+
+        .section2 .logo label {
+            display: none;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: none;
+        }
+
+        .select2-container--default.select2-container--disabled .select2-selection--single {
+            background-color: #fff;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: black;
+        }
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            padding-left: 0;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            display: none;
+        }
+
+        .section4 #supplier,
+        .section4 p .select2 {
+            display: none;
+        }
+
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-row-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        .btn,
+        .fa-paste,
+        .section5 table thead tr th:last-child,
+        .section5 table tbody tr td:last-child {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Purchase Order</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate
+                Report
+        </a> -->
+    </div>
+    <p class="mb-4">
+        A purchase order is a commercial document and first official offer issued by a buyer to a seller, indicating
+        types, quantities, and agreed prices for products or services. It is used to control the purchasing of products
+        and services from external suppliers.
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Create/Generate</h6>
+        </div>
+        <div class="card-body">
+            <div class="section1">
+                PURCHASE ORDER
+            </div>
+            <hr>
+            <div class="section2">
+                <div>
+                    <div class="logo">
+                        <img id="logo-preview" src={% static COMPANY_NAME_ICON_URL %} width="200">
+                        <label class="logo-button-label" for="logo-button">Upload Image</label>
+                        <input type="file" id="logo-button" accept="image/*">
+                    </div>
+                    <br><br>
+                    <textarea id="address">1225 W College Ave, Carrollton, TX 75006 USA</textarea>
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <th>PO NUMBER:&nbsp;</th>
+                            <td><input type="text" id="po_number"></td>
+                        </tr>
+                        <tr>
+                            <th>ORDER DATE:&nbsp;</th>
+                            <td><input type="date" id="date"></td>
+                        </tr>
+                        <tr>
+                            <th>EST. RECEIVE DATE:&nbsp;</th>
+                            <td><input type="date" id="est_receive_date"></td>
+                        </tr>
+                        <tr>
+                            <th>DUE DATE:&nbsp;</th>
+                            <td><input type="date" id="due_date"></td>
+                        </tr>
+                        <tr>
+                            <th>REQUESTED SHIPPING:&nbsp;</th>
+                            <td><input list="requested_shippings" type="text" id="requested_shipping"></td>
+                            <datalist id="requested_shippings">
+                                <option value="Std US D2D Dom">
+                                <option value="Standard">
+                                <option value="One-Day">
+                                <option value="Second-Day">
+                                <option value="Other">
+                            </datalist>
+                        </tr>
+                        <tr>
+                            <th>CARRIER SHIPPING:&nbsp;</th>
+                            <td><input list="carrier_shippings" type="text" id="carrier_shipping"></td>
+                            <datalist id="carrier_shippings">
+                                <option value="UPS - UPS Standard">
+                                <option value="USPS">
+                                <option value="Federal Express">
+                                <option value="UPS">
+                                <option value="Freight">
+                                <option value="Customer pickup">
+                                <option value="Other">
+                            </datalist>
+                        </tr>
+                        <tr>
+                            <th>TERMS:&nbsp;</th>
+                            <td><input list="terms_list" type="text" id="terms"></td>
+                            <datalist id="terms_list">
+                                <option value="Credit Card">
+                                <option value="Check">
+                                <option value="Cash">
+                                <option value="Net">
+                            </datalist>
+                        </tr>
+                        <tr>
+                            <th>Note:&nbsp;</th>
+                            <td><input type="text" id="term_note"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="section3"><textarea id="url" style="resize:auto">https://giswholesale.com</textarea></div>
+            <br>
+            <div class="section4">
+                <div>
+                    <strong>Ship from</strong>
+                    <p>
+                        <!-- <select id="supplier" style="width: 100%;">
+                            <option value="" selected="selected">Search Supplier</option>
+                        </select> -->
+                        <textarea id="supplier_address"
+                            onchange="$(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);"
+                            onkeyup="$(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);">GIS Wholesale &#13;&#10;1225 W College Ave, &#13;&#10;Carrollton, TX 75006 USA&#13;&#10;</textarea>
+                    </p>
+                </div>
+                <div style="position:relative"><span id="copy_ship_to_into_bill_to"
+                        style="position:absolute;right:10px;color:white;cursor:pointer;"
+                        title="Copy ship to into bill to"><i class="fa fa-paste"></i></span>
+                    <strong>Bill to</strong>
+                    <p><textarea
+                            id="bill_to">ESMH Auto Performance&#13;&#10;6801 E Parker Rd&#13;&#10;Allen, TX 75002 USA&#13;&#10;</textarea>
+                    </p>
+                </div>
+                <div style="position:relative"><span id="copy_bill_to_into_ship_to"
+                        style="position:absolute;right:10px;color:white;cursor:pointer;"
+                        title="Copy bill to into ship to"><i class="fa fa-paste"></i></span>
+                    <strong>Ship to</strong>
+                    <p><textarea
+                            id="ship_to">ESMH Auto Performance&#13;&#10;6801 E Parker Rd&#13;&#10;Allen, TX 75002 USA&#13;&#10;</textarea>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="section5">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Packing</th>
+                            <th>Quantity</th>
+                            <th>Received</th>
+                            <th>Pending</th>
+                            <!-- <th>Price</th>
+                            <th>Subtotal</th> -->
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products">
+                    </tbody>
+                    <!-- <tfoot>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th colspan="2"> Sub&nbsp;Total</th>
+                            <th id="sub_total">00</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th colspan="2">Delivery Cost</th>
+                            <th id="delivery_cost">00</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th colspan="2">Discount&nbsp;(<input id="discount_percentage" type="number">)%</th>
+                            <th id="discount">00</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th colspan="2">Total</th>
+                            <th id="total">00</th>
+                        </tr>
+                    </tfoot> -->
+                </table>
+                <br />
+                <br />
+                <!-- <button class="btn btn-primary add_new_item">+ Add</button> -->
+                <!-- <button class="btn btn-success save_so">Save</button> -->
+                <button class="btn btn-warning print_preview">Print Preview</button>
+                <!-- <button class="btn btn-danger float-right update_stock">Update Stock</button> -->
+                <!-- <button class="btn btn-danger float-right update_stock">Lock</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div id="update_stock_modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="modal_part_number">Part Number</label>
+                            <input type="text" class="form-control" id="modal_part_number" placeholder="">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="modal_quantity">Quantity</label>
+                                <input type="text" class="form-control" id="modal_quantity" placeholder="">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="modal_received">Received</label>
+                                <input type="text" class="form-control" id="modal_received" placeholder="">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="modal_pending">Pending</label>
+                                <input type="text" class="form-control" id="modal_pending" placeholder="">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="modal_current_received">Current Received</label>
+                            <input type="number" min="0" value="0" class="form-control" id="modal_current_received" placeholder="">
+                        </div>
+                        <div id="warehouse_section"></div>
+                    </form>
+                </div>
+                {% if request.user.email != "partspromax@gmail.com" %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="update_stock_submit_button_modal" class="btn btn-primary">Save changes</button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+
+
+
+
+
+<script>
+    const stock_transaction_api_url = "{% url 'main:inventory:api:v1:stock_transaction-list' %}";
+    const product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
+    const po_api_url = "{% url 'main:user_panel:api:v1:purchase_order-list' %}";
+    const po_list_url = "{% url 'admin:admin_order:purchase_order_list' %}";
+    const uuid = "{{ uuid }}";
+    const page = 'edit';
+</script>
+
+<!-- Finale Invoice JS -->
+<script src="{% static 'admin_stock_management/js/purchase_order.js' %}?v={{JS_VERSION}}&s=stock-management"></script>
+{% endblock %}
