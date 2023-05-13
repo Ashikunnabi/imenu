@@ -1,5 +1,3 @@
-from apps.main.inventory.models.unit import Unit
-from apps.main.inventory.models.vat import Vat
 from rest_framework import serializers
 
 from apps.core.base.utils.basic import build_media_url
@@ -15,12 +13,14 @@ from ...models import (
     ProductCode,
     ProductDocument,
     ProductPrice,
-    ProductWarehouse,
     ProductUnit,
     ProductVat,
+    ProductWarehouse,
     Supplier,
     Type,
     Warehouse,
+    Unit,
+    Vat,
 )
 
 
@@ -163,7 +163,7 @@ class ProductAttributeInputSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if not data.get("attribute_uuid", None) and not data.get("name", None):
             raise serializers.ValidationError(
-                "Attribute uuid/name at lease 1 is required"
+                "Attribute uuid/name at least 1 is required"
             )
         if data.get("attribute_uuid", None) and data.get("name", None):
             raise serializers.ValidationError("Attribute uuid/name only 1 is required")

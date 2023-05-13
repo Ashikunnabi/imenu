@@ -9,6 +9,8 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("", include("apps.main.urls")),
 ]
+
+# static and media url controll
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT, show_indexes=True
