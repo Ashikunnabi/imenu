@@ -19,7 +19,7 @@ class Login {
             let login_form_data = new FormData($('#login-form')[0]);
 
             let data = {
-                email: login_form_data.get('email'),
+                username: login_form_data.get('email'),
                 password: login_form_data.get('password')
             };
 

@@ -1,9 +1,9 @@
-APPLICATION_NAME = 'Tech Spider Inventory'
-COMPANY_NAME = 'Tech Spider'
+APPLICATION_NAME = 'Inventory'
+COMPANY_NAME = 'Inventory'
 COMPANY_EMAIL = 'portal@giswholesale.com'
 COMPANY_PHONE = '+970-360-5788'
-FAVICON_URL = 'base/company/img/logo.webp'
-COMPANY_NAME_ICON_URL = 'base/company/img/logo.webp'
+FAVICON_URL = 'base/company/img/logo.png'
+COMPANY_NAME_ICON_URL = 'base/company/img/logo.png'
 JS_VERSION = '1.00'
 
 LOGIN_URL = '/login/'
