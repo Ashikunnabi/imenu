@@ -114,7 +114,7 @@ class DocumentOutputSerializer(serializers.ModelSerializer):
 
 
 class GroupInputSerializer(serializers.ModelSerializer):
-    parent_uuid = serializers.UUIDField()
+    parent_uuid = serializers.UUIDField(required=False)
 
     class Meta:
         model = Group
@@ -417,14 +417,26 @@ class ProductVatOutputSerializer(serializers.ModelSerializer):
 
 
 class ProductInputSerializer(serializers.ModelSerializer):
-    parent_uuid = serializers.UUIDField()
+    parent_uuid = serializers.UUIDField(required=False)
     brand_uuid = serializers.UUIDField()
     group_uuid = serializers.UUIDField()
     type_uuid = serializers.UUIDField()
 
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = [
+            "code",
+            "name",
+            "description",
+            "short_description",
+            "family",
+            "series",
+            "parent_uuid",
+            "brand_uuid",
+            "group_uuid",
+            "type_uuid",
+            "is_active",
+        ]
 
 
 class ProductOutputSerializer(serializers.ModelSerializer):

@@ -1,8 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.models import Permission
-# from apps.core.rbac.models import Permission
-
-# from apps.main.user_panel.models import DealerSalesReps
 
 
 def application_information(request):

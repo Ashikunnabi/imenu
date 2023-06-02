@@ -1,5 +1,5 @@
-APPLICATION_NAME = 'GIS Wholesale Portal'
-COMPANY_NAME = 'GIS Wholesale'
+APPLICATION_NAME = 'Tech Spider Inventory'
+COMPANY_NAME = 'Tech Spider'
 COMPANY_EMAIL = 'portal@giswholesale.com'
 COMPANY_PHONE = '+970-360-5788'
 FAVICON_URL = 'base/company/img/logo.webp'

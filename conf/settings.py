@@ -276,3 +276,10 @@ FINALE_PASSWORD = os.getenv("FINALE_PASSWORD")
 
 # File Encryption key!
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
+
+
+# place this at the end of the file for developer/local configuration
+try:
+    from .local import *
+except ModuleNotFoundError:
+    pass
