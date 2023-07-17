@@ -23,13 +23,13 @@ def login(request):
     serializer = LoginInputSerializer(data=data)
     serializer.is_valid(raise_exception=True)
 
-    users = get_user_model().objects.filter(username=data.get("email"))
+    users = get_user_model().objects.filter(username=data.get("username"))
     if not users.exists():
         raise InvalidCredentialsException
     else:
         # activating session based authentication
         user = authenticate(
-            username=request.data["email"], password=request.data["password"]
+            username=request.data["username"], password=request.data["password"]
         )
         if not user:
             raise InvalidCredentialsException
