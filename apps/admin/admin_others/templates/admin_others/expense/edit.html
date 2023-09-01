@@ -93,9 +93,9 @@
         const page = 'edit'
         const uuid = "{{ uuid }}"
         const expense_list_url = "{% url 'admin:admin_others:expense_list' %}";
-        const expense_api_url = "{% url 'main:user_panel:api:v1:expense-list' %}";
-        const expense_type_api_url = "{% url 'main:user_panel:api:v1:expense_type-list' %}";
-        const spender_api_url = "{% url 'core:rbac:api:v1:user-list' %}";
+        const expense_api_url = "{% url 'apps:user_panel:api:v1:expense-list' %}";
+        const expense_type_api_url = "{% url 'apps:user_panel:api:v1:expense_type-list' %}";
+        const spender_api_url = "{% url 'apps:rbac:api:v1:user-list' %}";
     </script>
 
     <!-- Sales Reps JS -->

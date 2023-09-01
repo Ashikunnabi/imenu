@@ -114,7 +114,7 @@
 
 {% block js %}
     <script>
-        const carousel_api_url = "{% url 'main:home:api:v1:carousel-list' %}";
+        const carousel_api_url = "{% url 'apps:home:api:v1:carousel-list' %}";
         const carousel_list_url = "{% url 'admin:admin_home:carousel_list' %}";
         const hashed_id = "{{ hashed_id }}";
     </script>

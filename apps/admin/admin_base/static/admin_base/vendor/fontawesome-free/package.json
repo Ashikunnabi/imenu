@@ -7,7 +7,7 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
-    "registry": true,
+    "Registry": true,
     "raw": "@fortawesome/fontawesome-free@5.15.1",
     "name": "@fortawesome/fontawesome-free",
     "escapedName": "@fortawesome%2ffontawesome-free",
@@ -19,7 +19,7 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.1.tgz",
+  "_resolved": "https://Registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.1.tgz",
   "_shasum": "ccfef6ddbe59f8fe8f694783e1d3eb88902dc5eb",
   "_spec": "@fortawesome/fontawesome-free@5.15.1",
   "_where": "/Users/DANGER_DAVID/Sites/startbootstrap-themes/startbootstrap-sb-admin-2",

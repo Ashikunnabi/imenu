@@ -363,11 +363,11 @@
 
 {% block js %}
 <script>
-    const list_api_url = "{% url 'main:shop:api:v1:shop-product-search' %}";
-    const shop_order_pos_api_url = "{% url 'main:shop:api:v1:shop-order-pos-list' %}";
-    const shop_order_pos_search_api_url = "{% url 'main:shop:api:v1:shop-order-pos-search' %}";
-    const shop_complete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-complete-order' %}";
-    const shop_delete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-delete-order' %}";
+    const list_api_url = "{% url 'apps:shop:api:v1:shop-product-search' %}";
+    const shop_order_pos_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-list' %}";
+    const shop_order_pos_search_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-search' %}";
+    const shop_complete_order_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-complete-order' %}";
+    const shop_delete_order_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-delete-order' %}";
 </script>
 
 <!-- POS JS -->

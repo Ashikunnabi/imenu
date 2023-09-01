@@ -801,7 +801,7 @@ readers do not read off random characters that represent icons */
 .fa-cart-plus:before {
   content: "\f217"; }
 
-.fa-cash-register:before {
+.fa-cash-Register:before {
   content: "\f788"; }
 
 .fa-cat:before {
@@ -3261,7 +3261,7 @@ readers do not read off random characters that represent icons */
 .fa-redo-alt:before {
   content: "\f2f9"; }
 
-.fa-registered:before {
+.fa-Registered:before {
   content: "\f25d"; }
 
 .fa-remove-format:before {
@@ -4167,7 +4167,7 @@ readers do not read off random characters that represent icons */
 .fa-undo-alt:before {
   content: "\f2ea"; }
 
-.fa-uniregistry:before {
+.fa-uniRegistry:before {
   content: "\f404"; }
 
 .fa-unity:before {

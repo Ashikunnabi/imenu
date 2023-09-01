@@ -173,11 +173,11 @@
 <script>
     const page = 'edit';
     const uuid = "{{ uuid }}";
-    const list_api_url = "{% url 'main:shop:api:v1:shop-list' %}";
-    const list_user_api_url = "{% url 'core:rbac:api:v1:user-staff-only' %}";
-    const list_shopekeeper_api_url = "{% url 'main:shop:api:v1:shopkeeper-list' %}?shop_uuid={{ uuid }}";
-    const list_shop_product_api_url = "{% url 'main:shop:api:v1:shop-product-list' %}?shop_uuid={{ uuid }}";
-    const list_shop_order_api_url = "{% url 'main:shop:api:v1:shop-order-list' %}?shop_uuid={{ uuid }}";
+    const list_api_url = "{% url 'apps:shop:api:v1:shop-list' %}";
+    const list_user_api_url = "{% url 'apps:rbac:api:v1:user-staff-only' %}";
+    const list_shopekeeper_api_url = "{% url 'apps:shop:api:v1:shopkeeper-list' %}?shop_uuid={{ uuid }}";
+    const list_shop_product_api_url = "{% url 'apps:shop:api:v1:shop-product-list' %}?shop_uuid={{ uuid }}";
+    const list_shop_order_api_url = "{% url 'apps:shop:api:v1:shop-order-list' %}?shop_uuid={{ uuid }}";
     const list_view_url = "{% url 'admin:admin_shop:shop_list' %}";
 </script>
 

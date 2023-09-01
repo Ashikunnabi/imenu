@@ -16,7 +16,7 @@
             {#            Report</a>#}
         </div>
         <p class="mb-4">
-            Users are valuable. See list of registered user.
+            Users are valuable. See list of Registered user.
             Only active staff can be an admin of this system.
         </p>
 
@@ -39,7 +39,7 @@
 
 {% block js %}
     <script>
-        const user_api_url = "{% url 'core:rbac:api:v1:user-list-create' %}";
+        const user_api_url = "{% url 'apps:rbac:api:v1:user-list-create' %}";
         const user_add_url = "{% url 'admin:admin_rbac:user_add' %}";
     </script>
 

@@ -241,6 +241,30 @@
     </li>
     {% endif %}
 
+    {% if "menu.view_menu" in CURRENT_USER_PERMISSIONS %}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+           id="sidebar_option_menu_a"
+           data-target="#sidebar_option_menu_options"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-hamburger"></i>
+            <span>Menu</span>
+        </a>
+        <div id="sidebar_option_menu_options" class="collapse" aria-labelledby="headingTwo"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Control Menu:</h6>
+                {% if "menu.view_menutype" in CURRENT_USER_PERMISSIONS %}
+                    <a class="collapse-item" href="{% url 'admin:admin_menu:menu_type_list' %}" id="sidebar_option_menu_type">Menu Type</a>
+                {% endif %}
+                {% if "menu.view_menu" in CURRENT_USER_PERMISSIONS %}
+                    <a class="collapse-item" href="{% url 'admin:admin_menu:menu_list' %}" id="sidebar_option_menu">Menu</a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
     {% if "tab_others" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse"
@@ -332,7 +356,7 @@
 {#            <div class="bg-white py-2 collapse-inner rounded">#}
 {#                <h6 class="collapse-header">Login Screens:</h6>#}
 {#                <a class="collapse-item" href="login.html">Login</a>#}
-{#                <a class="collapse-item" href="register.html">Register</a>#}
+{#                <a class="collapse-item" href="Register.html">Register</a>#}
 {#                <a class="collapse-item" href="forgot-password.html">Forgot#}
 {#                    Password</a>#}
 {#                <div class="collapse-divider"></div>#}

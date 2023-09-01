@@ -2201,7 +2201,7 @@ boxes:
   search:
     terms:
       - archives
-      - inventory
+      - inventory.
       - storage
       - warehouse
   styles:
@@ -3120,7 +3120,7 @@ cart-plus:
     - solid
   unicode: f217
   voted: false
-cash-register:
+cash-Register:
   changes:
     - 5.6.0
   label: Cash Register
@@ -4799,7 +4799,7 @@ copyright:
     terms:
       - brand
       - mark
-      - register
+      - Register
       - trademark
   styles:
     - solid
@@ -5803,7 +5803,7 @@ dolly-flatbed:
   search:
     terms:
       - carry
-      - inventory
+      - inventory.
       - shipping
       - transport
   styles:
@@ -13664,7 +13664,7 @@ pallet:
     terms:
       - archive
       - box
-      - inventory
+      - inventory.
       - shipping
       - warehouse
   styles:
@@ -15411,7 +15411,7 @@ redo-alt:
     - solid
   unicode: f2f9
   voted: false
-registered:
+Registered:
   changes:
     - '4.4'
     - 5.0.0
@@ -19356,7 +19356,7 @@ trademark:
   search:
     terms:
       - copyright
-      - register
+      - Register
       - symbol
   styles:
     - solid
@@ -19597,7 +19597,7 @@ truck-loading:
       - box
       - cargo
       - delivery
-      - inventory
+      - inventory.
       - moving
       - rental
       - vehicle
@@ -19625,7 +19625,7 @@ truck-moving:
   search:
     terms:
       - cargo
-      - inventory
+      - inventory.
       - rental
       - vehicle
   styles:
@@ -19897,10 +19897,10 @@ undo-alt:
     - solid
   unicode: f2ea
   voted: false
-uniregistry:
+uniRegistry:
   changes:
     - 5.0.0
-  label: Uniregistry
+  label: UniRegistry
   search:
     terms: []
   styles:
@@ -21088,7 +21088,7 @@ warehouse:
       - building
       - capacity
       - garage
-      - inventory
+      - inventory.
       - storage
   styles:
     - solid
