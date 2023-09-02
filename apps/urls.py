@@ -10,7 +10,5 @@ urlpatterns = [
     path("", include("apps.send_email.urls")),
     path("", include("apps.inventory.urls")),
     path("", include("apps.menu.urls")),
-    # path('', include('apps.finale_inventory.urls')),
-    # path('', include('apps.user_panel.urls')),
-    # path('', include('apps.shop.urls')),
+    path("", include("apps.table.urls")),
 ]

@@ -1,0 +1,51 @@
+{% extends 'admin_base/base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Table</h1>
+        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate
+            Report</a> -->
+    </div>
+    <p class="mb-4">
+        <!-- Only active table will be shown in home page.
+        Tables are awesome for user experience.
+        Please make sure you have full HD table images. -->
+    </p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Table List</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover row-select" id="dataTable">
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    const page_type = "list";
+    const api_urls = {
+        "table_list": "{% url 'apps:table:api:v1:table-list-create' %}",
+    }
+    const table_add_url = "{% url 'admin:admin_table:table_add' %}";
+</script>
+
+<!-- Table JS -->
+<script type="module" src="{% static 'admin_table/js/table.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

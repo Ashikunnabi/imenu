@@ -1,23 +1,26 @@
+import { TableCode } from "./table_code.js";
+import { TableDocument } from "./table_document.js";
+
 /*
 * =============================================================================
-*                                   MENU TYPE
+*                                   PRODUCT
 * =============================================================================
 **/
 
-class MenuType {
+class Table {
     /*
     * =========================================================================
     *                       Active sidebar option
     * =========================================================================
     **/
     select_sidebar_option = () => {
-        $('#sidebar_option_menu_a').click();
-        $('#sidebar_option_menu_type').addClass('active');
+        $('#sidebar_option_table_a').click();
+        $('#sidebar_option_table').addClass('active');
     };
 
     /*
     * =========================================================================
-    *                       Product in Datatable
+    *                       Table in Datatable
     * =========================================================================
     **/
     list = () => {
@@ -33,19 +36,19 @@ class MenuType {
                 {
                     text: 'Add',
                     attr: {
-                        title: 'Add menu type',
-                        id: 'addMenuTypeButton',
+                        title: 'Add table',
+                        id: 'addTableButton',
                         class: 'btn btn-success'
                     },
                     action: function (e, dt, node, config) {
-                        window.location = menu_type_add_url;
+                        window.location = table_add_url;
                     }
                 },
                 {
                     text: 'Delete',
                     attr: {
-                        title: 'Delete menu type',
-                        id: 'deleteMenuTypeButton',
+                        title: 'Delete table',
+                        id: 'deleteTableButton',
                         class: 'btn btn-danger'
                     },
                     action: function (e, dt, node, config) {
@@ -67,12 +70,12 @@ class MenuType {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_type_list"] + data[0].uuid + '/',
+                                    url: api_urls["table_list"] + data[0].uuid + '/',
                                     type: "DELETE",
                                     success: function (response) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Menu type has been deleted.',
+                                            'Table has been deleted.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -91,9 +94,9 @@ class MenuType {
                 'csv',
                 'print',
             ],
-            "lengthMenu": [10, 25, 50, 75, 100],
+            "lengthTable": [10, 25, 50, 75, 100],
             "ajax": {
-                'url': api_urls["menu_type_list"],
+                'url': api_urls["table_list"],
                 'type': 'GET',
                 'error': function (x, status, error) {
                     console.log(x, status, error)
@@ -105,7 +108,10 @@ class MenuType {
             "columns": [
                 { "title": "SL", "data": "" },
                 { "title": "Name", "data": "name" },
-                { "title": "Is Active", "data": "is_active" },
+                { "title": "Type", "data": "type.name" },
+                { "title": "End At", "data": "end_at" },
+                { "title": "Start At", "data": "start_at" },
+                { "title": "Status", "data": "is_active" },
             ],
             "columnDefs": [
                 {
@@ -115,7 +121,7 @@ class MenuType {
                     }
                 },
                 {
-                    "targets": [2],
+                    "targets": [5],
                     "visible": true,
                     "searchable": true,
                     "render": function (data, type, row, meta) {
@@ -141,41 +147,77 @@ class MenuType {
         // double click row will redirect to edit selected row
         $('#dataTable tbody').on('dblclick', 'tr', function () {
             let data = table.row(this).data();
-            // self.edit_form_value_set(table, data.uuid);
             window.location = 'edit/' + data.uuid;
         });
     };
 
     /*
     * =========================================================================
-    *                       Menu add
+    *                       MENU TYPE SEARCH
+    * =========================================================================
+    **/
+    type_search = (default_value = null) => {
+        $("#type_uuid").select2({
+            // dropdownParent: $("#pos_section"),
+            allowClear: true,
+            placeholder: "Select table type",
+            minimumInputLength: 3,
+            ajax: {
+                url: api_urls["table_type_list"],
+                dataType: 'json',
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    let results = []
+                    $.each(data.data, function (i, v) {
+                        results.push({
+                            id: v.uuid,
+                            text: `${v.name}`,
+                            other: v
+                        })
+                    })
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+
+        if (default_value) {
+            let newOption = new Option(default_value.text, default_value.id, true, true);
+            $('#type_uuid').append(newOption).trigger('change');
+        }
+    }
+
+    /*
+    * =========================================================================
+    *                       Table add
     * =========================================================================
     **/
 
     add = () => {
-        // add menu
-        $(document).on('submit', '#menu_type_add', function (e) {
+        // add table
+        $(document).on('submit', '#table_add', function (e) {
             e.preventDefault();
-            const menu_type_add_form = $('#menu_type_add').parsley();
-            let menu_type_add_form_data = new FormData($('#menu_type_add')[0]);
+            const table_add_form = $('#table_add').parsley();
+            let table_add_form_data = new FormData($('#table_add')[0]);
 
 
-            if (menu_type_add_form.isValid()) {
+            if (table_add_form.isValid()) {
                 // is_active value set
-                // if (menu_type_add_form_data.has('image')) ($("input[name='image']").val() === '') ? menu_type_add_form_data.delete('image') : '';
-                if (!menu_type_add_form_data.has('is_active')) menu_type_add_form_data.append('is_active', 0);
+                // if (table_add_form_data.has('image')) ($("input[name='image']").val() === '') ? table_add_form_data.delete('image') : '';
+                if (table_add_form_data.has('start_at')) table_add_form_data.append('start_at', moment($("#start_at")).format());
+                if (table_add_form_data.has('end_at')) table_add_form_data.append('end_at', moment($("#end_at")).format());
+                if (!table_add_form_data.has('is_active')) table_add_form_data.append('is_active', 0);
                 // submit an ajax request to the api endpoint
                 $.ajax({
-                    url: api_urls["menu_type_list"],
+                    url: api_urls["table_list"],
                     type: "POST",
-                    data: JSON.stringify({
-                        "name": $('#name').val(),
-                        "is_active": $('#is_active').is(":checked"),
-                    }),
-                    dataType: 'json',
-                    contentType: "application/json",
+                    data: table_add_form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (resp) {
-                        window.location.href = menu_type_list_url;
+                        window.location.href = table_list_url;
                     },
                     error: function (response) {
                         $.each(response.responseJSON.error, function (i, v) {
@@ -189,24 +231,38 @@ class MenuType {
 
     /*
     * =========================================================================
-    *                       Product edit form setup
+    *                       Table edit form setup
     * =========================================================================
     **/
 
     edit_form_value_set = () => {
-        // edit product form value setup
+        let self = this
+        // edit table form value setup
         $.ajax({
-            url: `${api_urls["menu_type_list"]}${uuid}/`,
+            url: `${api_urls["table_list"]}${uuid}/`,
             type: "get",
             success: function (response) {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
                         if (key === 'is_active') (value === true) ? $('input[name=is_active]').click() : "";
+                        else if (key === 'start_at') $('[name=' + key + ']', form).val(`${moment(value).format('YYYY-MM-DD')}`);
+                        else if (key === 'end_at') $('[name=' + key + ']', form).val(`${moment(value).format('YYYY-MM-DD')}`);
                         else $('[name=' + key + ']', form).val(value);
                     });
                 }
 
-                populate($('#menu_type_edit'), response.data);
+                populate($('#table_edit'), response.data);
+
+                // Select2 type value set
+                if (response.data.type) {
+                    let default_value = {
+                        "id": response.data.type.uuid,
+                        "text": response.data.type.name,
+                    }
+                    self.type_search(default_value = default_value);
+                } else {
+                    self.type_search();
+                }
             },
             error: function (response) {
                 $.each(response.responseJSON.error, function (i, v) {
@@ -218,30 +274,30 @@ class MenuType {
 
     /*
     * =========================================================================
-    *                       Menu type edit
+    *                       Table edit
     * =========================================================================
     **/
 
     edit = () => {
-        // edit menu
-        $(document).on('submit', '#menu_type_edit', function (e) {
+        // edit table
+        $(document).on('submit', '#table_edit', function (e) {
             e.preventDefault();
-            const menu_type_edit_form = $('#menu_type_edit').parsley();
-            let menu_type_edit_form_data = new FormData($('#menu_type_edit')[0]);
+            const table_edit_form = $('#table_edit').parsley();
+            let table_edit_form_data = new FormData($('#table_edit')[0]);
 
-            if (menu_type_edit_form.isValid()) {
-                if (!menu_type_edit_form_data.has('is_active')) menu_type_edit_form_data.append('is_active', 0);
+            if (table_edit_form.isValid()) {
+                if (table_edit_form_data.has('start_at')) table_edit_form_data.append('start_at', moment($("#start_at")).format());
+                if (table_edit_form_data.has('end_at')) table_edit_form_data.append('end_at', moment($("#end_at")).format());
+                if (!table_edit_form_data.has('is_active')) table_edit_form_data.append('is_active', 0);
 
                 // submit an ajax request to the api endpoint
                 $.ajax({
-                    url: api_urls["menu_type_list"] + uuid + '/',
+                    url: api_urls["table_list"] + uuid + '/',
                     type: "PATCH",
-                    data: JSON.stringify({
-                        "name": $('#name').val(),
-                        "is_active": $('#is_active').is(":checked"),
-                    }),
-                    dataType: 'json',
-                    contentType: "application/json",
+                    data: table_edit_form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         notify("Success", 'success')
                     },
@@ -262,11 +318,13 @@ class MenuType {
    **/
 
     main = () => {
-        this.select_sidebar_option()
-        this.list();
+        // call this function to execute all operations of this class
+        this.select_sidebar_option();
+        if (page_type === "list") this.list();
         if (page_type === "add") {
-        this.add();
-        }
+            this.add();
+            this.type_search();
+        };
         if (page_type === "edit") {
             this.edit_form_value_set();
             this.edit();
@@ -275,4 +333,7 @@ class MenuType {
 }
 
 
-new MenuType().main();
+
+new Table().main();
+new TableCode().main();
+new TableDocument().main();

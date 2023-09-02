@@ -265,6 +265,30 @@
     </li>
     {% endif %}
 
+    {% if "table.view_table" in CURRENT_USER_PERMISSIONS %}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+           id="sidebar_option_table_a"
+           data-target="#sidebar_option_table_options"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-hamburger"></i>
+            <span>Table</span>
+        </a>
+        <div id="sidebar_option_table_options" class="collapse" aria-labelledby="headingTwo"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Control Table:</h6>
+                {% if "table.view_tabletype" in CURRENT_USER_PERMISSIONS %}
+                    <a class="collapse-item" href="{% url 'admin:admin_table:table_type_list' %}" id="sidebar_option_table_type">Table Type</a>
+                {% endif %}
+                {% if "table.view_table" in CURRENT_USER_PERMISSIONS %}
+                    <a class="collapse-item" href="{% url 'admin:admin_table:table_list' %}" id="sidebar_option_table">Table</a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
     {% if "tab_others" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse"

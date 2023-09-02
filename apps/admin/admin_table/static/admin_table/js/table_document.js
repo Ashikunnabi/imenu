@@ -1,20 +1,20 @@
 /*
 * =============================================================================
-*                                   MENU ITEM
+*                                   PRODUCT DOCUMENT
 * =============================================================================
 **/
 
-export class MenuItem {
+export class TableDocument {
 
     /*
     * =========================================================================
-    *                       MenuItem in Datatable
+    *                       Table in Datatable
     * =========================================================================
     **/
     list = () => {
         let self = this;
 
-        let table = $('#dataTableMenuItem').DataTable({
+        let table = $('#dataTableTableDocument').DataTable({
             "processing": true,
             "serverSide": true,
             "bDestroy": true,
@@ -24,44 +24,35 @@ export class MenuItem {
                 {
                     text: 'Add',
                     attr: {
-                        title: 'Add menu item',
-                        id: 'addMenuItemButton',
+                        title: 'Add table',
+                        id: 'addTableButton',
                         class: 'btn btn-success'
                     },
                     action: function (e, dt, node, config) {
                         Swal.fire({
-                            title: 'Add Item',
+                            title: 'Add Table Document',
                             html: `
-                            <form id="menu_item_add" data-parsley-validate>
+                            <form id="table_code_add" data-parsley-validate>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="add__menu_item__uuid" class="font-weight-bold">Item: <span class="text-danger">*</span></label>
+                                        <label for="add_document" class="font-weight-bold">Document: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <select class="form-control" id="add__menu_item__uuid" name="add__menu_item__uuid" required></select>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="add__menu_item__start_at" class="font-weight-bold">Start At: <span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input type="date" class="form-control font-weight-bold" id="add__menu_item__start_at" name="add__menu_item__start_at" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_document" name="document" data-parsley-maxlength="50"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="add__menu_item__end_at" class="font-weight-bold">End At: <span class="text-danger">*</span></label>
+                                        <label for="add_stock" class="font-weight-bold">Stock: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="date" class="form-control font-weight-bold" id="add__menu_item__end_at" name="add__menu_item__end_at" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_stock" name="stock" data-parsley-maxlength="50"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
-                            </form>
+                            </form>                            
                             `,
                             icon: '',
                             showCancelButton: true,
@@ -71,19 +62,18 @@ export class MenuItem {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_item_list"],
+                                    url: api_urls["table_document_list"],
                                     data: JSON.stringify({
-                                        "menu_uuid": uuid,
-                                        "item_uuid": $("#add__menu_item__uuid").val(),
-                                        "start_at": moment($("#add__menu_item__start_at").val()).format(),
-                                        "end_at": moment($("#add__menu_item__end_at").val()).format(),
+                                        "table_uuid": uuid,
+                                        "document_uuid": $("#add_document").val(),
+                                        "stock": $("#add_stock").val(),
                                     }),
                                     type: "POST",
                                     contentType: "application/json",
                                     success: function (response) {
                                         Swal.fire(
                                             'Success!',
-                                            'Item has been added.',
+                                            'Document has been added.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -96,15 +86,13 @@ export class MenuItem {
                                 });
                             }
                         })
-
-                        self.item_search();
                     }
                 },
                 {
                     text: 'Delete',
                     attr: {
-                        title: 'Delete Item',
-                        id: 'deleteMenuItemButton',
+                        title: 'Delete document',
+                        id: 'deleteTableDocumentButton',
                         class: 'btn btn-danger'
                     },
                     action: function (e, dt, node, config) {
@@ -126,12 +114,12 @@ export class MenuItem {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_item_list"] + data[0].uuid + '/',
+                                    url: api_urls["table_document_list"] + data[0].uuid + '/',
                                     type: "DELETE",
                                     success: function (response) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Item has been deleted from the menu.',
+                                            'Document has been deleted.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -152,7 +140,7 @@ export class MenuItem {
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
-                'url': api_urls["menu_item_list"],
+                'url': api_urls["table_document_list"],
                 'type': 'GET',
                 'error': function (x, status, error) {
                     console.log(x, status, error)
@@ -163,9 +151,8 @@ export class MenuItem {
             },
             "columns": [
                 { "title": "SL", "data": "" },
-                { "title": "Item", "data": "item.name" },
-                { "title": "Start At", "data": "start_at" },
-                { "title": "End At", "data": "end_at" },
+                { "title": "Type", "data": "type" },
+                { "title": "Document", "data": "document.path" },
             ],
             "columnDefs": [
                 {
@@ -175,22 +162,28 @@ export class MenuItem {
                     }
                 },
                 {
-                    targets: 2,
+                    targets: 1,
                     render: function (data, type, row, meta) {
-                        return moment(data).format('LLL')
+                        return data.toUpperCase()
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 2,
                     render: function (data, type, row, meta) {
-                        return moment(data).format('LLL')
+                        if (!data) return
+                        let width = "100%";
+                        if (row.type === "qrcode") {
+                            width = "100px";
+                        }
+                        let html = `<img src="${data}" width="${width}">`
+                        return html
                     }
                 },
             ],
         });
 
         // Single click row select the row and mark a different color
-        $('#dataTableMenuItem tbody').on('click', 'tr', function () {
+        $('#dataTableTableDocument tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
             } else {
@@ -200,7 +193,7 @@ export class MenuItem {
         });
 
         // double click row will redirect to edit selected row
-        $('#dataTableMenuItem tbody').on('dblclick', 'tr', function () {
+        $('#dataTableTableDocument tbody').on('dblclick', 'tr', function () {
             let data = table.row(this).data();
             self.edit_form_value_set(table, data.uuid);
         });
@@ -208,58 +201,48 @@ export class MenuItem {
 
     /*
     * =========================================================================
-    *                       MenuItem edit form setup
+    *                       Table edit form setup
     * =========================================================================
     **/
 
     edit_form_value_set = (data_table, _uuid) => {
-        // edit product form value setup
-        let self = this
+        // edit table form value setup
         $.ajax({
-            url: `${api_urls["menu_item_list"]}${_uuid}/`,
+            url: `${api_urls["table_document_list"]}${_uuid}/`,
             type: "get",
             success: function (response) {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
-                        if (key === 'start_at') $('#edit__menu_item__start_at').val(moment(value).format('YYYY-MM-DD'));
-                        else if (key === 'end_at') $('#edit__menu_item__end_at').val(moment(value).format('YYYY-MM-DD'));
+                        if (key === 'is_active') (value === true) ? $('input[name=is_active]').click() : "";
+                        if (key === 'document') $('input[name=document]').val(value.uuid);
                         else $('[name=' + key + ']', form).val(value);
                     });
                 }
 
                 Swal.fire({
-                    title: 'Edit Item',
+                    title: 'Edit Table Document',
                     html: `
-                    <form id="menu_item_edit" data-parsley-validate>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__uuid" class="font-weight-bold">Item: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <select class="form-control" id="edit__menu_item__uuid" name="edit__menu_item__uuid" required></select>
-                            </div>
+                <form id="table_document_edit" data-parsley-validate>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="edit_document" class="font-weight-bold">Document: <span class="text-danger">*</span></label>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__start_at" class="font-weight-bold">Start At: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <input type="date" class="form-control font-weight-bold" id="edit__menu_item__start_at" name="edit__menu_item__start_at" data-parsley-maxlength="50"
-                                    placeholder="max 50 chars" required>
-                            </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control font-weight-bold" id="edit_document" name="document" data-parsley-maxlength="50"
+                                placeholder="max 50 chars" required>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__end_at" class="font-weight-bold">End At: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <input type="date" class="form-control font-weight-bold" id="edit__menu_item__end_at" name="edit__menu_item__end_at" data-parsley-maxlength="50"
-                                    placeholder="max 50 chars" required>
-                            </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="edit_stock" class="font-weight-bold">Stock: <span class="text-danger">*</span></label>
                         </div>
-                    </form>     
+                        <div class="col-8">
+                            <input type="text" class="form-control font-weight-bold" id="edit_stock" name="stock" data-parsley-maxlength="50"
+                                placeholder="max 50 chars" required>
+                        </div>
+                    </div>
+                </form>
                 `,
                     icon: '',
                     showCancelButton: true,
@@ -269,10 +252,10 @@ export class MenuItem {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `${api_urls["product_warehouse_list"]}${_uuid}/`,
+                            url: `${api_urls["table_document_list"]}${_uuid}/`,
                             data: JSON.stringify({
-                                "product_uuid": uuid,
-                                "warehouse_uuid": $("#edit_warehouse").val(),
+                                "table_uuid": uuid,
+                                "document_uuid": $("#edit_document").val(),
                                 "stock": $("#edit_stock").val(),
                             }),
                             type: "PUT",
@@ -280,7 +263,7 @@ export class MenuItem {
                             success: function (response) {
                                 Swal.fire(
                                     'Success!',
-                                    'Warehouse has been updated.',
+                                    'Document has been updated.',
                                     'success'
                                 );
                                 data_table.ajax.reload()
@@ -294,18 +277,7 @@ export class MenuItem {
                     }
                 })
 
-                populate($('#menu_item_edit'), response.data);
-
-                // Select2 item value set
-                if (response.data.item) {
-                    let default_value = {
-                        "id": response.data.item.uuid,
-                        "text": response.data.item.name,
-                    }
-                    self.item_search("edit__menu_item__uuid", default_value = default_value);
-                } else {
-                    self.item_search("edit__menu_item__uuid");
-                }
+                populate($('#table_document_edit'), response.data);
             },
             error: function (response) {
                 $.each(response.responseJSON.error, function (i, v) {
@@ -314,45 +286,6 @@ export class MenuItem {
             }
         });
     };
-    /*
-    * =========================================================================
-    *                       MENU ITEM SEARCH
-    * =========================================================================
-    **/
-    item_search = (element_id = "add__menu_item__uuid", default_value = null) => {
-        let dropdownParent = "#menu_item_add"
-        if (element_id == "edit__menu_item__uuid") dropdownParent = "#menu_item_edit";
-
-        $(`#${element_id}`).select2({
-            dropdownParent: $(dropdownParent),
-            allowClear: true,
-            placeholder: "Select menu item",
-            minimumInputLength: 3,
-            ajax: {
-                url: api_urls["product_list"],
-                dataType: 'json',
-                processResults: function (data) {
-                    // Transforms the top-level key of the response object from 'items' to 'results'
-                    let results = []
-                    $.each(data.data, function (i, v) {
-                        results.push({
-                            id: v.uuid,
-                            text: `${v.name}`,
-                            other: v
-                        })
-                    })
-                    return {
-                        results: results
-                    };
-                }
-            }
-        });
-
-        if (default_value) {
-            let newOption = new Option(default_value.text, default_value.id, true, true);
-            $(`#${element_id}`).append(newOption).trigger('change');
-        }
-    }
 
     /*
    * =========================================================================

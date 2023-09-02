@@ -11,8 +11,8 @@ class MenuType {
     * =========================================================================
     **/
     select_sidebar_option = () => {
-        $('#sidebar_option_menu_a').click();
-        $('#sidebar_option_menu_type').addClass('active');
+        $('#sidebar_option_table_a').click();
+        $('#sidebar_option_table_type').addClass('active');
     };
 
     /*
@@ -33,18 +33,18 @@ class MenuType {
                 {
                     text: 'Add',
                     attr: {
-                        title: 'Add menu type',
+                        title: 'Add table type',
                         id: 'addMenuTypeButton',
                         class: 'btn btn-success'
                     },
                     action: function (e, dt, node, config) {
-                        window.location = menu_type_add_url;
+                        window.location = table_type_add_url;
                     }
                 },
                 {
                     text: 'Delete',
                     attr: {
-                        title: 'Delete menu type',
+                        title: 'Delete table type',
                         id: 'deleteMenuTypeButton',
                         class: 'btn btn-danger'
                     },
@@ -67,7 +67,7 @@ class MenuType {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_type_list"] + data[0].uuid + '/',
+                                    url: api_urls["table_type_list"] + data[0].uuid + '/',
                                     type: "DELETE",
                                     success: function (response) {
                                         Swal.fire(
@@ -93,7 +93,7 @@ class MenuType {
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
-                'url': api_urls["menu_type_list"],
+                'url': api_urls["table_type_list"],
                 'type': 'GET',
                 'error': function (x, status, error) {
                     console.log(x, status, error)
@@ -153,20 +153,20 @@ class MenuType {
     **/
 
     add = () => {
-        // add menu
-        $(document).on('submit', '#menu_type_add', function (e) {
+        // add table
+        $(document).on('submit', '#table_type_add', function (e) {
             e.preventDefault();
-            const menu_type_add_form = $('#menu_type_add').parsley();
-            let menu_type_add_form_data = new FormData($('#menu_type_add')[0]);
+            const table_type_add_form = $('#table_type_add').parsley();
+            let table_type_add_form_data = new FormData($('#table_type_add')[0]);
 
 
-            if (menu_type_add_form.isValid()) {
+            if (table_type_add_form.isValid()) {
                 // is_active value set
-                // if (menu_type_add_form_data.has('image')) ($("input[name='image']").val() === '') ? menu_type_add_form_data.delete('image') : '';
-                if (!menu_type_add_form_data.has('is_active')) menu_type_add_form_data.append('is_active', 0);
+                // if (table_type_add_form_data.has('image')) ($("input[name='image']").val() === '') ? table_type_add_form_data.delete('image') : '';
+                if (!table_type_add_form_data.has('is_active')) table_type_add_form_data.append('is_active', 0);
                 // submit an ajax request to the api endpoint
                 $.ajax({
-                    url: api_urls["menu_type_list"],
+                    url: api_urls["table_type_list"],
                     type: "POST",
                     data: JSON.stringify({
                         "name": $('#name').val(),
@@ -175,7 +175,7 @@ class MenuType {
                     dataType: 'json',
                     contentType: "application/json",
                     success: function (resp) {
-                        window.location.href = menu_type_list_url;
+                        window.location.href = table_type_list_url;
                     },
                     error: function (response) {
                         $.each(response.responseJSON.error, function (i, v) {
@@ -196,7 +196,7 @@ class MenuType {
     edit_form_value_set = () => {
         // edit product form value setup
         $.ajax({
-            url: `${api_urls["menu_type_list"]}${uuid}/`,
+            url: `${api_urls["table_type_list"]}${uuid}/`,
             type: "get",
             success: function (response) {
                 function populate(form, data) {
@@ -206,7 +206,7 @@ class MenuType {
                     });
                 }
 
-                populate($('#menu_type_edit'), response.data);
+                populate($('#table_type_edit'), response.data);
             },
             error: function (response) {
                 $.each(response.responseJSON.error, function (i, v) {
@@ -223,18 +223,18 @@ class MenuType {
     **/
 
     edit = () => {
-        // edit menu
-        $(document).on('submit', '#menu_type_edit', function (e) {
+        // edit table
+        $(document).on('submit', '#table_type_edit', function (e) {
             e.preventDefault();
-            const menu_type_edit_form = $('#menu_type_edit').parsley();
-            let menu_type_edit_form_data = new FormData($('#menu_type_edit')[0]);
+            const table_type_edit_form = $('#table_type_edit').parsley();
+            let table_type_edit_form_data = new FormData($('#table_type_edit')[0]);
 
-            if (menu_type_edit_form.isValid()) {
-                if (!menu_type_edit_form_data.has('is_active')) menu_type_edit_form_data.append('is_active', 0);
+            if (table_type_edit_form.isValid()) {
+                if (!table_type_edit_form_data.has('is_active')) table_type_edit_form_data.append('is_active', 0);
 
                 // submit an ajax request to the api endpoint
                 $.ajax({
-                    url: api_urls["menu_type_list"] + uuid + '/',
+                    url: api_urls["table_type_list"] + uuid + '/',
                     type: "PATCH",
                     data: JSON.stringify({
                         "name": $('#name').val(),

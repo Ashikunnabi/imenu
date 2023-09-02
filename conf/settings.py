@@ -44,6 +44,7 @@ LOCAL_APPS = [
     "apps.send_email",
     "apps.user_panel",
     "apps.menu",
+    "apps.table",
     # "apps.shop",
     # admin
     "apps.admin.admin_base",
@@ -51,6 +52,7 @@ LOCAL_APPS = [
     "apps.admin.admin_rbac",
     "apps.admin.admin_inventory",
     "apps.admin.admin_menu",
+    "apps.admin.admin_table",
     # "apps.admin.admin_dealer",
     # "apps.admin.admin_order",
     # "apps.admin.admin_others",
@@ -270,11 +272,6 @@ EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = int(os.getenv("EMAIL_USE_TLS"))
-
-# Finale Inventory Configuration
-FINALE_URL = os.getenv("FINALE_URL")
-FINALE_USERNAME = os.getenv("FINALE_USERNAME")
-FINALE_PASSWORD = os.getenv("FINALE_PASSWORD")
 
 # File Encryption key!
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")

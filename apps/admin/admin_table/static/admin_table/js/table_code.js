@@ -1,20 +1,20 @@
 /*
 * =============================================================================
-*                                   MENU ITEM
+*                                   PRODUCT CODE
 * =============================================================================
 **/
 
-export class MenuItem {
+export class TableCode {
 
     /*
     * =========================================================================
-    *                       MenuItem in Datatable
+    *                       Table in Datatable
     * =========================================================================
     **/
     list = () => {
         let self = this;
 
-        let table = $('#dataTableMenuItem').DataTable({
+        let table = $('#dataTableTableCode').DataTable({
             "processing": true,
             "serverSide": true,
             "bDestroy": true,
@@ -24,44 +24,36 @@ export class MenuItem {
                 {
                     text: 'Add',
                     attr: {
-                        title: 'Add menu item',
-                        id: 'addMenuItemButton',
+                        title: 'Add table',
+                        id: 'addTableButton',
                         class: 'btn btn-success'
                     },
                     action: function (e, dt, node, config) {
                         Swal.fire({
-                            title: 'Add Item',
+                            title: 'Add Table Code',
                             html: `
-                            <form id="menu_item_add" data-parsley-validate>
+                            <form id="table_code_add" data-parsley-validate>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="add__menu_item__uuid" class="font-weight-bold">Item: <span class="text-danger">*</span></label>
+                                        <label for="type" class="font-weight-bold">Type: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <select class="form-control" id="add__menu_item__uuid" name="add__menu_item__uuid" required></select>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="add__menu_item__start_at" class="font-weight-bold">Start At: <span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-8">
-                                        <input type="date" class="form-control font-weight-bold" id="add__menu_item__start_at" name="add__menu_item__start_at" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_type" name="type" data-parsley-maxlength="50"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="add__menu_item__end_at" class="font-weight-bold">End At: <span class="text-danger">*</span></label>
+                                        <label for="value" class="font-weight-bold">Value: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="date" class="form-control font-weight-bold" id="add__menu_item__end_at" name="add__menu_item__end_at" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_value" name="value" data-parsley-maxlength="50"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
                             </form>
+                            
                             `,
                             icon: '',
                             showCancelButton: true,
@@ -71,19 +63,18 @@ export class MenuItem {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_item_list"],
+                                    url: api_urls["table_code_list"],
                                     data: JSON.stringify({
-                                        "menu_uuid": uuid,
-                                        "item_uuid": $("#add__menu_item__uuid").val(),
-                                        "start_at": moment($("#add__menu_item__start_at").val()).format(),
-                                        "end_at": moment($("#add__menu_item__end_at").val()).format(),
+                                        "table_uuid": uuid,
+                                        "type": $("#add_type").val(),
+                                        "value": $("#add_value").val(),
                                     }),
                                     type: "POST",
                                     contentType: "application/json",
                                     success: function (response) {
                                         Swal.fire(
                                             'Success!',
-                                            'Item has been added.',
+                                            'Code has been added.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -96,15 +87,13 @@ export class MenuItem {
                                 });
                             }
                         })
-
-                        self.item_search();
                     }
                 },
                 {
                     text: 'Delete',
                     attr: {
-                        title: 'Delete Item',
-                        id: 'deleteMenuItemButton',
+                        title: 'Delete table',
+                        id: 'deleteTableButton',
                         class: 'btn btn-danger'
                     },
                     action: function (e, dt, node, config) {
@@ -126,12 +115,12 @@ export class MenuItem {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
-                                    url: api_urls["menu_item_list"] + data[0].uuid + '/',
+                                    url: api_urls["table_code_list"] + data[0].uuid + '/',
                                     type: "DELETE",
                                     success: function (response) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Item has been deleted from the menu.',
+                                            'Code has been deleted.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -152,7 +141,7 @@ export class MenuItem {
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
-                'url': api_urls["menu_item_list"],
+                'url': api_urls["table_code_list"],
                 'type': 'GET',
                 'error': function (x, status, error) {
                     console.log(x, status, error)
@@ -163,9 +152,9 @@ export class MenuItem {
             },
             "columns": [
                 { "title": "SL", "data": "" },
-                { "title": "Item", "data": "item.name" },
-                { "title": "Start At", "data": "start_at" },
-                { "title": "End At", "data": "end_at" },
+                { "title": "Type", "data": "type" },
+                { "title": "Value", "data": "value" },
+                { "title": "QR Code", "data": "" },
             ],
             "columnDefs": [
                 {
@@ -175,22 +164,33 @@ export class MenuItem {
                     }
                 },
                 {
-                    targets: 2,
+                    targets: 1,
                     render: function (data, type, row, meta) {
-                        return moment(data).format('LLL')
+                        return data.toUpperCase()
                     }
                 },
                 {
                     targets: 3,
                     render: function (data, type, row, meta) {
-                        return moment(data).format('LLL')
+                        let qr_code_path = ""
+                        if (row.qr_code_path) {
+                            qr_code_path = `
+                            <a href="${row.qr_code_path}" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" target="_blank"><i class="fa fa-qrcode"></i></a>
+                            `
+                        }
+                        let html = `
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm generate_qr_code">Generate</a>
+                            ${qr_code_path}                            
+                        `
+                        return html
                     }
                 },
             ],
         });
+        self.table = table
 
         // Single click row select the row and mark a different color
-        $('#dataTableMenuItem tbody').on('click', 'tr', function () {
+        $('#dataTableTableCode tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
             } else {
@@ -200,7 +200,7 @@ export class MenuItem {
         });
 
         // double click row will redirect to edit selected row
-        $('#dataTableMenuItem tbody').on('dblclick', 'tr', function () {
+        $('#dataTableTableCode tbody').on('dblclick', 'tr', function () {
             let data = table.row(this).data();
             self.edit_form_value_set(table, data.uuid);
         });
@@ -208,58 +208,48 @@ export class MenuItem {
 
     /*
     * =========================================================================
-    *                       MenuItem edit form setup
+    *                       Table edit form setup
     * =========================================================================
     **/
 
     edit_form_value_set = (data_table, _uuid) => {
-        // edit product form value setup
-        let self = this
+        // edit table form value setup
         $.ajax({
-            url: `${api_urls["menu_item_list"]}${_uuid}/`,
+            url: `${api_urls["table_code_list"]}${_uuid}/`,
             type: "get",
             success: function (response) {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
-                        if (key === 'start_at') $('#edit__menu_item__start_at').val(moment(value).format('YYYY-MM-DD'));
-                        else if (key === 'end_at') $('#edit__menu_item__end_at').val(moment(value).format('YYYY-MM-DD'));
+                        if (key === 'is_active') (value === true) ? $('input[name=is_active]').click() : "";
                         else $('[name=' + key + ']', form).val(value);
                     });
                 }
 
                 Swal.fire({
-                    title: 'Edit Item',
+                    title: 'Edit Table Code',
                     html: `
-                    <form id="menu_item_edit" data-parsley-validate>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__uuid" class="font-weight-bold">Item: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <select class="form-control" id="edit__menu_item__uuid" name="edit__menu_item__uuid" required></select>
-                            </div>
+                <form id="table_code_edit" data-parsley-validate>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="type" class="font-weight-bold">Type: <span class="text-danger">*</span></label>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__start_at" class="font-weight-bold">Start At: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <input type="date" class="form-control font-weight-bold" id="edit__menu_item__start_at" name="edit__menu_item__start_at" data-parsley-maxlength="50"
-                                    placeholder="max 50 chars" required>
-                            </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control font-weight-bold" id="edit_type" name="type" data-parsley-maxlength="50"
+                                placeholder="max 50 chars" required>
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="edit__menu_item__end_at" class="font-weight-bold">End At: <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="col-8">
-                                <input type="date" class="form-control font-weight-bold" id="edit__menu_item__end_at" name="edit__menu_item__end_at" data-parsley-maxlength="50"
-                                    placeholder="max 50 chars" required>
-                            </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="value" class="font-weight-bold">Value: <span class="text-danger">*</span></label>
                         </div>
-                    </form>     
+                        <div class="col-8">
+                            <input type="text" class="form-control font-weight-bold" id="edit_value" name="value" data-parsley-maxlength="50"
+                                placeholder="max 50 chars" required>
+                        </div>
+                    </div>
+                </form>
+                
                 `,
                     icon: '',
                     showCancelButton: true,
@@ -269,18 +259,18 @@ export class MenuItem {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `${api_urls["product_warehouse_list"]}${_uuid}/`,
+                            url: `${api_urls["table_code_list"]}${_uuid}/`,
                             data: JSON.stringify({
-                                "product_uuid": uuid,
-                                "warehouse_uuid": $("#edit_warehouse").val(),
-                                "stock": $("#edit_stock").val(),
+                                "table_uuid": uuid,
+                                "type": $("#edit_type").val(),
+                                "value": $("#edit_value").val(),
                             }),
                             type: "PUT",
                             contentType: "application/json",
                             success: function (response) {
                                 Swal.fire(
                                     'Success!',
-                                    'Warehouse has been updated.',
+                                    'Code has been updated.',
                                     'success'
                                 );
                                 data_table.ajax.reload()
@@ -294,18 +284,7 @@ export class MenuItem {
                     }
                 })
 
-                populate($('#menu_item_edit'), response.data);
-
-                // Select2 item value set
-                if (response.data.item) {
-                    let default_value = {
-                        "id": response.data.item.uuid,
-                        "text": response.data.item.name,
-                    }
-                    self.item_search("edit__menu_item__uuid", default_value = default_value);
-                } else {
-                    self.item_search("edit__menu_item__uuid");
-                }
+                populate($('#table_code_edit'), response.data);
             },
             error: function (response) {
                 $.each(response.responseJSON.error, function (i, v) {
@@ -314,45 +293,67 @@ export class MenuItem {
             }
         });
     };
+
     /*
     * =========================================================================
-    *                       MENU ITEM SEARCH
+    *                       Generate QR code
     * =========================================================================
     **/
-    item_search = (element_id = "add__menu_item__uuid", default_value = null) => {
-        let dropdownParent = "#menu_item_add"
-        if (element_id == "edit__menu_item__uuid") dropdownParent = "#menu_item_edit";
 
-        $(`#${element_id}`).select2({
-            dropdownParent: $(dropdownParent),
-            allowClear: true,
-            placeholder: "Select menu item",
-            minimumInputLength: 3,
-            ajax: {
-                url: api_urls["product_list"],
-                dataType: 'json',
-                processResults: function (data) {
-                    // Transforms the top-level key of the response object from 'items' to 'results'
-                    let results = []
-                    $.each(data.data, function (i, v) {
-                        results.push({
-                            id: v.uuid,
-                            text: `${v.name}`,
-                            other: v
-                        })
-                    })
-                    return {
-                        results: results
-                    };
+    generate_qr_code = () => {
+        let self = this
+        $(document).on("click", ".generate_qr_code", function (e) {
+            let tr = $(this).parent().parent();
+            let data = self.table.row(tr).data();
+
+            Swal.fire({
+                title: 'Generate QR Code',
+                html: `
+                    <form id="add_table_code_qr_code" data-parsley-validate>
+                        <div class="row">
+                            <div class="col-2">
+                                <label for="value" class="font-weight-bold">Value: <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-10">
+                                <!--<textarea id="add_table_code_qr_code_value" cols="30" rows="10">${JSON.stringify(data.value, null, 2)}</textarea>-->
+                                <textarea id="add_table_code_qr_code_value" cols="30" rows="10">${data.value}</textarea>
+                            </div>
+                        </div>
+                    </form>            
+                `,
+                icon: '',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Save'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `${api_urls["table_code_list"]}${data.uuid}/create-qr-code/`,
+                        data: JSON.stringify({
+                            "data": $("#add_table_code_qr_code_value").val(),
+                        }),
+                        type: "POST",
+                        contentType: "application/json",
+                        success: function (response) {
+                            Swal.fire(
+                                'Success!',
+                                'QR Code has been generated.',
+                                'success'
+                            );
+                            self.table.ajax.reload()
+                        },
+                        error: function (response) {
+                            $.each(response.responseJSON.error, function (i, v) {
+                                notify(`${i.toUpperCase()} - ${v}`, 'error')
+                            })
+                        }
+                    });
                 }
-            }
-        });
+            })
 
-        if (default_value) {
-            let newOption = new Option(default_value.text, default_value.id, true, true);
-            $(`#${element_id}`).append(newOption).trigger('change');
-        }
-    }
+        })
+    };
 
     /*
    * =========================================================================
@@ -363,6 +364,7 @@ export class MenuItem {
     main = () => {
         if (page_type === "edit") {
             this.list();
+            this.generate_qr_code();
         }
     }
 }
