@@ -1,0 +1,40 @@
+import qrcode
+import time
+from pathlib import Path
+from apps.base.service import BaseModelService
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+from apps.inventory.services.document_service import DocumentService
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+
+class UploadDocumentService(BaseModelService):
+    model = None
+    search_keywords = []
+
+    def __init__(self, data=None, file_path=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.data = data
+        self.file_path = file_path
+
+    def get_document_service(self):
+        return DocumentService()
+
+    def save_file_in_storage(self, file):
+        file_name = file.name
+        file_content = file
+
+        if isinstance(file, InMemoryUploadedFile):
+            file_name = file.name
+            file_content = file_content.read()
+
+        file_path = f"{self.file_path}{file_name}"
+
+        # save file into Default Storage
+        final_path = default_storage.save(file_path, ContentFile(file_content))
+
+        # save data into Document model
+        document_service = self.get_document_service()
+        document = document_service.create_document(**{"path": final_path})
+        return document

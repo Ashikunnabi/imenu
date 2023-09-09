@@ -2,6 +2,9 @@ from apps.base.service import BaseModelService
 from apps.base.utils.basic import build_media_url
 from apps.document_generation.services.qr_code_service import QRCodeService
 from apps.inventory.constants import ProductDocumentTypes
+from apps.document_generation.services.upload_document_service import (
+    UploadDocumentService,
+)
 from apps.inventory.services.brand_service import BrandService
 from apps.inventory.services.document_service import DocumentService
 from apps.inventory.services.group_service import GroupService
@@ -17,6 +20,9 @@ class ProductService(BaseModelService):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def get_upload_document_service(self, file_path):
+        return UploadDocumentService(file_path=file_path)
 
     def get_brand_service(self):
         return BrandService()
@@ -45,9 +51,7 @@ class ProductService(BaseModelService):
                 m2m_data[m2m_key] = kwargs.pop(m2m_key)
 
         if "parent_uuid" in kwargs:
-            parent = self.read_by_uuid(
-                uuid_value=kwargs.pop("parent_uuid")
-            )
+            parent = self.read_by_uuid(uuid_value=kwargs.pop("parent_uuid"))
             kwargs["parent_id"] = parent.id
 
         if "brand_uuid" in kwargs:
@@ -124,7 +128,56 @@ class ProductService(BaseModelService):
                 document__name__startswith=pattern
             )
         if product_documents:
-            qr_code_file_path = product_documents.last().document.path
+            qr_code_file_path = product_documents.last().document.file.url
             qr_code_file_path = build_media_url(qr_code_file_path)
 
         return qr_code_file_path
+
+    def product_search_single_response(self, product):
+        data = {
+            "uuid": product.uuid,
+            "name": product.name,
+            "brand": product.brand,
+            "code": product.code,
+            "description": product.description,
+            "short_description": product.short_description,
+            "family": product.family,
+            "series": product.series,
+            "group": product.group,
+            "is_active": product.is_active,
+            "parent": self.product_search_single_response(product.parent)
+            if product.parent
+            else None,
+            "type": product.type,
+            "documents": product.documents,
+            "prices": product.prices,
+        }
+        return data
+
+    def product_search_list_response(self, queryset):
+        data = []
+        for product in queryset:
+            temp_dict = self.product_search_single_response(product)
+            data.append(temp_dict)
+        return data
+
+    def upload_document(self, *args, **kwargs):
+        product_uuid = kwargs["product_uuid"]
+        product = self.read_by_uuid(uuid_value=product_uuid)
+        file_path = f"products/{product_uuid}/"
+
+        upload_document_service = self.get_upload_document_service(file_path=file_path)
+        product_document_service = self.get_product_document_service()
+        document = upload_document_service.save_file_in_storage(file=kwargs["file"])
+
+        # save data into ProductDocument model
+        product_document_data = {
+            "product_id": product.id,
+            "document_id": document.id,
+            "sort_order": kwargs.get("sort_order", 0),
+        }
+        product_document = product_document_service.create_product_document(
+            **product_document_data
+        )
+
+        return product_document

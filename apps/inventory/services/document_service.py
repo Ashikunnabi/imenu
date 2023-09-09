@@ -26,7 +26,7 @@ class DocumentService(BaseModelService):
         path = Path(path)
         data = {
             "name": path.name,
-            "path": path,
+            "file": str(path),
             "extension": str(path.suffix),
             # "size": path.stat().st_size,  # byte
         }
@@ -35,7 +35,6 @@ class DocumentService(BaseModelService):
     def create_document(self, **kwargs):
         path = kwargs["path"]
         data = self.get_document_details_by_path(path=path)
-        print(data)
         return self.create(**data)
 
     def update_document(self, instance, **kwargs):

@@ -184,7 +184,7 @@ class ShopkeeperViewSet(ShopMixin, viewsets.ModelViewSet):
         )
 
 
-class ShopProductViewSet(ShopMixin, BaseGenericAPIView):
+class ShopProductViewSet(ShopMixin, viewsets.ModelViewSet):
     permission_classes = [AuthenticatedStaffOrReadOnly]
     pagination_class = LargeResultsSetPagination
     queryset = ShopProduct.objects.all()
@@ -282,15 +282,11 @@ class ShopProductViewSet(ShopMixin, BaseGenericAPIView):
             queryset = ShopProduct.objects.filter(
                 shop=shop,
                 product__is_active=True,
-                product__manufacturer__is_active=True,
-                product__category__is_active=True,
                 is_active=True,
             )
         else:
             queryset = ShopProduct.objects.filter(
                 product__is_active=True,
-                product__manufacturer__is_active=True,
-                product__category__is_active=True,
                 is_active=True,
             )
 
@@ -313,7 +309,7 @@ class ShopProductViewSet(ShopMixin, BaseGenericAPIView):
         return data
 
 
-class ShopOrderPOSViewSet(ShopMixin, BaseGenericAPIView):
+class ShopOrderPOSViewSet(ShopMixin, viewsets.ModelViewSet):
     permission_classes = [AuthenticatedStaffOrReadOnly]
     pagination_class = LargeResultsSetPagination
     queryset = ShopOrder.objects.all()
@@ -427,7 +423,7 @@ class ShopOrderPOSViewSet(ShopMixin, BaseGenericAPIView):
         return Response({"data": serializer.data}, status=status.HTTP_200_OK)
 
 
-class ShopOrderViewSet(ShopMixin, BaseGenericAPIView):
+class ShopOrderViewSet(ShopMixin, viewsets.ModelViewSet):
     permission_classes = [AuthenticatedStaffOrReadOnly]
     pagination_class = LargeResultsSetPagination
     queryset = ShopOrder.objects.all()

@@ -95,7 +95,6 @@ class DocumentInputSerializer(serializers.ModelSerializer):
 
 
 class DocumentOutputSerializer(serializers.ModelSerializer):
-    path = serializers.SerializerMethodField()
 
     class Meta:
         model = Document
@@ -105,12 +104,8 @@ class DocumentOutputSerializer(serializers.ModelSerializer):
             "is_encrypted",
             "is_active",
             "name",
-            "path",
+            "file",
         ]
-
-    def get_path(self, obj):
-        if obj.path:
-            return build_media_url(obj.path)
 
 
 class GroupInputSerializer(serializers.ModelSerializer):
@@ -217,6 +212,7 @@ class ProductDocumentOutputSerializer(serializers.ModelSerializer):
         fields = [
             "uuid",
             "type",
+            "sort_order",
             "document",
         ]
 
@@ -467,3 +463,24 @@ class ProductOutputSerializer(serializers.ModelSerializer):
     def get_parent(self, obj):
         if obj.parent:
             return self.__class__(obj.parent).data
+
+class ProductSearchOutputSerializer(serializers.Serializer):
+    brand = BrandOutputSerializer()
+    group = GroupOutputSerializer()
+    parent = serializers.DictField()
+    type = TypeOutputSerializer()
+    uuid = serializers.UUIDField()
+    code = serializers.CharField()
+    name = serializers.CharField()
+    description = serializers.CharField()
+    short_description = serializers.CharField()
+    family = serializers.CharField()
+    series = serializers.CharField()
+    is_active = serializers.BooleanField()
+    documents = ProductDocumentOutputSerializer(many=True)
+    prices = ProductPriceOutputSerializer(many=True)
+
+
+class ProductDocumentUploadInputSerializer(serializers.Serializer):
+    file = serializers.FileField()
+    sort_order = serializers.IntegerField()

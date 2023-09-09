@@ -45,7 +45,8 @@ LOCAL_APPS = [
     "apps.user_panel",
     "apps.menu",
     "apps.table",
-    # "apps.shop",
+    "apps.shop",
+    "apps.cart",
     # admin
     "apps.admin.admin_base",
     "apps.admin.admin_home",
@@ -60,7 +61,7 @@ LOCAL_APPS = [
     # "apps.admin.admin_user_panel",
     # "apps.admin.admin_pos",
     # "apps.admin.admin_por",
-    # "apps.admin.admin_shop",
+    "apps.admin.admin_shop",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

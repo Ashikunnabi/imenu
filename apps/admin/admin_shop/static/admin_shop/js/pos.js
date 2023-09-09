@@ -34,10 +34,11 @@ class POS {
         $.map(products, function (product, i) {
             $("#product_image").append(`
                 <div class="product" data-uuid=${product.uuid}
-                    title="${product.product_id}"><span class="stock">${product.stock}</span>
-                    <img src="${self.image_url_generator(product)}">
-                    <h4 class="price">$${product.retail_price}</h4>
-                    <p>${product.product_id}</p>
+                    title="${product.name}">
+                    <!-- <span class="stock">${product.stock}</span> -->
+                    <img src="${product.documents.length ? product.documents[0].document.path : ""}">
+                    <h4 class="price">${product.prices.length ? product.prices[0].price : "00.00"}</h4>
+                    <p>${product.name}</p>
                 </div>
             `)
         })

@@ -9,11 +9,11 @@ app_name = "v1"
 
 
 router = DefaultRouter()
-router.Register(r"shop", ShopViewSet, basename="shop")
-router.Register(r"shopkeeper", ShopkeeperViewSet, basename="shopkeeper")
-router.Register(r"shop-product", ShopProductViewSet, basename="shop-product")
-router.Register(r"shop-order", ShopOrderViewSet, basename="shop-order")
-router.Register(r"shop-order-pos", ShopOrderPOSViewSet, basename="shop-order-pos")
+router.register(r"shop", ShopViewSet, basename="shop")
+router.register(r"shopkeeper", ShopkeeperViewSet, basename="shopkeeper")
+router.register(r"shop-product", ShopProductViewSet, basename="shop-product")
+router.register(r"shop-order", ShopOrderViewSet, basename="shop-order")
+router.register(r"shop-order-pos", ShopOrderPOSViewSet, basename="shop-order-pos")
 
 urlpatterns = [
     path("", include(router.urls)),

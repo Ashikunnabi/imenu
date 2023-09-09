@@ -15,6 +15,7 @@ class ProductDocument(BaseModel):
     type = models.CharField(
         choices=ProductDocumentTypes.CHOICES, default=ProductDocumentTypes.IMAGE, max_length=50
     )
+    sort_order = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.product}"

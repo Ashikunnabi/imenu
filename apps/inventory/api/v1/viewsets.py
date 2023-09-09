@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.custom_viewset import (
     BaseCreateAPIView,
+    BaseListAPIView,
     BaseListCreateAPIView,
     BaseRetrieveUpdateDestroyAPIView,
 )
@@ -51,12 +52,14 @@ from .serializers import (
     ProductCodeQRCodeGenerateOutputSerializer,
     ProductDocumentInputSerializer,
     ProductDocumentOutputSerializer,
+    ProductDocumentUploadInputSerializer,
     ProductInputSerializer,
     ProductOutputSerializer,
     ProductPriceInputSerializer,
     ProductPriceOutputSerializer,
     ProductQRCodeGenerateInputSerializer,
     ProductQRCodeGenerateOutputSerializer,
+    ProductSearchOutputSerializer,
     ProductUnitInputSerializer,
     ProductUnitOutputSerializer,
     ProductVatInputSerializer,
@@ -1374,3 +1377,47 @@ class VatRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
             {"detail": "Vat deleted successfully"},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+class ProductDocumentUploadAPIView(BaseCreateAPIView):
+    service_class = ProductService
+    input_serializer_class = ProductDocumentUploadInputSerializer
+    output_serializer_class = ProductDocumentOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.get_input_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        validated_data["product_uuid"] = kwargs["product_uuid"]
+
+        service = self.service_class()
+        instance = service.upload_document(**validated_data)
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ProductSearchAPIView(BaseListAPIView):
+    service_class = ProductService
+    input_serializer_class = ProductInputSerializer
+    output_serializer_class = ProductSearchOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def list(self, request, *args, **kwargs):
+        service = self.service_class()
+        search = {
+            "search": request.GET.get("search[value]", request.GET.get("q", None))
+        }
+        queryset = service.list(**search)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            data = service.product_search_list_response(page)
+            serializer = self.get_output_serializer(data, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        data = service.product_search_list_response(queryset)
+        serializer = self.get_output_serializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

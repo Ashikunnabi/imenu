@@ -316,7 +316,7 @@
     </li>
     {% endif %}
 
-    {% if "tab_shop_management" in CURRENT_USER_PERMISSIONS %}
+    {% if "__shop.view_shop" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse"
            id="sidebar_option_shop_management_a"
@@ -329,7 +329,7 @@
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Shop Management:</h6>
-                {% if "sub_tab_others_product_images" in CURRENT_USER_PERMISSIONS %}
+                {% if "shop.view_shop" in CURRENT_USER_PERMISSIONS %}
                     <a class="collapse-item" href="{% url 'admin:admin_shop:shop_list' %}" id="sidebar_option_shop_management_shop">Shops</a>
                 {% endif %}
             </div>

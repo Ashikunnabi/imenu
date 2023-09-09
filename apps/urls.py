@@ -11,4 +11,6 @@ urlpatterns = [
     path("", include("apps.inventory.urls")),
     path("", include("apps.menu.urls")),
     path("", include("apps.table.urls")),
+    path("", include("apps.shop.urls")),
+    path("", include("apps.cart.urls")),
 ]
