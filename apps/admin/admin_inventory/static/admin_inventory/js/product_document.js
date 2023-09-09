@@ -152,6 +152,7 @@ export class ProductDocument {
                 { "title": "SL", "data": "" },
                 { "title": "Type", "data": "type" },
                 { "title": "Document", "data": "document.file" },
+                { "title": "View", "data": "document.file" },
                 { "title": "Sort Order", "data": "sort_order" },
             ],
             "columnDefs": [
@@ -172,10 +173,24 @@ export class ProductDocument {
                     render: function (data, type, row, meta) {
                         if (!data) return
                         let width = "100%";
+                        let height = "100%";
                         if (row.type === "qrcode") {
                             width = "100px";
+                            height = "100px";
                         }
-                        let html = `<img src="${data}" width="${width}">`
+                        if (row.type === "image") {
+                            width = "300px";
+                            height = "300px";
+                        }
+                        let html = `<img src="${data}" width="${width}" height="${height}">`
+                        return html
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, row, meta) {
+                        if (!data) return
+                        let html = `<a href="${data}" target="_blank">View File</a>`
                         return html
                     }
                 },

@@ -1,12 +1,13 @@
-import qrcode
 import time
 from pathlib import Path
-from apps.base.service import BaseModelService
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
+import qrcode
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+
+from apps.base.service import BaseModelService
 from apps.inventory.services.document_service import DocumentService
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class UploadDocumentService(BaseModelService):
@@ -25,7 +26,9 @@ class UploadDocumentService(BaseModelService):
         file_name = file.name
         file_content = file
 
-        if isinstance(file, InMemoryUploadedFile):
+        if (isinstance(file, InMemoryUploadedFile) or
+            isinstance(file, TemporaryUploadedFile)
+        ):
             file_name = file.name
             file_content = file_content.read()
 

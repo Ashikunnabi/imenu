@@ -149,7 +149,7 @@ class ProductService(BaseModelService):
             if product.parent
             else None,
             "type": product.type,
-            "documents": product.documents,
+            "documents": product.documents.all().order_by("sort_order"),
             "prices": product.prices,
         }
         return data

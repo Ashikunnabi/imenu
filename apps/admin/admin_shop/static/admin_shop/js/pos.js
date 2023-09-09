@@ -28,6 +28,7 @@ class POS {
             product.image ? '/media/' + product.image : url
         return url;
     }
+
     set_products = (products) => {
         let self = this
         $("#product_image").html("")
@@ -36,7 +37,7 @@ class POS {
                 <div class="product" data-uuid=${product.uuid}
                     title="${product.name}">
                     <!-- <span class="stock">${product.stock}</span> -->
-                    <img src="${product.documents.length ? product.documents[0].document.path : ""}">
+                    <img src="${product.documents.length ? product.documents[0].document.file : ""}">
                     <h4 class="price">${product.prices.length ? product.prices[0].price : "00.00"}</h4>
                     <p>${product.name}</p>
                 </div>
