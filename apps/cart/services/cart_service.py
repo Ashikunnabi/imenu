@@ -1,6 +1,7 @@
 import decimal
 from django.db.models import Sum
 from apps.base.service import BaseModelService
+from apps.table.services.table_service import TableService
 
 from ..models.cart import Cart
 from .cart_line_service import CartLineService
@@ -17,6 +18,9 @@ class CartService(BaseModelService):
     def get_cart_line_service(self):
         return CartLineService()
 
+    def get_table_service(self):
+        return TableService()
+
     def validated_data(self, **kwargs):
         m2m_data = {}
         m2m_keys = ["permissions", "users"]
@@ -31,20 +35,22 @@ class CartService(BaseModelService):
             )
             kwargs["table_id"] = table.id
 
+        # Default price
+        kwargs["total_price_in_vat"] = decimal.Decimal("00.00")
+        kwargs["total_price_ex_vat"] = decimal.Decimal("00.00")
+
         return kwargs, m2m_data
 
     def create_cart(self, **kwargs):
         data, m2m_data = self.validated_data(**kwargs)
-
-        # check object already exists
-        self.does_object_already_exists(**data)
+        lines = data.pop("lines", [])
 
         cart = self.create(**data)
-        # cart line create
 
-        for line in data.get("lines", []):
+        # cart line create
+        for line in lines:
             line["cart_id"] = cart.id
-            self.cart_line_service.create(**line)
+            self.cart_line_service.create_cart_line(**line)
 
         self.calculate_price(cart=cart)
 
@@ -63,7 +69,7 @@ class CartService(BaseModelService):
             line.total_price_in_vat = decimal.Decimal(line.quantity) * line.price_in_vat
             line.save()
 
-        cart = cart.refresh_from_db()
+        cart.refresh_from_db()
         lines = cart.lines.all()
         cart.total_price_ex_vat = lines.aggregate(sum=Sum("total_price_ex_vat")).get(
             "sum"

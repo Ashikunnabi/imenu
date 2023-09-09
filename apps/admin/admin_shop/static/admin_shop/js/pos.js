@@ -108,19 +108,19 @@ class POS {
     *                       SET CART
     * =========================================================================
     **/
-    set_cart = (products) => {
+    set_cart = (lines) => {
         let self = this
         $("#cart").html("")
-        $.map(products, function (product, i) {
+        $.map(lines, function (line, i) {
             $("#cart").append(`
                 <tr>
-                    <td class="product-name">${product.product_id}</td>
+                    <td class="product-name">${line.product.name}</td>
                     <td class="product-quantity">
-                        <input type="number" value="${product.quantity}" class="cart_product_quantity" id="cart_product_quantity_${product.product_uuid}">
+                        <input type="number" value="${line.quantity}" class="cart_product_quantity" id="cart_line_uuid${line.uuid}">
                     </td>
-                    <td>${product.unit_price}</td>
-                    <td>${product.price}</td>
-                    <td><i class="fas fa-trash cart_product_delete" style="color: red;cursor:pointer" id="cart_product_delete_${product.product_uuid}"></i></td>
+                    <td>${line.price_ex_vat}</td>
+                    <td>${line.total_price_ex_vat}</td>
+                    <td><i class="fas fa-trash cart_product_delete" style="color: red;cursor:pointer" id="cart_line_delete_${line.uuid}"></i></td>
                 </tr>
             `)
         })
@@ -130,12 +130,12 @@ class POS {
     *                       SET CART SUMMARY
     * =========================================================================
     **/
-    set_cart_summary = (order) => {
+    set_cart_summary = (cart) => {
         let self = this
-        $(".cart_subtotal").text(order.sub_total)
-        $(".cart_total").text(order.total)
-        $(".cart_discount").val(order.discount)
-        $(".cart_tax").val(order.tax)
+        $(".cart_subtotal").text(cart.total_price_ex_vat)
+        $(".cart_total").text(cart.total_price_in_vat)
+        $(".cart_discount").val(cart.discount)
+        $(".cart_tax").val(cart.vat)
     }
 
     /*
@@ -145,13 +145,19 @@ class POS {
     **/
     fetch_cart = () => {
         let self = this
+        // Get data and check for expiration
+        let cart_uuid = getLocalWithExpiry('cart_uuid');
+        if (!cart_uuid) {
+            return
+        }
+
         $.ajax({
-            url: shop_order_pos_api_url,
+            url: `${cart_api_url}${cart_uuid}/` ,
             type: "GET",
             success: function (resp) {
-                self.cart = resp
-                let data = resp.data[0]
-                self.set_cart(data.order_lines)
+                let data = resp.data
+                self.cart = data
+                self.set_cart(data.lines)
                 self.set_cart_summary(data)
             },
             error: function (response) {
@@ -171,17 +177,23 @@ class POS {
         // on click product add to cart
         $(document).on("click", ".product", function (e) {
             let data = {}
-            data.type = "orderline"
-            data.product_uuid = $(this).attr("data-uuid")
-            data.quantity = parseInt($(`#cart_product_quantity_${$(this).attr("data-uuid")}`).val() || 0) + 1
+            data.table_uuid = "a66b45e6-f799-4c1d-a002-edd4823bcd1b"
+            data.lines = [{
+                "product_uuid": $(this).attr("data-uuid"),
+                "quantity": parseInt($(`#cart_line_uuid${$(this).attr("data-uuid")}`).val() || 0) + 1
+            }]
+
             $.ajax({
-                url: shop_order_pos_api_url,
+                url: cart_api_url,
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (resp) {
                     notify("Success", 'success', 5000);
+
+                    // Set data with a 60-minute expiration time
+                    setLocalWithExpiry('cart_uuid', resp.data.uuid, 60);
                     self.fetch_cart();
                 },
                 error: function (response) {
@@ -194,13 +206,15 @@ class POS {
         $(document).on("keyup", ".cart_product_quantity", function (e) {
             if (e.key === "Enter") {
                 e.preventDefault();
+
+                let line_uuid = $(this).attr("id").replace("cart_line_uuid", "")
+                let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
+
                 let data = {}
-                data.type = "orderline"
-                data.product_uuid = $(this).attr("id").replace("cart_product_quantity_", "")
-                data.quantity = parseInt($(`#cart_product_quantity_${data.product_uuid}`).val())
+                data.quantity = parseInt($(`#cart_line_uuid${line_uuid}`).val())
                 $.ajax({
-                    url: shop_order_pos_api_url,
-                    type: "POST",
+                    url: url,
+                    type: "PATCH",
                     data: JSON.stringify(data),
                     dataType: 'json',
                     contentType: "application/json",
@@ -219,7 +233,7 @@ class POS {
         $(document).on("click", ".cart_product_delete", function (e) {
             let data = {}
             data.type = "orderline"
-            data.product_uuid = $(this).attr("id").replace("cart_product_delete_", "")
+            data.product_uuid = $(this).attr("id").replace("cart_line_delete_", "")
             $.ajax({
                 url: shop_order_pos_api_url,
                 type: "DELETE",

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.custom_viewset import (
     BaseListCreateAPIView,
+    BaseRetrieveAPIView,
     BaseRetrieveUpdateDestroyAPIView,
 )
 
@@ -50,6 +51,18 @@ class CartListCreateAPIView(BaseListCreateAPIView):
         instance = service.create_cart(**serializer.validated_data)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class CartRetrieveAPIView(BaseRetrieveAPIView):
+    service_class = CartService
+    input_serializer_class = CartInputSerializer
+    output_serializer_class = CartOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CartLineListCreateAPIView(BaseListCreateAPIView):

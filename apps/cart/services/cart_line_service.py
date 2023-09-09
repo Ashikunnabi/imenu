@@ -29,6 +29,13 @@ class CartLineService(BaseModelService):
                 uuid_value=kwargs.pop("product_uuid")
             )
             kwargs["product_id"] = product.id
+        
+
+        # Default price
+        kwargs["price_in_vat"] = decimal.Decimal("00.00")
+        kwargs["price_ex_vat"] = decimal.Decimal("00.00")
+        kwargs["total_price_in_vat"] = decimal.Decimal("00.00")
+        kwargs["total_price_ex_vat"] = decimal.Decimal("00.00")
         return kwargs, m2m_data
 
     def create_cart_line(self, **kwargs):

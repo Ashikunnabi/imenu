@@ -4,6 +4,7 @@ from .viewsets import (
     CartLineListCreateAPIView,
     CartLineRetrieveUpdateDestroyAPIView,
     CartListCreateAPIView,
+    CartRetrieveAPIView,
 )
 
 app_name = "v1"
@@ -15,13 +16,18 @@ urlpatterns = [
         name="cart-list-create",
     ),
     path(
-        "carts/<uuid:cart_uuid>/",
+        "carts/<uuid:uuid>/",
+        CartRetrieveAPIView.as_view(),
+        name="cart-retrieve",
+    ),
+    path(
+        "carts/<uuid:cart_uuid>/lines/",
         CartLineListCreateAPIView.as_view(),
         name="cart-line-list-create",
     ),
     path(
         "carts/<uuid:cart_uuid>/lines/<uuid:uuid>/",
         CartLineRetrieveUpdateDestroyAPIView.as_view(),
-        name="cart-line-list-create",
+        name="cart-line-retrieve-update-destroy",
     ),
 ]

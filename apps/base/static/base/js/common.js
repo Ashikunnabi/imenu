@@ -213,3 +213,32 @@ class Search {
 }
 
 new Search().main();
+
+
+
+
+// LOCAL STORAGE DATA STORE
+// Function to set an item in LocalStorage with an expiration time
+function setLocalWithExpiry(key, value, minutes=60) {
+    const now = new Date();
+    const item = {
+        value: value,
+        expiry: now.getTime() + minutes * 60000, // Convert minutes to milliseconds
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+}
+
+// Function to get an item from LocalStorage and check its expiration
+function getLocalWithExpiry(key) {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+        return null; // Item doesn't exist in LocalStorage
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key); // Remove the item if it has expired
+        return null;
+    }
+    return item.value;
+}
