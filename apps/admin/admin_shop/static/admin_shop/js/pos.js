@@ -85,6 +85,33 @@ class POS {
         // })
     }
 
+    table_search = (default_value = null) => {
+        $("#table_uuid").select2({
+            // dropdownParent: $("#pos_section"),
+            allowClear: true,
+            placeholder: "Select Table",
+            minimumInputLength: 3,
+            ajax: {
+                url: table_api_url,
+                dataType: 'json',
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    let results = []
+                    $.each(data.data, function (i, v) {
+                        results.push({
+                            id: v.uuid,
+                            text: `${v.name}`,
+                            other: v
+                        })
+                    })
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+    }
+
     /*
     * =========================================================================
     *                       FETCH PRODUCTS
@@ -245,7 +272,7 @@ class POS {
 
         // on click product add to cart
         $(document).on("click", ".product", function (e) {
-            let table_uuid = "a66b45e6-f799-4c1d-a002-edd4823bcd1b"
+            let table_uuid = $("#table_uuid").val()
             let lines = [{
                 "product_uuid": $(this).attr("data-uuid"),
                 "quantity": parseInt($(`#cart_line_uuid${$(this).attr("data-uuid")}`).val() || 0) + 1
@@ -255,7 +282,7 @@ class POS {
                 let quantity = parseInt($(`#cart_line_uuid${cart_line_uuid}`).val() || 0) + 1
                 self.update_cart_line(cart_line_uuid, quantity)
             } else {
-                self.add_to_cart_line(table_uuid = table_uuid, lines = lines)
+                self.add_to_cart_line(table_uuid, lines)
             }
         })
 
@@ -506,6 +533,7 @@ class POS {
         // this.select_sidebar_option();
         let self = this
         self.refresh_products();
+        self.table_search();
         self.add_to_cart();
         self.fetch_order();
         self.fetch_cart();
