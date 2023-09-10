@@ -152,7 +152,7 @@ class POS {
         }
 
         $.ajax({
-            url: `${cart_api_url}${cart_uuid}/` ,
+            url: `${cart_api_url}${cart_uuid}/`,
             type: "GET",
             success: function (resp) {
                 let data = resp.data
@@ -166,40 +166,97 @@ class POS {
         });
     }
 
+
+
+    /*
+    * =========================================================================
+    *                       GET CART LINE UUID FROM PRODUCT UUID
+    * =========================================================================
+    **/
+    get_car_line_or_null = (product_uuid) => {
+        let self = this
+        let cart_line_uuid = null
+        $.map(self.cart.lines, function (v, i) {
+            if (product_uuid === v.product.uuid) {
+                cart_line_uuid = v.uuid
+                return cart_line_uuid
+            }
+        })
+        return cart_line_uuid
+    }
+
+
     /*
     * =========================================================================
     *                       ADD TO CART BY PRODUCT IMAGE CLICK
     * =========================================================================
     **/
+
+    add_to_cart_line = (table_uuid, lines) => {
+        let self = this
+        let data = {}
+        data.table_uuid = table_uuid
+        data.lines = lines
+
+        $.ajax({
+            url: cart_api_url,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
+
+                // Set data with a 60-minute expiration time
+                setLocalWithExpiry('cart_uuid', resp.data.uuid, 60);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+    update_cart_line = (line_uuid, quantity) => {
+        let self = this
+        let data = {}
+        let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
+        data.quantity = quantity
+
+        $.ajax({
+            url: url,
+            type: "PATCH",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+
     add_to_cart = () => {
         let self = this
 
         // on click product add to cart
         $(document).on("click", ".product", function (e) {
-            let data = {}
-            data.table_uuid = "a66b45e6-f799-4c1d-a002-edd4823bcd1b"
-            data.lines = [{
+            let table_uuid = "a66b45e6-f799-4c1d-a002-edd4823bcd1b"
+            let lines = [{
                 "product_uuid": $(this).attr("data-uuid"),
                 "quantity": parseInt($(`#cart_line_uuid${$(this).attr("data-uuid")}`).val() || 0) + 1
             }]
-
-            $.ajax({
-                url: cart_api_url,
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (resp) {
-                    notify("Success", 'success', 5000);
-
-                    // Set data with a 60-minute expiration time
-                    setLocalWithExpiry('cart_uuid', resp.data.uuid, 60);
-                    self.fetch_cart();
-                },
-                error: function (response) {
-                    notify(response.responseText, 'error', 5000);
-                }
-            });
+            let cart_line_uuid = self.get_car_line_or_null($(this).attr("data-uuid"))
+            if (cart_line_uuid) {
+                let quantity = parseInt($(`#cart_line_uuid${cart_line_uuid}`).val() || 0) + 1
+                self.update_cart_line(cart_line_uuid, quantity)
+            } else {
+                self.add_to_cart_line(table_uuid = table_uuid, lines = lines)
+            }
         })
 
         // on change on cart quantity 
@@ -208,36 +265,19 @@ class POS {
                 e.preventDefault();
 
                 let line_uuid = $(this).attr("id").replace("cart_line_uuid", "")
-                let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
-
-                let data = {}
-                data.quantity = parseInt($(`#cart_line_uuid${line_uuid}`).val())
-                $.ajax({
-                    url: url,
-                    type: "PATCH",
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    contentType: "application/json",
-                    success: function (resp) {
-                        notify("Success", 'success', 5000);
-                        self.fetch_cart();
-                    },
-                    error: function (response) {
-                        notify(response.responseText, 'error', 5000);
-                    }
-                });
+                let quantity = parseInt($(`#cart_line_uuid${line_uuid}`).val())
+                self.update_cart_line(line_uuid, quantity)
             }
         })
 
         // delete cart item 
         $(document).on("click", ".cart_product_delete", function (e) {
-            let data = {}
-            data.type = "orderline"
-            data.product_uuid = $(this).attr("id").replace("cart_line_delete_", "")
+            let line_uuid = $(this).attr("id").replace("cart_line_delete_", "")
+            let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
+
             $.ajax({
-                url: shop_order_pos_api_url,
+                url: url,
                 type: "DELETE",
-                data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (resp) {

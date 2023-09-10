@@ -2,8 +2,9 @@ from django.urls import include, path
 
 app_name = "apps"
 
+fe_urlpatterns = []
 
-urlpatterns = [
+dashboard_urlpatterns = [
     path("", include("apps.authentication.urls")),
     path("", include("apps.base.urls")),
     path("", include("apps.rbac.urls")),
@@ -14,3 +15,5 @@ urlpatterns = [
     path("", include("apps.shop.urls")),
     path("", include("apps.cart.urls")),
 ]
+
+urlpatterns = fe_urlpatterns + dashboard_urlpatterns

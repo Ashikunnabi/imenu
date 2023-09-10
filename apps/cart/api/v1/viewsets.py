@@ -123,3 +123,10 @@ class CartLineRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
         cart_service.calculate_price(cart=instance.cart)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        cart_service = self.cart_service_class()
+        cart_service.calculate_price(cart=instance.cart)
+        return Response(status=status.HTTP_204_NO_CONTENT)
