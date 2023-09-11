@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet"
+          href="{% static 'home/css/custom_page/brand_partner/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <!-- banner -->
+    <section class="banner_main">
+        <div class="container">
+            <h2>Welcome to GIS Wholesale Supplier Connect</h2>
+            <div class="two_column">
+                <p>
+                    This section of our site is intended to provide 1120
+                    Distributing’s partners with easy access to the latest
+                    information about GIS Wholesale, especially in this
+                    rapidly changing business environment. GIS Wholesale
+                    views the Manufacturer–Distributor relationship as a
+                    long-term partnership.
+                    <br>
+                    It is with this goal in mind, the company is highly
+                    selective when choosing new product lines in which to
+                    invest its resources. Numerous tools, forecasting sales,
+                    market research, dealer surveys, product quality test is
+                    conducted before a brand is deemed a perfect fit to
+                    complement GIS Wholesale’s existing Line Card offering.
+                </p>
+                <img src="https://1120distributing.com/wp-content/uploads/2020/12/AdobeStock_353944690.jpg">
+            </div>
+            <div class="two_column">
+                <img src="https://1120distributing.com/wp-content/uploads/2020/12/AdobeStock_130082675-1536x1130.jpg">
+                <p>
+                    This section of our site is intended to provide 1120
+                    Distributing’s partners with easy access to the latest
+                    information about GIS Wholesale, especially in this
+                    rapidly changing business environment. GIS Wholesale
+                    views the Manufacturer–Distributor relationship as a
+                    long-term partnership.
+                    <br>
+                    It is with this goal in mind, the company is highly
+                    selective when choosing new product lines in which to
+                    invest its resources. Numerous tools, forecasting sales,
+                    market research, dealer surveys, product quality test is
+                    conducted before a brand is deemed a perfect fit to
+                    complement GIS Wholesale’s existing Line Card offering.
+                </p>
+            </div>
+
+        </div>
+    </section>
+    </br>
+    </br>
+    </br>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

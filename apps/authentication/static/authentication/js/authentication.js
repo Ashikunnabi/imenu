@@ -34,11 +34,9 @@ class Login {
                         window.location.reload();
                     },
                     error: function (response) {
-                        if (response.status === 401) {
-                            $('.login-failed')
-                                .html(response.responseJSON.detail)
-                                .css('display', 'block')
-                        }
+                        $('.login-failed')
+                            .html(response.responseJSON.message)
+                            .css('display', 'block')
                     }
                 });
             }

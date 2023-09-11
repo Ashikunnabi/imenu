@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+
+    <!-- Start slider -->
+    {% include 'home/carousel.html' %}
+    <!-- / slider -->
+
+    <!-- Start Promo section -->
+    {% include 'home/promo.html' %}
+    <!-- / Promo section -->
+
+    <!-- banner section -->
+    {% include 'home/banner.html' with banner_id=1 %}
+    <!-- /banner section -->
+
+    <!-- Products section -->
+    {% include 'home/products.html' %}
+    <!-- / Products section -->
+
+    <!-- banner section -->
+    {% include 'home/banner.html' with banner_id=2 %}
+    <!-- /banner section -->
+
+    <!-- categories section -->
+    {% include 'home/category.html' %}
+    <!-- / categories section -->
+
+    <!-- popular section -->
+    {% include 'home/popular_category.html' %}
+    <!-- / popular section -->
+
+    <!-- banner section -->
+    {% include 'home/two_banner_row.html' %}
+    <!-- /banner section -->
+
+    <!-- Support section -->
+{#    {% include 'home/support.html' %}#}
+    <!-- / Support section -->
+
+    <!-- Testimonial -->
+{#    {% include 'home/testimonial.html' %}#}
+    <!-- / Testimonial -->
+
+    <!-- Latest Blog -->
+{#    {% include 'home/blog.html' %}#}
+    <!-- / Latest Blog -->
+
+    <!-- Latest Blog -->
+    {% include 'home/flyer.html' %}
+    <!-- / Latest Blog -->
+
+    <!-- Client Brand -->
+    {% include 'home/client_brand.html' %}
+    <!-- / Client Brand -->
+
+    <!-- Subscribe section -->
+{#    {% include 'home/subscribe.html' %}#}
+    <!-- / Subscribe section -->
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        const carousel_api_url = "{% url 'main:home:api:v1:carousel-list' %}";
+        const promo_section_api_url = "{% url 'main:home:api:v1:promo_section-list' %}";
+        const available_category_list_api_url = "{% url 'main:home:api:v1:available_category_list' %}";
+        const products_based_on_category_api_url = "{% url 'main:home:api:v1:products_based_on_category' %}";
+        const banner_api_url = "{% url 'main:home:api:v1:banner-list' %}";
+        const category_api_url = "{% url 'main:inventory:api:v1:product_category-list' %}";
+        const product_live_stock_api_url = "{% url 'main:inventory:api:v1:product-get-live-stock' %}";
+        const latest_product_api_url = "{% url 'main:home:api:v1:latest_products' %}";
+        const brand_images_api_url = "{% url 'main:home:api:v1:brand_images' %}";
+        const flyer_api_url = "{% url 'main:home:api:v1:flyer-list' %}";
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+        const cart_api_url = "{% url 'main:user_panel:api:v1:cart-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Carousel JS -->
+    <script src="{% static 'home/js/carousel.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Promo Section JS -->
+    <script src="{% static 'home/js/promo_section.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Product JS -->
+    <script src="{% static 'home/js/products.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Category JS -->
+    <script src="{% static 'home/js/category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Popular Category JS -->
+    <script src="{% static 'home/js/popular_category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Banner JS -->
+    <script src="{% static 'home/js/banner.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Brand JS -->
+    <script src="{% static 'home/js/brand.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Flyer JS -->
+    <script src="{% static 'home/js/flyer.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Order JS -->
+    <script src="{% static 'home/js/order.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}
+

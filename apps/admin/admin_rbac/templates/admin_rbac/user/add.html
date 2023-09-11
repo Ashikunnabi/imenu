@@ -33,7 +33,7 @@
                             <label for="name">Username: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="username" name="username"
                                 data-parsley-maxlength="256" placeholder="Enter username here (max 256 chars)."
-                                required>
+                                autocomplete="off" required>
                         </div>
 
                         <div class="form-group">
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label for="password">Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter password here." required>
+                                placeholder="Enter password here."  autocomplete="off" minlength="8" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                             <label for="phone">Phone: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
+                            <input type="number" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
                                 placeholder="Enter phone number here (max 12 chars)." required>
                         </div>
 
@@ -66,7 +66,7 @@
                             <label for="password1">Confirm Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password1" name="password1"
                                 placeholder="Retype password here." data-parsley-equalto="#password"
-                                data-parsley-trigger="change" required>
+                                data-parsley-trigger="change"  autocomplete="off" required>
                         </div>
                     </div>
                 </div>

@@ -38,6 +38,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.authentication",
     "apps.base",
+    "apps.home",
     "apps.document_generation",
     "apps.inventory",
     "apps.rbac",

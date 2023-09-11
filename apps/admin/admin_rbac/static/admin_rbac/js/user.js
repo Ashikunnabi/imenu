@@ -174,18 +174,33 @@ class User {
                 // submit an ajax request to the api endpoint
                 $.ajax({
                     url: user_api_url,
-                    headers: {"X-CSRFToken": csrf_token},
                     type: "POST",
+                    headers: {"X-CSRFToken": csrf_token},
                     data: user_add_form_data,
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (resp) {
-                        window.location.href = user_list_url;
+                        // Display a success message
+                        notify("User has been created successfully.", "success");
+
+                        // Delay the page refresh for 2 seconds (2000 milliseconds)
+                        setTimeout(function() {
+                            // Refresh the page
+                            // location.reload();
+                            window.location.href = user_list_url;
+                        }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
-                        console.log(response)
-                        notify(response.responseJSON.errors.message, 'error');
+                        let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
+                        }
                     }
                 });
             }
@@ -201,8 +216,8 @@ class User {
     edit_form_value_set = () => {
         // edit user form value setup
         $.ajax({
-            url: `${user_api_url}`,
             type: "get",
+            url: `${user_api_url}`,
             success: function (response) {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
@@ -277,10 +292,19 @@ class User {
                     contentType: false,
                     processData: false,
                     success: function (resp) {
-                        window.location.reload();
+                        // Display a success message
+                        notify("User has been updated successfully.", "success");
                     },
                     error: function (response) {
-                        notify(response.responseJSON.detail, 'error');
+                        let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
+                        }
                     }
                 });
             }

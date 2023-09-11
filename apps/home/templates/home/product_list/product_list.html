@@ -1,0 +1,491 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/css/product_list/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+
+    <!-- catg header banner section -->
+    <section id="aa-catg-head-banner" style="display: none">
+        <a href="#">
+            <img src=""
+                 alt="banner list page"
+                 width="100%"
+                 height="200"
+            >
+            <div class="aa-catg-head-banner-area">
+                <div class="container">
+                    <div class="aa-catg-head-banner-content">
+                        <h2></h2>
+                        <ol class="breadcrumb">
+{#                            <li><a href="index.html">Write your own text</a></li>#}
+                            <!-- <li><a href="index.html">Home</a></li>
+                            <li class="active">Women</li> -->
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </section>
+    <!-- / catg header banner section -->
+
+    <!-- product category -->
+    <section id="aa-product-category">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
+                    <div class="unauthorized_brand_message">
+                            <span>ATTENTION</span>
+                            <h4>You are not authorized to purchase this product due to vendor restrictions.</h4>
+                            <p>If you are an existing authorized dealer or need assistance reviewing the vendor guidelines please contact with your sales representative.</p>
+                            <a target="_blank">CLICK HERE TO APPLY FOR AUTHORIZATION</a>
+                    </div>
+                    <div class="aa-product-catg-content">
+                        <div class="aa-product-catg-head">
+                            <div class="aa-product-catg-head-left">
+                                <form action="" class="aa-sort-form" hidden>
+                                    <label for="">Sort by</label>
+                                    <select name="sort_by">
+                                        <option value="1" selected="Default">
+                                            Default
+                                        </option>
+                                        <option value="2">Name</option>
+{#                                        <option value="3">Price</option>#}
+                                        <option value="4">Date</option>
+                                    </select>
+                                </form>
+                                <form action="" class="aa-show-form">
+                                    <label for="">Show</label>
+                                    <select name="length">
+                                        <option value="12" selected="12">12
+                                        </option>
+                                        <option value="24">24</option>
+                                        <option value="36">36</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="aa-product-catg-head-right">
+                                <a id="grid-catg" href="#"><span
+                                        class="fa fa-th"></span></a>
+                                <a id="list-catg" href="#"><span
+                                        class="fa fa-list"></span></a>
+                            </div>
+                        </div>
+                        <div class="aa-product-catg-body">
+                            <ul class="aa-product-catg" id="product_list">
+                                <!-- start single product item -->
+{#                                <li>#}
+{#                                    <figure>#}
+{#                                        <!-- <a class="aa-product-img" href="#"><img src="img/women/girl-1.png" alt="polo shirt img"></a> -->#}
+{#                                        <a class="aa-product-img" href="#"><img#}
+{#                                                src="https://swall.teahub.io/photos/small/55-555475_full-hd-car-1080p.jpg"#}
+{#                                                alt="polo shirt img"#}
+{#                                                width="250" height="300"></a>#}
+{#                                        <a class="aa-add-card-btn"#}
+{#                                           href="#"><span#}
+{#                                                class="fa fa-cart-plus"></span>Add#}
+{#                                            To Cart</a>#}
+{#                                        <figcaption>#}
+{#                                            <h4 class="aa-product-title"><a#}
+{#                                                    href="#">This is Title</a>#}
+{#                                            </h4>#}
+{#                                            <span class="aa-product-price">$45.50</span><span#}
+{#                                                class="aa-product-price"><del>$65.50</del></span>#}
+{#                                            <p class="aa-product-descrip">Lorem#}
+{#                                                ipsum dolor sit amet,#}
+{#                                                consectetur adipisicing elit.#}
+{#                                                Numquam accusamus facere iusto,#}
+{#                                                autem soluta amet sapiente#}
+{#                                                ratione inventore nesciunt a,#}
+{#                                                maxime quasi consectetur, rerum#}
+{#                                                illum.</p>#}
+{#                                        </figcaption>#}
+{#                                    </figure>#}
+{#                                    <div class="aa-product-hvr-content">#}
+{#                                        <a href="#" data-toggle="tooltip"#}
+{#                                           data-placement="top"#}
+{#                                           title="Add to Wishlist"><span#}
+{#                                                class="fa fa-heart-o"></span></a>#}
+{#                                        <!--<a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>-->#}
+{#                                        <a href="#" data-toggle2="tooltip"#}
+{#                                           data-placement="top"#}
+{#                                           title="Quick View"#}
+{#                                           data-toggle="modal"#}
+{#                                           data-target="#quick-view-modal"><span#}
+{#                                                class="fa fa-search"></span></a>#}
+{#                                    </div>#}
+{#                                    <!-- product badge -->#}
+{#                                    <!--<span class="aa-badge aa-sale" href="#">SALE!</span>-->#}
+{#                                </li>#}
+                                <!-- start single product item -->
+                            </ul>
+                            <!-- quick view modal -->
+{#                            <div class="modal fade" id="quick-view-modal"#}
+{#                                 tabindex="-1" role="dialog"#}
+{#                                 aria-labelledby="myModalLabel"#}
+{#                                 aria-hidden="true">#}
+{#                                <div class="modal-dialog">#}
+{#                                    <div class="modal-content">#}
+{#                                        <div class="modal-body">#}
+{#                                            <button type="button" class="close"#}
+{#                                                    data-dismiss="modal"#}
+{#                                                    aria-hidden="true">&times;#}
+{#                                            </button>#}
+{#                                            <div class="row">#}
+{#                                                <!-- Modal view slider -->#}
+{#                                                <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#                                                    <div class="aa-product-view-slider">#}
+{#                                                        <div class="simpleLens-gallery-container"#}
+{#                                                             id="demo-1">#}
+{#                                                            <div class="simpleLens-container">#}
+{#                                                                <div class="simpleLens-big-image-container">#}
+{#                                                                    <a class="simpleLens-lens-image"#}
+{#                                                                       data-lens-image="img/view-slider/large/polo-shirt-1.png">#}
+{#                                                                        <img src="img/view-slider/medium/polo-shirt-1.png"#}
+{#                                                                             class="simpleLens-big-image">#}
+{#                                                                    </a>#}
+{#                                                                </div>#}
+{#                                                            </div>#}
+{#                                                            <div class="simpleLens-thumbnails-container">#}
+{#                                                                <a href="#"#}
+{#                                                                   class="simpleLens-thumbnail-wrapper"#}
+{#                                                                   data-lens-image="img/view-slider/large/polo-shirt-1.png"#}
+{#                                                                   data-big-image="img/view-slider/medium/polo-shirt-1.png">#}
+{#                                                                    <img src="img/view-slider/thumbnail/polo-shirt-1.png">#}
+{#                                                                </a>#}
+{#                                                                <a href="#"#}
+{#                                                                   class="simpleLens-thumbnail-wrapper"#}
+{#                                                                   data-lens-image="img/view-slider/large/polo-shirt-3.png"#}
+{#                                                                   data-big-image="img/view-slider/medium/polo-shirt-3.png">#}
+{#                                                                    <img src="img/view-slider/thumbnail/polo-shirt-3.png">#}
+{#                                                                </a>#}
+{##}
+{#                                                                <a href="#"#}
+{#                                                                   class="simpleLens-thumbnail-wrapper"#}
+{#                                                                   data-lens-image="img/view-slider/large/polo-shirt-4.png"#}
+{#                                                                   data-big-image="img/view-slider/medium/polo-shirt-4.png">#}
+{#                                                                    <img src="img/view-slider/thumbnail/polo-shirt-4.png">#}
+{#                                                                </a>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <!-- Modal view content -->#}
+{#                                                <div class="col-md-6 col-sm-6 col-xs-12">#}
+{#                                                    <div class="aa-product-view-content">#}
+{#                                                        <h3>T-Shirt</h3>#}
+{#                                                        <div class="aa-price-block">#}
+{#                                                            <span class="aa-product-view-price">$34.99</span>#}
+{#                                                            <p class="aa-product-avilability">#}
+{#                                                                Avilability:#}
+{#                                                                <span>In stock</span>#}
+{#                                                            </p>#}
+{#                                                        </div>#}
+{#                                                        <p>Lorem ipsum dolor#}
+{#                                                            sit amet,#}
+{#                                                            consectetur#}
+{#                                                            adipisicing elit.#}
+{#                                                            Officiis animi,#}
+{#                                                            veritatis quae#}
+{#                                                            repudiandae quod#}
+{#                                                            nulla porro quidem,#}
+{#                                                            itaque quis#}
+{#                                                            quaerat!</p>#}
+{#                                                        <h4>Size</h4>#}
+{#                                                        <div class="aa-prod-view-size">#}
+{#                                                            <a href="#">S</a>#}
+{#                                                            <a href="#">M</a>#}
+{#                                                            <a href="#">L</a>#}
+{#                                                            <a href="#">XL</a>#}
+{#                                                        </div>#}
+{#                                                        <div class="aa-prod-quantity">#}
+{#                                                            <form action="">#}
+{#                                                                <select name=""#}
+{#                                                                        id="">#}
+{#                                                                    <option value="0"#}
+{#                                                                            selected="1">#}
+{#                                                                        1#}
+{#                                                                    </option>#}
+{#                                                                    <option value="1">#}
+{#                                                                        2#}
+{#                                                                    </option>#}
+{#                                                                    <option value="2">#}
+{#                                                                        3#}
+{#                                                                    </option>#}
+{#                                                                    <option value="3">#}
+{#                                                                        4#}
+{#                                                                    </option>#}
+{#                                                                    <option value="4">#}
+{#                                                                        5#}
+{#                                                                    </option>#}
+{#                                                                    <option value="5">#}
+{#                                                                        6#}
+{#                                                                    </option>#}
+{#                                                                </select>#}
+{#                                                            </form>#}
+{#                                                            <p class="aa-prod-category">#}
+{#                                                                Category: <a#}
+{#                                                                    href="#">Polo#}
+{#                                                                T-Shirt</a>#}
+{#                                                            </p>#}
+{#                                                        </div>#}
+{#                                                        <div class="aa-prod-view-bottom">#}
+{#                                                            <a href="#"#}
+{#                                                               class="aa-add-to-cart-btn"><span#}
+{#                                                                    class="fa fa-cart-plus"></span>Add#}
+{#                                                                To Cart</a>#}
+{#                                                            <a href="#"#}
+{#                                                               class="aa-add-to-cart-btn">View#}
+{#                                                                Details</a>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div><!-- /.modal-content -->#}
+{#                                </div><!-- /.modal-dialog -->#}
+{#                            </div>#}
+                            <!-- / quick view modal -->
+                        </div>
+{#                        <div class="aa-product-catg-pagination">#}
+{#                            <nav>#}
+{#                                <ul class="pagination">#}
+{#                                    <li>#}
+{#                                        <a href="#" aria-label="Previous">#}
+{#                                            <span aria-hidden="true">&laquo;</span>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li><a href="#">1</a></li>#}
+{#                                    <li><a href="#">2</a></li>#}
+{#                                    <li><a href="#">3</a></li>#}
+{#                                    <li><a href="#">4</a></li>#}
+{#                                    <li><a href="#">5</a></li>#}
+{#                                    <li>#}
+{#                                        <a href="#" aria-label="Next">#}
+{#                                            <span aria-hidden="true">&raquo;</span>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </nav>#}
+{#                        </div>#}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination" id="pagination"></ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">
+                    <aside class="aa-sidebar">
+                        <!-- single sidebar -->
+                        <div class="aa-sidebar-widget">
+                            <h3>Category
+                            <span id="clear_category_selection"
+                                   style="float: right;
+                                   font-size: 10px;
+                                   cursor: pointer;
+                                    color: #ff4444"
+                            >Clear</span>
+                            </h3>
+                            <ul class="aa-catg-nav" id="sidebar_category">
+{#                                <li><a href="#">Car</a></li>#}
+{#                                <li><a href="">Bike</a></li>#}
+{#                                <li><a href="">Cycle</a></li>#}
+{#                                <li><a href="">Truck</a></li>#}
+{#                                <li><a href="">Sports Car</a></li>#}
+                            </ul>
+                        </div>
+                        <div class="aa-sidebar-widget">
+                            <h3>Brands
+                            <span id="clear_brand_selection"
+                                   style="float: right;
+                                   font-size: 10px;
+                                   cursor: pointer;
+                                   color: #ff4444"
+                            >Clear</span>
+                            </h3>
+                            <div class="tag-cloud">
+{#                                <a href="#">Fashion</a>#}
+{#                                <a href="#">Ecommerce</a>#}
+{#                                <a href="#">Shop</a>#}
+{#                                <a href="#">Hand Bag</a>#}
+{#                                <a href="#">Laptop</a>#}
+{#                                <a href="#">Head Phone</a>#}
+{#                                <a href="#">Pen Drive</a>#}
+                            </div>
+                        </div>
+
+                        <!-- single sidebar -->
+                        <div class="aa-sidebar-widget">
+                            <h3>Shop By Price</h3>
+                            <!-- price range -->
+                            <div class="aa-sidebar-price-range">
+                                <div action="">
+                                    <div id="skipstep"
+                                         class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                                    </div>
+                                    <span id="skip-value-lower"
+                                          class="example-val">30.00</span>
+                                    <span id="skip-value-upper"
+                                          class="example-val">100.00</span>
+                                    <button class="aa-filter-btn"
+                                            type="">Filter
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- single sidebar -->
+                        <!-- single sidebar -->
+{#                        <div class="aa-sidebar-widget">#}
+{#                            <h3>Shop By Color</h3>#}
+{#                            <div class="aa-color-tag">#}
+{#                                <a class="aa-color-green" href="#"></a>#}
+{#                                <a class="aa-color-yellow" href="#"></a>#}
+{#                                <a class="aa-color-pink" href="#"></a>#}
+{#                                <a class="aa-color-purple" href="#"></a>#}
+{#                                <a class="aa-color-blue" href="#"></a>#}
+{#                                <a class="aa-color-orange" href="#"></a>#}
+{#                                <a class="aa-color-gray" href="#"></a>#}
+{#                                <a class="aa-color-black" href="#"></a>#}
+{#                                <a class="aa-color-white" href="#"></a>#}
+{#                                <a class="aa-color-cyan" href="#"></a>#}
+{#                                <a class="aa-color-olive" href="#"></a>#}
+{#                                <a class="aa-color-orchid" href="#"></a>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <!-- single sidebar -->
+{#                        <div class="aa-sidebar-widget">#}
+{#                            <h3>Recently Views</h3>#}
+{#                            <div class="aa-recently-views">#}
+{#                                <ul>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-2.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-1.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-2.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <!-- single sidebar -->
+{#                        <div class="aa-sidebar-widget">#}
+{#                            <h3>Top Rated Products</h3>#}
+{#                            <div class="aa-recently-views">#}
+{#                                <ul>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-2.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-1.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#" class="aa-cartbox-img"><img#}
+{#                                                alt="img"#}
+{#                                                src="img/woman-small-2.jpg"></a>#}
+{#                                        <div class="aa-cartbox-info">#}
+{#                                            <h4><a href="#">Product Name</a>#}
+{#                                            </h4>#}
+{#                                            <p>1 x $250</p>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                        </div>#}
+                    </aside>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- / product category -->
+
+
+    <!-- Subscribe section -->
+{#    <section id="aa-subscribe">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-md-12">#}
+{#                    <div class="aa-subscribe-area">#}
+{#                        <h3>Subscribe our newsletter </h3>#}
+{#                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing#}
+{#                            elit. Ex, velit!</p>#}
+{#                        <form action="" class="aa-subscribe-form">#}
+{#                            <input type="email" name="" id=""#}
+{#                                   placeholder="Enter your Email">#}
+{#                            <input type="submit" value="Subscribe">#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    <!-- / Subscribe section -->
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        let product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
+        const banner_api_url = "{% url 'main:home:api:v1:banner-list' %}";
+        const product_live_stock_api_url = "{% url 'main:inventory:api:v1:product-get-live-stock' %}";
+        const product_category_api_url = "{% url 'main:inventory:api:v1:product_category-list' %}";
+        const brand_api_url = "{% url 'main:inventory:api:v1:brand-list' %}";
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+        const cart_api_url = "{% url 'main:user_panel:api:v1:cart-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Product List JS -->
+    <script src="{% static 'home/js/products_list.js' %}?v={{JS_VERSION}}"></script>
+    <!-- Order JS -->
+    <script src="{% static 'home/js/order.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

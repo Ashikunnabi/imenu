@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/css/custom_page/faq/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- General notice for all -->
+{% include 'home/notice.html' %}
+<!-- Start menu -->
+{% include 'home/nav_category.html' %}
+<!-- / menu -->
+<!-- banner -->
+<div class="elementor-widget-wrap elementor-element-populated snipcss-BcOP5">
+    <div class="elementor-element elementor-element-0e9bdd8 elementor-widget elementor-widget-text-editor"
+        data-id="0e9bdd8" data-element_type="widget" data-widget_type="text-editor.default">
+        <div class="elementor-widget-container">
+            <style>
+                /*! elementor - v3.12.1 - 02-04-2023 */
+                .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap {
+                    background-color: #69727d;
+                    color: #fff
+                }
+
+                .elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap {
+                    color: #69727d;
+                    border: 3px solid;
+                    background-color: transparent
+                }
+
+                .elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap {
+                    margin-top: 8px
+                }
+
+                .elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter {
+                    width: 1em;
+                    height: 1em
+                }
+
+                .elementor-widget-text-editor .elementor-drop-cap {
+                    float: left;
+                    text-align: center;
+                    line-height: 1;
+                    font-size: 50px
+                }
+
+                .elementor-widget-text-editor .elementor-drop-cap-letter {
+                    display: inline-block
+                }
+            </style>
+            <br>
+            <br>
+            <p>
+                <b>
+                    What is the minimum order amount for free shipping for Shops/Dealers?
+                </b>
+                <br>
+                For jobbers, we require a minimum order of $650.00 to be eligible for free shipping. The minimum order
+                amount is based on the subtotal of products in your shopping cart, excluding taxes and shipping.
+            </p>
+            <p>
+                <b>
+                    Do you backorder out of stock products?
+                </b>
+                <br>
+                Yes, we can backorder any products we sell through our dealer portal. However, if a particular product
+                is low on stock and has already been sold out by the manufacturer, we will not be able to backorder it
+                for retail site orders. We will only charge you for the products we have shipped and adjust the shipping
+                charges accordingly.
+            </p>
+            <p>
+                <b>
+                    Do you ship to Amazon FBA?
+                </b>
+                <br>
+                No, we do not sell or ship to Amazon or its fulfillment centers.
+            </p>
+            <p>
+                <b>
+                    How long does it take to process orders?
+                </b>
+                <br>
+                We pride ourselves on fast order processing, considering the high volume of orders we receive daily.
+                Orders placed by 10 am ET, Monday to Friday, will be shipped the same day. Any orders placed after that
+                time will be shipped the following business day.
+            </p>
+            <p>
+                <b>
+                    What shipping methods do you offer?
+                </b>
+                <br>
+                Our primary shipping method is FedEx Ground Service, which offers discounted rates that we pass on to
+                our customers. For larger orders weighing 500 pounds or more, we offer pallet shipping via LTL Freight
+                providers such as SAIA, Roadway, FedEx Freight, and others.
+            </p>
+            <p>
+                <b>
+                    How can I track my order?
+                </b>
+                <br>
+                Once your order has been completed, you will receive an email with your shipment tracking information.
+                You can also log into your account on our website, and visit the “Order History” tab within the “My
+                Account” menu at the top of your screen. From there, you can see all your past orders and the associated
+                tracking numbers.
+            </p>
+            <p>
+                <b>
+                    Can I get a shipping estimate before placing an order?
+                </b>
+                <br>
+                Yes, you can easily get a shipping estimate on our website. If you are logged in, the shipping estimator
+                will be located at the bottom of the shopping cart page. If you are not logged in, you can enter your
+                shipping destination in the shipping estimator to see all available shipping options and estimates for
+                your order.
+            </p>
+            <p>
+                <b>
+                    Are your inventory counts accurate and up to date?
+                </b>
+                <br>
+                Yes, all inventory counts on our website are updated from our warehouse inventory system. However,
+                please note that products bought within our warehouse may not immediately reflect on the website. Our
+                goal is to be able fill in each and every customer’s orders that we receive as soon as possible.
+            </p>
+            <p>
+                <b>
+                    Can I special order an out of stock product?
+                </b>
+                <br>
+                Depending on the item and the BRAND you are requesting, we may offer special ordering of products.
+                Please contact our Sales Team at 214-724-3668 for more information about this service.
+            </p>
+            <p>
+                <b>
+                    Do you offer quantity price breaks on your products?
+                </b>
+                <br>
+                Yes, we offer quantity price breaks on nearly all of our products. To access these price breaks, you
+                must be an approved Dealer and log in to set up bulk buying discounts. Once you log in to your Dealer
+                portal, the home page will display any applicable price breaks for particular SKUs. If you are not a
+                retailer, then please call us for quantity discounts.
+            </p>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+{% endblock %}
+
+{% block js %}
+<script>
+    const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+    const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+</script>
+
+<!-- General Notice JS -->
+<script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+<!-- NavCategory JS -->
+<script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

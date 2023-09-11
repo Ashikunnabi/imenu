@@ -14,6 +14,7 @@ dashboard_urlpatterns = [
     path("", include("apps.table.urls")),
     path("", include("apps.shop.urls")),
     path("", include("apps.cart.urls")),
+    path("", include("apps.home.urls")),
 ]
 
 urlpatterns = fe_urlpatterns + dashboard_urlpatterns
