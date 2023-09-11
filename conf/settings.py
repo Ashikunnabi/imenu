@@ -16,7 +16,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.getenv("DEBUG"))
 
-ALLOWED_HOSTS = []
+# comma separeted value without any space. e.g. 123,456,789
+ALLOWED_HOSTS = (os.getenv("ALLOWED_HOSTS")).split(",") or []
+print(ALLOWED_HOSTS)
 
 # Application definition
 DJANGO_APPS = [
