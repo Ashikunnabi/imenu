@@ -12,10 +12,10 @@ class CartLineInputSerializer(serializers.Serializer):
 
 class CartLineOutputSerializer(serializers.ModelSerializer):
     product = ProductOutputSerializer()
-    price_ex_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
-    price_in_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
-    total_price_ex_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
-    total_price_in_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
+    price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
 
     class Meta:
         model = CartLine
@@ -29,9 +29,9 @@ class CartInputSerializer(serializers.Serializer):
 
 class CartOutputSerializer(serializers.ModelSerializer):
     lines = CartLineOutputSerializer(many=True)
-    total_price_ex_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
-    total_price_in_vat = serializers.DecimalField(max_digits=6, decimal_places=2)
-    vat = serializers.DecimalField(max_digits=6, decimal_places=2)
+    total_price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    vat = serializers.DecimalField(max_digits=18, decimal_places=2)
 
     class Meta:
         model = Cart

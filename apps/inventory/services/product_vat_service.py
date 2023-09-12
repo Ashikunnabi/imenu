@@ -1,3 +1,4 @@
+import decimal
 from apps.base.service import BaseModelService
 from apps.inventory.services.product_service import ProductService
 from apps.inventory.services.vat_service import VatService
@@ -33,11 +34,8 @@ class ProductVatService(BaseModelService):
             kwargs["product_id"] = product.id
 
         if "vat_uuid" in kwargs:
-            vat = self.get_vat_service().read_by_uuid(
-                uuid_value=kwargs.pop("vat_uuid")
-            )
+            vat = self.get_vat_service().read_by_uuid(uuid_value=kwargs.pop("vat_uuid"))
             kwargs["vat_id"] = vat.id
-
         return kwargs, m2m_data
 
     def create_product_vat(self, **kwargs):
@@ -51,3 +49,53 @@ class ProductVatService(BaseModelService):
         kwargs, m2m_data = self.validated_data(**kwargs)
         instance = self.update_model_instance(instance, **kwargs)
         return instance
+
+    def default_vat(self):
+        return decimal.Decimal("1") + decimal.Decimal("00.00")
+
+    def default_vat_type(self):
+        return "percentage"
+
+    def get_vat(self, product_uuid):
+        vat = self.default_vat()
+        vat_type = self.default_vat_type()
+
+        product_vat = self.model.objects.filter(
+            product__uuid=product_uuid,
+            vat__is_active=True,
+            is_active=True,
+        ).first()
+
+        if product_vat:
+            if product_vat.flat:
+                vat = product_vat.flat
+                vat_type = "flat"
+            else:
+                vat = decimal.Decimal("1") + (
+                    product_vat.percentage / decimal.Decimal("100")
+                )
+
+        return vat, vat_type
+
+    def get_price_in_vat(self, product_uuid, price_ex_vat):
+        vat, vat_type = self.get_vat(product_uuid=product_uuid)
+        price = price_ex_vat
+        print(vat)
+
+        if vat_type == "percentage":
+            price = decimal.Decimal(str(price_ex_vat)) * vat
+        else:
+            price = decimal.Decimal(str(price_ex_vat)) + decimal.Decimal(str(vat))
+
+        return price
+
+    def get_price_ex_vat(self, product_uuid, price_in_vat):
+        vat, vat_type = self.get_vat(product_uuid=product_uuid)
+        price = price_in_vat
+
+        if vat_type == "percentage":
+            price = decimal.Decimal(str(price_in_vat)) / vat
+        else:
+            price = decimal.Decimal(str(price_in_vat)) - decimal.Decimal(str(vat))
+
+        return price

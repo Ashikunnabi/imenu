@@ -1,6 +1,7 @@
 import decimal
 from django.db.models import Sum
 from apps.base.service import BaseModelService
+from apps.base.utils.basic import fix_internal_decimal_places
 from apps.table.services.table_service import TableService
 
 from ..models.cart import Cart
@@ -65,8 +66,12 @@ class CartService(BaseModelService):
         lines = cart.lines.all()
 
         for line in lines:
-            line.total_price_ex_vat = decimal.Decimal(line.quantity) * line.price_ex_vat
-            line.total_price_in_vat = decimal.Decimal(line.quantity) * line.price_in_vat
+            line.total_price_ex_vat = fix_internal_decimal_places(
+                decimal.Decimal(line.quantity) * line.price_ex_vat
+            )
+            line.total_price_in_vat = fix_internal_decimal_places(
+                decimal.Decimal(line.quantity) * line.price_in_vat
+            )
             line.save()
 
         cart.refresh_from_db()

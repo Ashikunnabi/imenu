@@ -95,7 +95,6 @@ class DocumentInputSerializer(serializers.ModelSerializer):
 
 
 class DocumentOutputSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Document
         fields = [
@@ -395,6 +394,17 @@ class ProductVatInputSerializer(serializers.ModelSerializer):
             "flat",
             "percentage",
         ]
+        extra_kwargs = {
+            "flat": {"required": False},
+            "percentage": {"required": False},
+        }
+
+    def validate(self, attr):
+        if "flat" in attr and "percentage" in attr:
+            serializers.ValidationError("Flat or Percentage only one is allowed.")
+        if not "flat" in attr and not "percentage" in attr:
+            serializers.ValidationError("Flat or Percentage atleast one is required.")
+        return attr
 
 
 class ProductVatOutputSerializer(serializers.ModelSerializer):
@@ -463,6 +473,7 @@ class ProductOutputSerializer(serializers.ModelSerializer):
     def get_parent(self, obj):
         if obj.parent:
             return self.__class__(obj.parent).data
+
 
 class ProductSearchOutputSerializer(serializers.Serializer):
     brand = BrandOutputSerializer()

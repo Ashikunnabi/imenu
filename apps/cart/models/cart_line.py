@@ -19,6 +19,7 @@ class CartLine(BaseModel):
     price_ex_vat = models.DecimalField(max_digits=18, decimal_places=8)
     total_price_in_vat = models.DecimalField(max_digits=18, decimal_places=8)
     total_price_ex_vat = models.DecimalField(max_digits=18, decimal_places=8)
+    extra_info = models.JSONField(blank=True, null=True)
 
     @property
     def vat(self):

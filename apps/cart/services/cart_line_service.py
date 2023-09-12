@@ -1,6 +1,7 @@
 import decimal
 from apps.base.service import BaseModelService
-from apps.inventory.services.product_service import ProductService
+from apps.base.utils.basic import fix_internal_decimal_places
+from apps.inventory.services import ProductService, ProductPriceService
 
 from ..models import CartLine
 
@@ -16,6 +17,9 @@ class CartLineService(BaseModelService):
     def get_product_service(self):
         return ProductService()
 
+    def get_product_price_service(self):
+        return ProductPriceService()
+
     def validated_data(self, **kwargs):
         m2m_data = {}
         m2m_keys = ["permissions", "users"]
@@ -29,7 +33,6 @@ class CartLineService(BaseModelService):
                 uuid_value=kwargs.pop("product_uuid")
             )
             kwargs["product_id"] = product.id
-        
 
         # Default price
         kwargs["price_in_vat"] = decimal.Decimal("00.00")
@@ -54,10 +57,38 @@ class CartLineService(BaseModelService):
         self.calculate_price(line=instance)
         return instance
 
+    def get_actual_product_price(self, product_uuid):
+        return self.get_product_price_service().get_prices(product_uuid=product_uuid)
+
+    def get_actual_product_sales_prices(self, product_uuid):
+        price_in_vat = self.get_actual_product_price(product_uuid=product_uuid)[
+            "sales_price_in_vat"
+        ]
+        price_ex_vat = self.get_actual_product_price(product_uuid=product_uuid)[
+            "sales_price_ex_vat"
+        ]
+        return price_in_vat, price_ex_vat
+
+    def get_actual_product_purchase_prices(self, product_uuid):
+        price_in_vat = self.get_actual_product_price(product_uuid=product_uuid)[
+            "purchase_price_in_vat"
+        ]
+        price_ex_vat = self.get_actual_product_price(product_uuid=product_uuid)[
+            "purchase_price_ex_vat"
+        ]
+        return price_in_vat, price_ex_vat
+
     def calculate_price(self, line):
-        line.price_ex_vat = decimal.Decimal("10")
-        line.price_in_vat = decimal.Decimal("11")
-        line.total_price_ex_vat = decimal.Decimal(line.quantity) * line.price_ex_vat
-        line.total_price_in_vat = decimal.Decimal(line.quantity) * line.price_in_vat
+        price_in_vat, price_ex_vat = self.get_actual_product_sales_prices(
+            product_uuid=line.product.uuid
+        )
+        line.price_in_vat = fix_internal_decimal_places(price_in_vat)
+        line.price_ex_vat = fix_internal_decimal_places(price_ex_vat)
+        line.total_price_ex_vat = fix_internal_decimal_places(
+            decimal.Decimal(line.quantity) * line.price_ex_vat
+        )
+        line.total_price_in_vat = fix_internal_decimal_places(
+            decimal.Decimal(line.quantity) * line.price_in_vat
+        )
         line.save()
         return line
