@@ -242,3 +242,13 @@ function getLocalWithExpiry(key) {
     }
     return item.value;
 }
+
+
+// Function to remove an item from LocalStorage
+function removeLocalWithExpiry(key) {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+        return null; // Item doesn't exist in LocalStorage
+    }
+    localStorage.removeItem(key); // Remove the item if it has expired
+}

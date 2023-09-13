@@ -114,24 +114,6 @@ class POS {
 
     /*
     * =========================================================================
-    *                       FETCH PRODUCTS
-    * =========================================================================
-    **/
-    fetch_order = () => {
-        let self = this
-        $.ajax({
-            url: shop_order_pos_api_url,
-            type: "GET",
-            success: function (resp) {
-                self.order = resp
-            },
-            error: function (response) {
-                notify(response.responseText, 'error', 5000);
-            }
-        });
-    }
-    /*
-    * =========================================================================
     *                       SET CART
     * =========================================================================
     **/
@@ -175,6 +157,16 @@ class POS {
         // Get data and check for expiration
         let cart_uuid = getLocalWithExpiry('cart_uuid');
         if (!cart_uuid) {
+            let empty_cart = {
+                total_price_ex_vat: "00.00",
+                total_price_in_vat: "00.00",
+                discount: "00.00",
+                vat: "00.00",
+                lines: []
+            }
+            self.cart = empty_cart
+            self.set_cart(empty_cart.lines)
+            self.set_cart_summary(empty_cart)
             return
         }
 
@@ -472,23 +464,12 @@ class POS {
     *                       DELETE ORDER
     * =========================================================================
     **/
-    delete_order = () => {
+    remove_cart = () => {
         let self = this
-        $(document).on("click", "#delete_order", function (e) {
-            $.ajax({
-                url: shop_delete_order_api_url,
-                type: "POST",
-                // data: JSON.stringify(data),
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (resp) {
-                    notify("Success", 'success', 3000);
-                    setTimeout(() => { window.location.reload(); }, 3000);
-                },
-                error: function (response) {
-                    notify(response.responseText, 'error', 5000);
-                }
-            });
+        $(document).on("click", "#remove_cart", function (e) {
+            removeLocalWithExpiry('cart_uuid');
+            notify("Success", 'success', 5000);
+            self.fetch_cart();
         })
     }
 
@@ -535,11 +516,10 @@ class POS {
         self.refresh_products();
         self.table_search();
         self.add_to_cart();
-        self.fetch_order();
         self.fetch_cart();
         self.barcode_scan();
         self.complete_order();
-        self.delete_order();
+        self.remove_cart();
     }
 }
 
