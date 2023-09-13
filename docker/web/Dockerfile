@@ -38,6 +38,6 @@ RUN python -m pip install --upgrade pip \
 
 COPY . .
 
-EXPOSE 8080
-
-CMD ["gunicorn", "conf.wsgi:application", "-b 0.0.0.0:8080", "--reload"]
+COPY ./docker/web/start /start
+RUN sed -i 's/\r//' /start
+RUN chmod +x /start
