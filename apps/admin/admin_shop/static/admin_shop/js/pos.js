@@ -17,17 +17,6 @@ class POS {
     //     $('#sidebar_option_others_product_image').addClass('active');
     // };
 
-    /*
-    * =========================================================================
-    *                       SET PRODUCTS
-    * =========================================================================
-    **/
-    image_url_generator(product) {
-        let url = '/static/base/img/no_image.png';
-        url = product.image_url ? product.image_url :
-            product.image ? '/media/' + product.image : url
-        return url;
-    }
 
     set_products = (products) => {
         let self = this
@@ -211,7 +200,7 @@ class POS {
     * =========================================================================
     **/
 
-    add_to_cart_line = (table_uuid, lines) => {
+    create_cart = (table_uuid, lines) => {
         let self = this
         let data = {}
         data.table_uuid = table_uuid
@@ -228,6 +217,26 @@ class POS {
 
                 // Set data with a 60-minute expiration time
                 setLocalWithExpiry('cart_uuid', resp.data.uuid, 60);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+    add_to_cart_line = (line) => {
+        let self = this
+        let url = `${cart_api_url}${self.cart.uuid}/lines/`
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify(line),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
                 self.fetch_cart();
             },
             error: function (response) {
@@ -273,8 +282,10 @@ class POS {
             if (cart_line_uuid) {
                 let quantity = parseInt($(`#cart_line_uuid${cart_line_uuid}`).val() || 0) + 1
                 self.update_cart_line(cart_line_uuid, quantity)
+            } else if (getLocalWithExpiry('cart_uuid')){
+                self.add_to_cart_line(lines[0])
             } else {
-                self.add_to_cart_line(table_uuid, lines)
+                self.create_cart(table_uuid, lines)
             }
         })
 

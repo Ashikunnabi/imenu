@@ -92,10 +92,13 @@ class CartLineListCreateAPIView(BaseListCreateAPIView):
 
         serializer = self.get_input_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        validated_data["cart_uuid"] = kwargs["cart_uuid"]
 
+        print("============77777777")
         service = self.service_class()
         cart_service = self.cart_service_class()
-        instance = service.create_cart_line(**serializer.validated_data)
+        instance = service.create_cart_line(**validated_data)
         cart_service.calculate_price(cart=instance.cart)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

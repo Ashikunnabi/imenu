@@ -17,6 +17,10 @@ class CartLineService(BaseModelService):
     def get_product_service(self):
         return ProductService()
 
+    def get_cart_service(self):
+        from apps.cart.services.cart_service import CartService
+        return CartService()
+
     def get_product_price_service(self):
         return ProductPriceService()
 
@@ -28,8 +32,14 @@ class CartLineService(BaseModelService):
             if m2m_key in kwargs:
                 m2m_data[m2m_key] = kwargs.pop(m2m_key)
 
+        if "cart_uuid" in kwargs:
+            cart = self.get_cart_service().read_by_uuid(
+                uuid_value=kwargs.pop("cart_uuid")
+            )
+            kwargs["cart_id"] = cart.id
+
         if "product_uuid" in kwargs:
-            product = self.get_product_service().read_by_uuid(
+            product = self.product_service.read_by_uuid(
                 uuid_value=kwargs.pop("product_uuid")
             )
             kwargs["product_id"] = product.id
@@ -43,6 +53,7 @@ class CartLineService(BaseModelService):
 
     def create_cart_line(self, **kwargs):
         data, m2m_data = self.validated_data(**kwargs)
+        print(data)
 
         # check object already exists
         self.does_object_already_exists(**data)
