@@ -5,7 +5,7 @@ from ..models.menu import Menu
 
 class MenuService(BaseModelService):
     model = Menu
-    search_keywords = []
+    search_keywords = ["name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,9 +1,12 @@
 from django.db import models
+from apps.base.validators import ScreenMethodValidator
 
 from apps.rbac.models import BaseModel
 
 
 class MenuItem(BaseModel):
+    validators = [ScreenMethodValidator]
+
     menu = models.ForeignKey(
         to="menu.Menu",
         related_name="items",
@@ -28,3 +31,11 @@ class MenuItem(BaseModel):
 
     def __str__(self):
         return f"{self.menu} - {self.item}"
+
+    def screen_unique_menu_and_item(self):
+        if (
+            self.__class__.objects.filter(menu=self.menu, item=self.item)
+            .exclude(id=self.id)
+            .exists()
+        ):
+            return "Menu item with this menu and item already exists."

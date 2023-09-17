@@ -1,4 +1,5 @@
 from django.db import models
+from apps.base.validators import ScreenMethodValidator
 
 from apps.inventory.models import Document
 from apps.rbac.models import BaseModel
@@ -8,6 +9,8 @@ from .table import Table
 
 
 class TableDocument(BaseModel):
+    validators = [ScreenMethodValidator]
+
     table = models.ForeignKey(
         Table, on_delete=models.CASCADE, related_name="documents"
     )

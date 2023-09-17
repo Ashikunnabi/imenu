@@ -63,19 +63,15 @@ class MyAccount {
 
             },
             error: function (response) {
-                if (response.status === 422) {
-                    let errors = '';
-                    $.map(response.responseJSON.details, function (v, i) {
-                        $.each(v, function (j, k) {
-                            errors += `<li>${i}: ${k}</l1>`;
-                        })
-                    });
-                    let final_error = `<ul>${errors}</ul>`;
-
-                    $('.failed')
-                        .html(final_error)
-                        .css('display', 'block')
-                }
+                let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
+                        }
             }
         });
     };
@@ -121,18 +117,14 @@ class MyAccount {
                         window.location.reload();
                     },
                     error: function (response) {
-                        if (response.status === 422) {
-                            let errors = '';
-                            $.map(response.responseJSON.details, function (v, i) {
-                                $.each(v, function (j, k) {
-                                    errors += `<li>${i}: ${k}</l1>`;
-                                })
-                            });
-                            let final_error = `<ul>${errors}</ul>`;
-
-                            $('.failed')
-                                .html(final_error)
-                                .css('display', 'block')
+                        let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
                         }
                     }
                 });

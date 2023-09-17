@@ -1,9 +1,12 @@
 from django.db import models
+from apps.base.validators import ScreenMethodValidator
 
 from apps.rbac.models import BaseModel
 
 
 class Table(BaseModel):
+    validators = [ScreenMethodValidator]
+
     name = models.CharField(max_length=256)
     type = models.ForeignKey(
         to="table.TableType",
@@ -24,3 +27,7 @@ class Table(BaseModel):
 
     def __str__(self):
         return f"{self.type} - {self.name}"
+
+    def screen_unique_name_and_type(self):
+        if self.__class__.objects.filter(name=self.name).exclude(id=self.id).exists():
+            return "Table with this name and type already exists."

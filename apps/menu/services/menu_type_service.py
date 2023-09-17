@@ -5,7 +5,7 @@ from ..models.menu_type import MenuType
 
 class MenuTypeService(BaseModelService):
     model = MenuType
-    search_keywords = []
+    search_keywords = ["name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

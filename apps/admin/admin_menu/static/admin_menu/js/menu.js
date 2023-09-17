@@ -87,11 +87,26 @@ class Menu {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -119,6 +134,7 @@ class Menu {
                         return (table.page.info()['start'] + meta['row'] + 1);
                     }
                 },
+                
                 {
                     "targets": [5],
                     "visible": true,
@@ -126,6 +142,10 @@ class Menu {
                     "render": function (data, type, row, meta) {
                         let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
                         let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Active"
+                            return "Inactive"
+                        }
                         if (data) return active_html
                         return inactive_html
                     },
@@ -160,7 +180,7 @@ class Menu {
             // dropdownParent: $("#pos_section"),
             allowClear: true,
             placeholder: "Select menu type",
-            minimumInputLength: 3,
+            minimumInputLength: 0,
             ajax: {
                 url: api_urls["menu_type_list"],
                 dataType: 'json',
@@ -216,7 +236,15 @@ class Menu {
                     contentType: false,
                     processData: false,
                     success: function (resp) {
-                        window.location.href = menu_list_url;
+                        // Display a success message
+                        notify("Menu has been created successfully.", "success");
+
+                        // Delay the page refresh for 2 seconds (2000 milliseconds)
+                        setTimeout(function() {
+                            // Refresh the page
+                            // location.reload();
+                            window.location.href = menu_list_url;
+                        }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
                         $.each(response.responseJSON.error, function (i, v) {

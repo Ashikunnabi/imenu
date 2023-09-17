@@ -85,11 +85,26 @@ class Unit {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -115,13 +130,17 @@ class Unit {
                         return (table.page.info()['start'] + meta['row'] + 1);
                     }
                 },
-                {
+                                {
                     "targets": [3],
                     "visible": true,
                     "searchable": true,
                     "render": function (data, type, row, meta) {
                         let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
                         let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Active"
+                            return "Inactive"
+                        }
                         if (data) return active_html
                         return inactive_html
                     },

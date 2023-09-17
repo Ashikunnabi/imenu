@@ -85,11 +85,26 @@ class MenuType {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -114,13 +129,17 @@ class MenuType {
                         return (table.page.info()['start'] + meta['row'] + 1);
                     }
                 },
-                {
+                                {
                     "targets": [2],
                     "visible": true,
                     "searchable": true,
                     "render": function (data, type, row, meta) {
                         let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
                         let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Active"
+                            return "Inactive"
+                        }
                         if (data) return active_html
                         return inactive_html
                     },
@@ -175,7 +194,15 @@ class MenuType {
                     dataType: 'json',
                     contentType: "application/json",
                     success: function (resp) {
-                        window.location.href = menu_type_list_url;
+                        // Display a success message
+                        notify("Menu type has been created successfully.", "success");
+
+                        // Delay the page refresh for 2 seconds (2000 milliseconds)
+                        setTimeout(function() {
+                            // Refresh the page
+                            // location.reload();
+                            window.location.href = menu_type_list_url;
+                        }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
                         $.each(response.responseJSON.error, function (i, v) {

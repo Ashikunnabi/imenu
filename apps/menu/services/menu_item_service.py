@@ -7,7 +7,7 @@ from ..models.menu_item import MenuItem
 
 class MenuItemService(BaseModelService):
     model = MenuItem
-    search_keywords = []
+    search_keywords = ["menu__name", "item__name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
