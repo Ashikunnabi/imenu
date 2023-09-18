@@ -323,9 +323,7 @@ export class MenuItem {
                 }
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };

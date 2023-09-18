@@ -283,9 +283,7 @@ export class ProductPrice {
                 populate($('#product_price_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };

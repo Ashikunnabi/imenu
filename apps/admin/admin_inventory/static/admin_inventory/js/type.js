@@ -205,9 +205,7 @@ class Type {
                         window.location.href = type_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -237,9 +235,7 @@ class Type {
                 populate($('#type_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -274,9 +270,7 @@ class Type {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

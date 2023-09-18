@@ -239,9 +239,7 @@ class Attribute {
                         window.location.href = attribute_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

@@ -283,9 +283,7 @@ export class ProductWarehouse {
                 populate($('#product_warehouse_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };

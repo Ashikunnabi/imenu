@@ -5,6 +5,7 @@ import unicodedata
 from django.core.validators import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from apps.base.rest_utils.exceptions import BadRequestException
 from rest_framework.exceptions import ValidationError as RestValidationError
 
 from .utils.basic import is_absolute_uri
@@ -28,7 +29,7 @@ class ScreenMethodValidator(BaseValidator):
         for method in screen_methods:
             result = method()
             if result:
-                raise ValidationError(result)
+                raise BadRequestException(result)
 
 
 def remove_diacritics(text):

@@ -205,9 +205,7 @@ class Warehouse {
                         window.location.href = warehouse_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -237,9 +235,7 @@ class Warehouse {
                 populate($('#warehouse_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -274,9 +270,7 @@ class Warehouse {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

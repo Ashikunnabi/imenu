@@ -5,7 +5,7 @@ from ..models.table import Table
 
 class TableService(BaseModelService):
     model = Table
-    search_keywords = []
+    search_keywords = ["name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

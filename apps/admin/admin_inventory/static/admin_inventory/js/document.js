@@ -222,9 +222,7 @@ class Document {
                         window.location.href = document_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -254,9 +252,7 @@ class Document {
                 populate($('#document_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -291,9 +287,7 @@ class Document {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

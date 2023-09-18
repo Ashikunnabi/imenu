@@ -205,9 +205,7 @@ class MenuType {
                         }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -236,9 +234,7 @@ class MenuType {
                 populate($('#menu_type_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -273,9 +269,7 @@ class MenuType {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

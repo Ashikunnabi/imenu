@@ -167,7 +167,7 @@ export class TableDocument {
             "columns": [
                 { "title": "SL", "data": "" },
                 { "title": "Type", "data": "type" },
-                { "title": "Document", "data": "document.path" },
+                { "title": "Document", "data": "document.file" },
             ],
             "columnDefs": [
                 {
@@ -187,10 +187,16 @@ export class TableDocument {
                     render: function (data, type, row, meta) {
                         if (!data) return
                         let width = "100%";
+                        let height = "100%";
                         if (row.type === "qrcode") {
                             width = "100px";
+                            height = "100px";
                         }
-                        let html = `<img src="${data}" width="${width}">`
+                        if (row.type === "image") {
+                            width = "300px";
+                            height = "300px";
+                        }
+                        let html = `<img src="${data}" width="${width}" height="${height}">`
                         return html
                     }
                 },
@@ -295,9 +301,7 @@ export class TableDocument {
                 populate($('#table_document_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };

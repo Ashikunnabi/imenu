@@ -1,4 +1,5 @@
 import datetime
+import re
 import uuid
 
 from auditlog.models import AuditlogHistoryField
@@ -9,6 +10,8 @@ User = get_user_model()
 
 
 class BaseModel(models.Model):
+    validators = []
+
     uuid = models.UUIDField(
         unique=True,
         default=uuid.uuid4,
@@ -39,7 +42,34 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def get_validators(self):
+        """Returns list of validators"""
+        return self.validators
+
+    def get_screen_methods(self):
+        """Returns list of all methods whose name starts with 'screen_'"""
+
+        screen_methods = []
+        attributes = dir(self)
+        pattern = re.compile("screen[_]*")
+        for attribute in attributes:
+            if pattern.match(attribute):
+                screen_methods.append(getattr(self, attribute))
+        return screen_methods
+
+    def check_validators(self):
+        """Pass the object to all validators for validation"""
+
+        validators = self.get_validators()
+        for validator in validators:
+            validator(obj=self).validate()
+
+    def clean(self, *args, **kwargs):
+        super().clean()
+        self.check_validators()
+
     def save(self, *args, **kwargs):
+        self.full_clean()
         if not self.pk:
             # Only set added_by during the first save.
             try:

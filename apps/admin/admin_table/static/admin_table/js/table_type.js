@@ -72,7 +72,7 @@ class MenuType {
                                     success: function (response) {
                                         Swal.fire(
                                             'Deleted!',
-                                            'Menu type has been deleted.',
+                                            'Table type has been deleted.',
                                             'success'
                                         );
                                         dt.ajax.reload()
@@ -194,12 +194,18 @@ class MenuType {
                     dataType: 'json',
                     contentType: "application/json",
                     success: function (resp) {
-                        window.location.href = table_type_list_url;
+                        // Display a success message
+                        notify("Table type has been created successfully.", "success");
+
+                        // Delay the page refresh for 2 seconds (2000 milliseconds)
+                        setTimeout(function() {
+                            // Refresh the page
+                            // location.reload();
+                            window.location.href = table_type_list_url;
+                        }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -228,9 +234,7 @@ class MenuType {
                 populate($('#table_type_edit'), response.data);
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -265,9 +269,7 @@ class MenuType {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

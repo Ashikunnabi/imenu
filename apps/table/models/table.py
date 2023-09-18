@@ -29,5 +29,5 @@ class Table(BaseModel):
         return f"{self.type} - {self.name}"
 
     def screen_unique_name_and_type(self):
-        if self.__class__.objects.filter(name=self.name).exclude(id=self.id).exists():
+        if self.__class__.objects.filter(name=self.name, type=self.type).exclude(id=self.id).exists():
             return "Table with this name and type already exists."

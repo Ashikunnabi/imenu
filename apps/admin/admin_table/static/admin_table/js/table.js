@@ -181,7 +181,7 @@ class Table {
             // dropdownParent: $("#pos_section"),
             allowClear: true,
             placeholder: "Select table type",
-            minimumInputLength: 3,
+            minimumInputLength: 0,
             ajax: {
                 url: api_urls["table_type_list"],
                 dataType: 'json',
@@ -237,12 +237,18 @@ class Table {
                     contentType: false,
                     processData: false,
                     success: function (resp) {
-                        window.location.href = table_list_url;
+                        // Display a success message
+                        notify("Table has been created successfully.", "success");
+
+                        // Delay the page refresh for 2 seconds (2000 milliseconds)
+                        setTimeout(function() {
+                            // Refresh the page
+                            // location.reload();
+                            window.location.href = table_list_url;
+                        }, 2000); // Adjust the delay time as needed
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -285,9 +291,7 @@ class Table {
                 }
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -322,9 +326,7 @@ class Table {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

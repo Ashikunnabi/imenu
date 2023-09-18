@@ -99,7 +99,7 @@ class TableCodeService(BaseModelService):
             pattern = f"{table_code.type}_{table_code.uuid}"
             table_documents = table_documents.filter(document__name__startswith=pattern)
         if table_documents:
-            qr_code_file_path = table_documents.last().document.path
+            qr_code_file_path = table_documents.last().document.file.url
             qr_code_file_path = build_media_url(qr_code_file_path)
 
         return qr_code_file_path

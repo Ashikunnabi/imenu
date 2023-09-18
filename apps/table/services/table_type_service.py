@@ -5,7 +5,7 @@ from ..models.table_type import TableType
 
 class TableTypeService(BaseModelService):
     model = TableType
-    search_keywords = []
+    search_keywords = ["name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
