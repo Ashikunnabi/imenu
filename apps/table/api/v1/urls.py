@@ -6,6 +6,7 @@ from .viewsets import (
     TableCodeRetrieveUpdateDestroyAPIView,
     TableDocumentListCreateAPIView,
     TableDocumentRetrieveUpdateDestroyAPIView,
+    TableDocumentUploadAPIView,
     TableListCreateAPIView,
     TableRetrieveUpdateDestroyAPIView,
     TableTypeListCreateAPIView,
@@ -59,5 +60,10 @@ urlpatterns = [
         "tables/<uuid:table_uuid>/documents/<uuid:uuid>/",
         TableDocumentRetrieveUpdateDestroyAPIView.as_view(),
         name="table_document-retrieve-update-delete",
+    ),
+    path(
+        "tables/<uuid:table_uuid>/upload-document/",
+        TableDocumentUploadAPIView.as_view(),
+        name="table-document-upload",
     ),
 ]

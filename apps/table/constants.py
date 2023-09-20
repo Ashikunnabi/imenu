@@ -1,12 +1,14 @@
 class TableCodeTypes:
-    IAN = "ian"
+    SERIAL = "serial"
     UPC = "upc"
     MANUFACTURE = "manufacture"
+    SERIAL = "serial"
 
     CHOICES = (
-        (IAN, "IAN"),
+        (SERIAL, "SERIAL"),
         (UPC, "UPC"),
         (MANUFACTURE, "Manufacture"),
+        (SERIAL, "SERIAL"),
     )
 
 
@@ -14,9 +16,11 @@ class TableDocumentTypes:
     IMAGE = "image"
     PDF = "pdf"
     QRCODE = "qrcode"
+    UNKNOWN = "unknown"
 
     CHOICES = (
         (IMAGE, "IMAGE"),
         (PDF, "PDF"),
         (QRCODE, "QRCODE"),
+        (UNKNOWN, "UNKNOWN"),
     )

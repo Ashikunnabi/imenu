@@ -94,13 +94,17 @@ class TableCodeService(BaseModelService):
             "type": TableDocumentTypes.QRCODE,
             "table_id": table_code.table_id,
         }
+
         table_documents = table_document_service.list(**data)
+
         if table_documents:
             pattern = f"{table_code.type}_{table_code.uuid}"
             table_documents = table_documents.filter(document__name__startswith=pattern)
-        if table_documents:
-            qr_code_file_path = table_documents.last().document.file.url
-            qr_code_file_path = build_media_url(qr_code_file_path)
+            table_document = table_documents.last()
+            if table_document:
+                qr_code_file_path = table_document.document
+                if qr_code_file_path.file:
+                    qr_code_file_path = qr_code_file_path.file.url
 
         return qr_code_file_path
 

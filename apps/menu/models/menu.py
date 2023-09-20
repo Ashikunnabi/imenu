@@ -34,4 +34,4 @@ class Menu(BaseModel):
             .exclude(id=self.id)
             .exists()
         ):
-            return "Meny with this name and type already exists."
+            return "Menu with this name and type already exists."

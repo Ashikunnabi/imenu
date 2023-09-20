@@ -38,18 +38,17 @@ export class TableDocument {
                                         <label for="add_document" class="font-weight-bold">Document: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control font-weight-bold" id="add_document" name="document" data-parsley-maxlength="50"
-                                            placeholder="max 50 chars" required>
+                                        <input type="file" class="form-control font-weight-bold" id="add_document" name="file" required>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="add_stock" class="font-weight-bold">Stock: <span class="text-danger">*</span></label>
+                                        <label for="add_sort_order" class="font-weight-bold">Sort Order: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control font-weight-bold" id="add_stock" name="stock" data-parsley-maxlength="50"
-                                            placeholder="max 50 chars" required>
+                                        <input type="number" class="form-control font-weight-bold" id="add_sort_order" name="sort_order" data-parsley-maxlength="50"
+                                            placeholder="max 50 chars" required value="1">
                                     </div>
                                 </div>
                             </form>                            
@@ -61,15 +60,15 @@ export class TableDocument {
                             confirmButtonText: 'Save'
                         }).then((result) => {
                             if (result.isConfirmed) {
+                                let formData = new FormData();
+                                formData.append('file', $('#add_document')[0].files[0]);
+                                formData.append('sort_order', $('#add_sort_order').val());
                                 $.ajax({
-                                    url: api_urls["table_document_list"],
-                                    data: JSON.stringify({
-                                        "table_uuid": uuid,
-                                        "document_uuid": $("#add_document").val(),
-                                        "stock": $("#add_stock").val(),
-                                    }),
+                                    url: api_urls["table_document_upload"],
                                     type: "POST",
-                                    contentType: "application/json",
+                                    data : formData,
+                                    processData: false,  // tell jQuery not to process the data
+                                    contentType: false,  // tell jQuery not to set contentType
                                     success: function (response) {
                                         Swal.fire(
                                             'Success!',
@@ -168,6 +167,8 @@ export class TableDocument {
                 { "title": "SL", "data": "" },
                 { "title": "Type", "data": "type" },
                 { "title": "Document", "data": "document.file" },
+                { "title": "View", "data": "document.file" },
+                { "title": "Sort Order", "data": "sort_order" },
             ],
             "columnDefs": [
                 {
@@ -197,6 +198,14 @@ export class TableDocument {
                             height = "300px";
                         }
                         let html = `<img src="${data}" width="${width}" height="${height}">`
+                        return html
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, row, meta) {
+                        if (!data) return
+                        let html = `<a href="${data}" target="_blank">View File</a>`
                         return html
                     }
                 },
@@ -245,23 +254,13 @@ export class TableDocument {
                     html: `
                 <form id="table_document_edit" data-parsley-validate>
                     <div class="row">
-                        <div class="col-4">
-                            <label for="edit_document" class="font-weight-bold">Document: <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
-                            <input type="text" class="form-control font-weight-bold" id="edit_document" name="document" data-parsley-maxlength="50"
-                                placeholder="max 50 chars" required>
-                        </div>
+                    <div class="col-4">
+                        <label for="edit_sort_order" class="font-weight-bold">Sort Order: <span class="text-danger">*</span></label>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-4">
-                            <label for="edit_stock" class="font-weight-bold">Stock: <span class="text-danger">*</span></label>
-                        </div>
-                        <div class="col-8">
-                            <input type="text" class="form-control font-weight-bold" id="edit_stock" name="stock" data-parsley-maxlength="50"
-                                placeholder="max 50 chars" required>
-                        </div>
+                    <div class="col-8">
+                        <input type="number" class="form-control font-weight-bold" id="edit_sort_order" name="sort_order" data-parsley-maxlength="50"
+                            placeholder="max 50 chars" required>
+                    </div>
                     </div>
                 </form>
                 `,
@@ -275,9 +274,7 @@ export class TableDocument {
                         $.ajax({
                             url: `${api_urls["table_document_list"]}${_uuid}/`,
                             data: JSON.stringify({
-                                "table_uuid": uuid,
-                                "document_uuid": $("#edit_document").val(),
-                                "stock": $("#edit_stock").val(),
+                                "sort_order": $("#edit_sort_order").val(),
                             }),
                             type: "PUT",
                             contentType: "application/json",

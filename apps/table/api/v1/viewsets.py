@@ -23,6 +23,7 @@ from .serializers import (
     TableCodeQRCodeGenerateOutputSerializer,
     TableDocumentInputSerializer,
     TableDocumentOutputSerializer,
+    TableDocumentUploadInputSerializer,
     TableInputSerializer,
     TableOutputSerializer,
     TableTypeInputSerializer,
@@ -331,3 +332,23 @@ class TableDocumentRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView
             {"detail": "TableDocument deleted successfully"},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+class TableDocumentUploadAPIView(BaseCreateAPIView):
+    service_class = TableService
+    input_serializer_class = TableDocumentUploadInputSerializer
+    output_serializer_class = TableDocumentOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.get_input_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        validated_data["table_uuid"] = kwargs["table_uuid"]
+
+        service = self.service_class()
+        instance = service.upload_document(**validated_data)
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

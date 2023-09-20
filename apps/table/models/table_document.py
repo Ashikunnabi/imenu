@@ -20,6 +20,7 @@ class TableDocument(BaseModel):
         default=TableDocumentTypes.IMAGE,
         max_length=50,
     )
+    sort_order = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.table}"

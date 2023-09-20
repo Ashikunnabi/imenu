@@ -91,6 +91,7 @@ class TableDocumentOutputSerializer(serializers.ModelSerializer):
             "uuid",
             "type",
             "document",
+            "sort_order",
         ]
 
 
@@ -100,3 +101,8 @@ class TableCodeQRCodeGenerateInputSerializer(serializers.Serializer):
 
 class TableCodeQRCodeGenerateOutputSerializer(serializers.Serializer):
     path = serializers.CharField()
+
+
+class TableDocumentUploadInputSerializer(serializers.Serializer):
+    file = serializers.FileField()
+    sort_order = serializers.IntegerField()

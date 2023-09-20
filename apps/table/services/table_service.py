@@ -1,4 +1,6 @@
 from apps.base.service import BaseModelService
+from apps.document_generation.services.upload_document_service import UploadDocumentService
+from apps.table.services.table_document_service import TableDocumentService
 
 from ..models.table import Table
 
@@ -15,6 +17,12 @@ class TableService(BaseModelService):
         from apps.table.services import TableTypeService
 
         return TableTypeService()
+
+    def get_upload_document_service(self, file_path):
+        return UploadDocumentService(file_path=file_path)
+
+    def get_table_document_service(self):
+        return TableDocumentService()
 
     def get_table_type(self, uuid):
         table_type = self.table_type_service.read_by_uuid(uuid_value=uuid)
@@ -45,3 +53,25 @@ class TableService(BaseModelService):
         kwargs, m2m_data = self.validated_data(**kwargs)
         instance = self.update_model_instance(instance, **kwargs)
         return instance
+
+
+    def upload_document(self, *args, **kwargs):
+        table_uuid = kwargs["table_uuid"]
+        table = self.read_by_uuid(uuid_value=table_uuid)
+        file_path = f"tables/{table_uuid}/"
+
+        upload_document_service = self.get_upload_document_service(file_path=file_path)
+        table_document_service = self.get_table_document_service()
+        document = upload_document_service.save_file_in_storage(file=kwargs["file"])
+
+        # save data into ProductDocument model
+        table_document_data = {
+            "table_id": table.id,
+            "document_id": document.id,
+            "sort_order": kwargs.get("sort_order", 0),
+        }
+        table_document = table_document_service.create_table_document(
+            **table_document_data
+        )
+
+        return table_document
