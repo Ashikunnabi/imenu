@@ -5,7 +5,7 @@ from .views import *
 app_name = 'home'
 
 urlpatterns = [
-    path('', index, name='index'),
+    # path('', index, name='index'),
     path(
         'product-details/<str:hashed_id>/',
         product_details,

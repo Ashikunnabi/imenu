@@ -20,8 +20,9 @@ class LoginRequiredMiddleware(MiddlewareMixin):
     def process_request(self, request):
         path = request.path_info.lstrip("/")
         if request.user.is_anonymous:
-            if not any(m.match(path) for m in EXEMPT_URLS):
-                return redirect(settings.LOGIN_URL + "?next=/" + path)
+            # if not any(m.match(path) for m in EXEMPT_URLS):
+            #     return redirect(settings.LOGIN_URL + "?next=/" + path)
+            pass
         else:
             if not request.user.is_active:
                 logout(request)
