@@ -1,3 +1,4 @@
+from apps.base.exceptions import ObjectAlreadyExistsException
 from apps.base.service import BaseModelService
 
 from ..models import Group
@@ -5,7 +6,7 @@ from ..models import Group
 
 class GroupService(BaseModelService):
     model = Group
-    search_keywords = []
+    search_keywords = ["name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,6 +23,10 @@ class GroupService(BaseModelService):
 
     def create_group(self, **kwargs):
         kwargs, m2m_data = self.validated_data(**kwargs)
+        try:
+            self.does_object_already_exists(**kwargs)
+        except ObjectAlreadyExistsException as ex:
+            raise ObjectAlreadyExistsException(errors={"name": ["Group with this name already exists"]}) from ex
         instance = self.create(**kwargs)
 
         if "permissions" in m2m_data:

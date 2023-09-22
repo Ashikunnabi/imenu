@@ -334,7 +334,8 @@ class GroupListCreateAPIView(BaseListCreateAPIView):
 
     def list(self, request, *args, **kwargs):
         service = self.service_class()
-        queryset = service.list()
+        search = {"search": request.GET.get("search[value]", request.GET.get("q", None))}
+        queryset = service.list(**search)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -382,10 +383,8 @@ class GroupRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()  # get the requested object instance
-        self.perform_destroy(instance, request)
-        return Response(
-            {"detail": "Group deleted successfully"}, status=status.HTTP_200_OK
-        )
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PermissionListCreateAPIView(BaseListCreateAPIView):

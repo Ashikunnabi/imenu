@@ -148,9 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": (
-        "apps.base.rest_utils.renderers.APIJSONRenderer",
-    ),
+    "DEFAULT_RENDERER_CLASSES": ("apps.base.rest_utils.renderers.APIJSONRenderer",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # 'rest_framework.authentication.SessionAuthentication',
         "apps.base.custom_authentication.CustomBasicAuthentication",
