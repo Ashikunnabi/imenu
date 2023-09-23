@@ -2,13 +2,11 @@ class TableCodeTypes:
     SERIAL = "serial"
     UPC = "upc"
     MANUFACTURE = "manufacture"
-    SERIAL = "serial"
 
     CHOICES = (
         (SERIAL, "SERIAL"),
         (UPC, "UPC"),
         (MANUFACTURE, "Manufacture"),
-        (SERIAL, "SERIAL"),
     )
 
 

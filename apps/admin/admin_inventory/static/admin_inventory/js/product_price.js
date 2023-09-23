@@ -38,8 +38,11 @@ export class ProductPrice {
                                         <label for="type" class="font-weight-bold">Type: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control font-weight-bold" id="add_type" name="type" data-parsley-maxlength="50"
+                                        <select type="text" class="form-control font-weight-bold" id="add_type" name="type" data-parsley-maxlength="50"
                                             placeholder="max 50 chars" required>
+                                            <option value="purchase_price">Prchase Price</option>
+                                            <option value="sales_price">Sales Price</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <br>
