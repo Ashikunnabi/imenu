@@ -109,7 +109,8 @@ class MenuListCreateAPIView(BaseListCreateAPIView):
     def list(self, request, *args, **kwargs):
         service = self.service_class()
         search = {
-            "search": request.GET.get("search[value]", request.GET.get("q", None))
+            "search": request.GET.get("search[value]", request.GET.get("q", None)),
+            "is_active": True,
         }
         queryset = service.list(**search)
 
