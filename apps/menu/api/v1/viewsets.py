@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
+from apps.menu.services.menu_document_service import MenuDocumentService
 from rest_framework import status
 from rest_framework.response import Response
 
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.custom_viewset import (
+    BaseCreateAPIView,
     BaseListCreateAPIView,
     BaseRetrieveUpdateDestroyAPIView,
 )
@@ -11,6 +13,9 @@ from apps.base.utils.basic import *
 
 from ...services import MenuService, MenuTypeService, MenuItemService
 from .serializers import (
+    MenuDocumentInputSerializer,
+    MenuDocumentOutputSerializer,
+    MenuDocumentUploadInputSerializer,
     MenuInputSerializer,
     MenuItemInputSerializer,
     MenuItemOutputSerializer,
@@ -227,3 +232,94 @@ class MenuItemRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
             {"detail": "MenuItem deleted successfully"},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+
+class MenuDocumentListCreateAPIView(BaseListCreateAPIView):
+    service_class = MenuDocumentService
+    input_serializer_class = MenuDocumentInputSerializer
+    output_serializer_class = MenuDocumentOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def list(self, request, *args, **kwargs):
+        service = self.service_class()
+        search = {
+            "menu__uuid": kwargs["menu_uuid"],
+            "search": request.GET.get("search[value]", None),
+        }
+        queryset = service.list(**search)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_output_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_output_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.get_input_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
+        service = self.service_class()
+        instance = service.create_menu_document(**serializer.validated_data)
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class MenuDocumentRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
+    service_class = MenuDocumentService
+    input_serializer_class = MenuDocumentInputSerializer
+    output_serializer_class = MenuDocumentOutputSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        instance = self.get_object()
+
+        serializer = self.get_input_serializer(
+            instance=instance, data=data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+
+        service = self.service_class()
+        instance = service.update_menu_document(
+            instance=instance, **serializer.validated_data
+        )
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        service = self.service_class()
+        service.delete(instance=instance)
+        return Response(
+            {"detail": "MenuDocument deleted successfully"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+class MenuDocumentUploadAPIView(BaseCreateAPIView):
+    service_class = MenuService
+    input_serializer_class = MenuDocumentUploadInputSerializer
+    output_serializer_class = MenuDocumentOutputSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.get_input_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        validated_data["menu_uuid"] = kwargs["menu_uuid"]
+
+        service = self.service_class()
+        instance = service.upload_document(**validated_data)
+        serializer = self.get_output_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

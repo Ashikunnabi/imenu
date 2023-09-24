@@ -1,4 +1,6 @@
 from apps.base.service import BaseModelService
+from apps.document_generation.services.upload_document_service import UploadDocumentService
+from apps.menu.services.menu_document_service import MenuDocumentService
 
 from ..models.menu import Menu
 
@@ -15,6 +17,12 @@ class MenuService(BaseModelService):
         from apps.menu.services import MenuTypeService
 
         return MenuTypeService()
+
+    def get_upload_document_service(self, file_path):
+        return UploadDocumentService(file_path=file_path)
+
+    def get_menu_document_service(self):
+        return MenuDocumentService()
 
     def get_menu_type(self, uuid):
         menu_type = self.menu_type_service.read_by_uuid(uuid_value=uuid)
@@ -45,3 +53,26 @@ class MenuService(BaseModelService):
         kwargs, m2m_data = self.validated_data(**kwargs)
         instance = self.update_model_instance(instance, **kwargs)
         return instance
+
+
+
+    def upload_document(self, *args, **kwargs):
+        menu_uuid = kwargs["menu_uuid"]
+        menu = self.read_by_uuid(uuid_value=menu_uuid)
+        file_path = f"menus/{menu_uuid}/"
+
+        upload_document_service = self.get_upload_document_service(file_path=file_path)
+        menu_document_service = self.get_menu_document_service()
+        document = upload_document_service.save_file_in_storage(file=kwargs["file"])
+
+        # save data into ProductDocument model
+        menu_document_data = {
+            "menu_id": menu.id,
+            "document_id": document.id,
+            "sort_order": kwargs.get("sort_order", 0),
+        }
+        menu_document = menu_document_service.create_menu_document(
+            **menu_document_data
+        )
+
+        return menu_document

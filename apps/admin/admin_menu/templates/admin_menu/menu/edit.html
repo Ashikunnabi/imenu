@@ -29,6 +29,8 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab"
                         aria-controls="nav-info" aria-selected="true">Basic Info</a>
+                    <a class="nav-item nav-link" id="nav-documents-tab" data-toggle="tab" href="#nav-documents"
+                        role="tab" aria-controls="nav-documents" aria-selected="false">Documents</a>
                     <a class="nav-item nav-link" id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab"
                         aria-controls="nav-items" aria-selected="false">Items</a>
                 </div>
@@ -42,7 +44,7 @@
                             <input type="text" class="form-control" id="name" name="name" data-parsley-maxlength="50"
                                 placeholder="Enter menu name here (max 50 chars)." required>
                         </div>
-        
+
                         <div class="row">
                             <div class="col-4">
                                 <label for="type">Type: <span class="text-danger">*</span></label>
@@ -55,13 +57,13 @@
                                 <label for="start_at">Start At: <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="start_at" name="start_at" required>
                             </div>
-        
+
                             <div class="form-menu col-4">
                                 <label for="end_at">End At: <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="end_at" name="end_at" required>
                             </div>
                         </div>
-        
+
                         <div class="form-menu">
                             <div class="custom-control custom-checkbox small">
                                 <input type="checkbox" class="custom-control-input" id="is_active" name="is_active">
@@ -73,10 +75,20 @@
                     </form>
                 </div>
 
+                <div class="tab-pane fade" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover row-select" id="dataTableMenuDocument"
+                            style="width: 100%;">
+                        </table>
+                    </div>
+                </div>
+
                 <div class="tab-pane fade" id="nav-items" role="tabpanel" aria-labelledby="nav-items-tab">
                     <br>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover row-select" id="dataTableMenuItem" style="width: 100%;">
+                        <table class="table table-bordered table-hover row-select" id="dataTableMenuItem"
+                            style="width: 100%;">
                         </table>
                     </div>
                 </div>
@@ -99,6 +111,8 @@
         "menu_type_list": "{% url 'apps:menu:api:v1:menu_type-list-create' %}",
         "menu_item_list": "{% url 'apps:menu:api:v1:menu_item-list-create'  %}",
         "product_list": "{% url 'apps:inventory:api:v1:product-list-create'  %}",
+        "menu_document_list": "{% url 'apps:menu:api:v1:menu_document-list-create' menu_uuid=uuid %}",
+        "menu_document_upload": "{% url 'apps:menu:api:v1:menu-document-upload' menu_uuid=uuid %}",
     }
     const menu_list_url = "{% url 'admin:admin_menu:menu_list' %}";
 </script>

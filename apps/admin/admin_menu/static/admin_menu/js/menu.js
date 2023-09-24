@@ -1,3 +1,4 @@
+import { MenuDocument } from "./menu_document.js";
 import { MenuItem } from "./menu_item.js";
 
 /*
@@ -357,3 +358,4 @@ class Menu {
 
 new Menu().main();
 new MenuItem().main();
+new MenuDocument().main();

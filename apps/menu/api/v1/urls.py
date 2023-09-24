@@ -1,6 +1,9 @@
 from django.urls import path
 
 from .viewsets import (
+    MenuDocumentListCreateAPIView,
+    MenuDocumentRetrieveUpdateDestroyAPIView,
+    MenuDocumentUploadAPIView,
     MenuItemListCreateAPIView,
     MenuItemRetrieveUpdateDestroyAPIView,
     MenuListCreateAPIView,
@@ -41,5 +44,20 @@ urlpatterns = [
         "menu-items/<uuid:uuid>/",
         MenuItemRetrieveUpdateDestroyAPIView.as_view(),
         name="menu_item-retrieve-update-delete",
+    ),
+    path(
+        "menus/<uuid:menu_uuid>/documents/",
+        MenuDocumentListCreateAPIView.as_view(),
+        name="menu_document-list-create",
+    ),
+    path(
+        "menus/<uuid:menu_uuid>/documents/<uuid:uuid>/",
+        MenuDocumentRetrieveUpdateDestroyAPIView.as_view(),
+        name="menu_document-retrieve-update-delete",
+    ),
+    path(
+        "menus/<uuid:menu_uuid>/upload-document/",
+        MenuDocumentUploadAPIView.as_view(),
+        name="menu-document-upload",
     ),
 ]
