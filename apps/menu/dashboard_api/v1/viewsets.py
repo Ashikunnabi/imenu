@@ -104,7 +104,6 @@ class MenuListCreateAPIView(BaseListCreateAPIView):
     output_serializer_class = MenuOutputSerializer
     pagination_class = LargeResultsSetPagination
     permission_classes=[AllowAny]
-    http_methods = ["get"]
 
     def list(self, request, *args, **kwargs):
         service = self.service_class()

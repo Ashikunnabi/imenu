@@ -185,17 +185,17 @@
     const page_type = "edit";
     const uuid = "{{ uuid }}";
     const api_urls = {
-        "product_list": "{% url 'apps:inventory:api:v1:product-list-create' %}",
-        "product_code_list": "{% url 'apps:inventory:api:v1:product-code-list-create' product_uuid=uuid %}",
-        "product_document_list": "{% url 'apps:inventory:api:v1:product-document-list-create' product_uuid=uuid %}",
-        "product_document_upload": "{% url 'apps:inventory:api:v1:product-document-upload' product_uuid=uuid %}",
-        "product_attribute_list": "{% url 'apps:inventory:api:v1:product-attribute-list-create' product_uuid=uuid %}",
-        "product_price_list": "{% url 'apps:inventory:api:v1:product-price-list-create' product_uuid=uuid %}",
-        "product_warehouse_list": "{% url 'apps:inventory:api:v1:product-warehouse-list-create' product_uuid=uuid %}",
-        "product_unit_list": "{% url 'apps:inventory:api:v1:product-unit-list-create' product_uuid=uuid %}",
-        "product_vat_list": "{% url 'apps:inventory:api:v1:product-vat-list-create' product_uuid=uuid %}",
-        "unit_list": "{% url 'apps:inventory:api:v1:unit-list-create' %}",
-        "vat_list": "{% url 'apps:inventory:api:v1:vat-list-create' %}",
+        "product_list": "{% url 'apps:inventory:api:v1:product_list_create' %}",
+        "product_code_list": "{% url 'apps:inventory:api:v1:product-code_list_create' product_uuid=uuid %}",
+        "product_document_list": "{% url 'apps:inventory:api:v1:product-document_list_create' product_uuid=uuid %}",
+        "product_document_upload": "{% url 'apps:inventory:api:v1:product_document_upload' product_uuid=uuid %}",
+        "product_attribute_list": "{% url 'apps:inventory:api:v1:product-attribute_list_create' product_uuid=uuid %}",
+        "product_price_list": "{% url 'apps:inventory:api:v1:product-price_list_create' product_uuid=uuid %}",
+        "product_warehouse_list": "{% url 'apps:inventory:api:v1:product-warehouse_list_create' product_uuid=uuid %}",
+        "product_unit_list": "{% url 'apps:inventory:api:v1:product-unit_list_create' product_uuid=uuid %}",
+        "product_vat_list": "{% url 'apps:inventory:api:v1:product-vat_list_create' product_uuid=uuid %}",
+        "unit_list": "{% url 'apps:inventory:api:v1:unit_list_create' %}",
+        "vat_list": "{% url 'apps:inventory:api:v1:vat_list_create' %}",
     }
     const product_list_url = "{% url 'admin:admin_inventory:product_list' %}";
 </script>

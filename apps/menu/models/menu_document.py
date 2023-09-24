@@ -20,6 +20,7 @@ class MenuDocument(BaseModel):
         default=MenuDocumentTypes.IMAGE,
         max_length=50,
     )
+    is_thumbnail = models.BooleanField(default=False)
     sort_order = models.IntegerField(default=0)
 
     def __str__(self):

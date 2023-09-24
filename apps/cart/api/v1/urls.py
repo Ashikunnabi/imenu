@@ -13,7 +13,7 @@ urlpatterns = [
     path(
         "carts/",
         CartListCreateAPIView.as_view(),
-        name="cart-list-create",
+        name="cart_list_create",
     ),
     path(
         "carts/<uuid:uuid>/",
@@ -23,7 +23,7 @@ urlpatterns = [
     path(
         "carts/<uuid:cart_uuid>/lines/",
         CartLineListCreateAPIView.as_view(),
-        name="cart-line-list-create",
+        name="cart-line_list_create",
     ),
     path(
         "carts/<uuid:cart_uuid>/lines/<uuid:uuid>/",

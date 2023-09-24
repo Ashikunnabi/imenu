@@ -107,12 +107,12 @@
     const page_type = "edit";
     const uuid = "{{ uuid }}";
     const api_urls = {
-        "menu_list": "{% url 'apps:menu:api:v1:menu-list-create' %}",
-        "menu_type_list": "{% url 'apps:menu:api:v1:menu_type-list-create' %}",
-        "menu_item_list": "{% url 'apps:menu:api:v1:menu_item-list-create'  %}",
-        "product_list": "{% url 'apps:inventory:api:v1:product-list-create'  %}",
-        "menu_document_list": "{% url 'apps:menu:api:v1:menu_document-list-create' menu_uuid=uuid %}",
-        "menu_document_upload": "{% url 'apps:menu:api:v1:menu-document-upload' menu_uuid=uuid %}",
+        "menu_list": "{% url 'apps:menu:dashboard_api:v1:dashboard_menu_list_create' %}",
+        "menu_type_list": "{% url 'apps:menu:dashboard_api:v1:dashboard_menu_type_list_create' %}",
+        "menu_item_list": "{% url 'apps:menu:dashboard_api:v1:dashboard_menu_item_list_create'  %}",
+        "product_list": "{% url 'apps:inventory:api:v1:product_list_create'  %}",
+        "menu_document_list": "{% url 'apps:menu:dashboard_api:v1:dashboard_menu_document_list_create' menu_uuid=uuid %}",
+        "dashboard_menu_document_upload": "{% url 'apps:menu:dashboard_api:v1:dashboard_menu_document_upload' menu_uuid=uuid %}",
     }
     const menu_list_url = "{% url 'admin:admin_menu:menu_list' %}";
 </script>

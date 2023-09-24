@@ -44,22 +44,18 @@ class MenuInputSerializer(serializers.ModelSerializer):
 
 
 class MenuOutputSerializer(serializers.ModelSerializer):
-    document_thumbnail = serializers.SerializerMethodField()
+    type = MenuTypeOutputSerializer()
 
     class Meta:
         model = Menu
         fields = [
             "uuid",
             "name",
-            "document_thumbnail",
+            "type",
+            "start_at",
+            "end_at",
+            "is_active",
         ]
-
-    def get_document_thumbnail(self, obj):
-        url = ""
-        thumbnail = obj.documents.filter(is_thumbnail=True).first()
-        if thumbnail:
-            url = thumbnail.document.file.url
-        return url
 
 
 class MenuItemInputSerializer(serializers.ModelSerializer):
@@ -114,5 +110,5 @@ class MenuDocumentOutputSerializer(serializers.ModelSerializer):
 
 class MenuDocumentUploadInputSerializer(serializers.Serializer):
     file = serializers.FileField()
-    is_thumbnail = serializers.BooleanField()
+    sort_order = serializers.IntegerField()
     sort_order = serializers.IntegerField()

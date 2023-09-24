@@ -51,48 +51,48 @@ urlpatterns = [
     path(
         "attribute-groups/",
         AttributeGroupListCreateAPIView.as_view(),
-        name="attribute-group-list-create",
+        name="attribute-group_list_create",
     ),
     path(
         "attribute-groups/<uuid:uuid>/",
         AttributeGroupRetrieveUpdateDestroyAPIView.as_view(),
-        name="attribute-group-retrieve-update-delete",
+        name="attribute-group_retrieve_update_delete",
     ),
     path(
         "attributes/",
         AttributeListCreateAPIView.as_view(),
-        name="attribute-list-create",
+        name="attribute_list_create",
     ),
     path(
         "attributes/<uuid:uuid>/",
         AttributeRetrieveUpdateDestroyAPIView.as_view(),
-        name="attribute-retrieve-update-delete",
+        name="attribute_retrieve_update_delete",
     ),
-    path("brands/", BrandListCreateAPIView.as_view(), name="brand-list-create"),
+    path("brands/", BrandListCreateAPIView.as_view(), name="brand_list_create"),
     path(
         "brands/<uuid:uuid>/",
         BrandRetrieveUpdateDestroyAPIView.as_view(),
-        name="brand-retrieve-update-delete",
+        name="brand_retrieve_update_delete",
     ),
     path(
-        "documents/", DocumentListCreateAPIView.as_view(), name="document-list-create"
+        "documents/", DocumentListCreateAPIView.as_view(), name="document_list_create"
     ),
     path(
         "documents/<uuid:uuid>/",
         DocumentRetrieveUpdateDestroyAPIView.as_view(),
-        name="document-retrieve-update-delete",
+        name="document_retrieve_update_delete",
     ),
-    path("groups/", GroupListCreateAPIView.as_view(), name="group-list-create"),
+    path("groups/", GroupListCreateAPIView.as_view(), name="group_list_create"),
     path(
         "groups/<uuid:uuid>/",
         GroupRetrieveUpdateDestroyAPIView.as_view(),
-        name="group-retrieve-update-delete",
+        name="group_retrieve_update_delete",
     ),
-    path("products/", ProductListCreateAPIView.as_view(), name="product-list-create"),
+    path("products/", ProductListCreateAPIView.as_view(), name="product_list_create"),
     path(
         "products/<uuid:uuid>/",
         ProductRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-retrieve-update-delete",
+        name="product_retrieve_update_delete",
     ),
     path(
         "products/<uuid:uuid>/create-qr-code/",
@@ -102,12 +102,12 @@ urlpatterns = [
     path(
         "products/<uuid:product_uuid>/codes/",
         ProductCodeListCreateAPIView.as_view(),
-        name="product-code-list-create",
+        name="product-code_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/codes/<uuid:uuid>/",
         ProductCodeRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-code-retrieve-update-delete",
+        name="product-code_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/codes/<uuid:uuid>/create-qr-code/",
@@ -117,111 +117,111 @@ urlpatterns = [
     path(
         "products/<uuid:product_uuid>/documents/",
         ProductDocumentListCreateAPIView.as_view(),
-        name="product-document-list-create",
+        name="product-document_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/documents/<uuid:uuid>/",
         ProductDocumentRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-document-retrieve-update-delete",
+        name="product-document_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/prices/",
         ProductPriceListCreateAPIView.as_view(),
-        name="product-price-list-create",
+        name="product-price_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/prices/<uuid:uuid>/",
         ProductPriceRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-price-retrieve-update-delete",
+        name="product-price_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/warehouses/",
         ProductWarehouseListCreateAPIView.as_view(),
-        name="product-warehouse-list-create",
+        name="product-warehouse_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/warehouses/<uuid:uuid>/",
         ProductWarehouseRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-warehouse-retrieve-update-delete",
+        name="product-warehouse_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/attributes/",
         ProductAttributeListCreateAPIView.as_view(),
-        name="product-attribute-list-create",
+        name="product-attribute_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/attributes/<uuid:uuid>/",
         ProductAttributeRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-attribute-retrieve-update-delete",
+        name="product-attribute_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/units/",
         ProductUnitListCreateAPIView.as_view(),
-        name="product-unit-list-create",
+        name="product-unit_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/units/<uuid:uuid>/",
         ProductUnitRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-unit-retrieve-update-delete",
+        name="product-unit_retrieve_update_delete",
     ),
     path(
         "products/<uuid:product_uuid>/vats/",
         ProductVatListCreateAPIView.as_view(),
-        name="product-vat-list-create",
+        name="product-vat_list_create",
     ),
     path(
         "products/<uuid:product_uuid>/vats/<uuid:uuid>/",
         ProductVatRetrieveUpdateDestroyAPIView.as_view(),
-        name="product-vat-retrieve-update-delete",
+        name="product-vat_retrieve_update_delete",
     ),
     path(
-        "suppliers/", SupplierListCreateAPIView.as_view(), name="supplier-list-create"
+        "suppliers/", SupplierListCreateAPIView.as_view(), name="supplier_list_create"
     ),
     path(
         "suppliers/<uuid:uuid>/",
         SupplierRetrieveUpdateDestroyAPIView.as_view(),
-        name="supplier-retrieve-update-delete",
+        name="supplier_retrieve_update_delete",
     ),
-    path("types/", TypeListCreateAPIView.as_view(), name="type-list-create"),
+    path("types/", TypeListCreateAPIView.as_view(), name="type_list_create"),
     path(
         "types/<uuid:uuid>/",
         TypeRetrieveUpdateDestroyAPIView.as_view(),
-        name="type-retrieve-update-delete",
+        name="type_retrieve_update_delete",
     ),
     path(
         "warehouses/",
         WarehouseListCreateAPIView.as_view(),
-        name="warehouse-list-create",
+        name="warehouse_list_create",
     ),
     path(
         "warehouses/<uuid:uuid>/",
         WarehouseRetrieveUpdateDestroyAPIView.as_view(),
-        name="warehouse-retrieve-update-delete",
+        name="warehouse_retrieve_update_delete",
     ),
     path(
         "units/",
         UnitListCreateAPIView.as_view(),
-        name="unit-list-create",
+        name="unit_list_create",
     ),
     path(
         "units/<uuid:uuid>/",
         UnitRetrieveUpdateDestroyAPIView.as_view(),
-        name="unit-retrieve-update-delete",
+        name="unit_retrieve_update_delete",
     ),
     path(
         "vats/",
         VatListCreateAPIView.as_view(),
-        name="vat-list-create",
+        name="vat_list_create",
     ),
     path(
         "vats/<uuid:uuid>/",
         VatRetrieveUpdateDestroyAPIView.as_view(),
-        name="vat-retrieve-update-delete",
+        name="vat_retrieve_update_delete",
     ),
     path("products/search/", ProductSearchAPIView.as_view(), name="product-search"),
     path(
         "products/<uuid:product_uuid>/upload-document/",
         ProductDocumentUploadAPIView.as_view(),
-        name="product-document-upload",
+        name="product_document_upload",
     ),
 ]

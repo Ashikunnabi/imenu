@@ -51,6 +51,16 @@ export class MenuDocument {
                                             placeholder="max 50 chars" required value="1">
                                     </div>
                                 </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="add_sort_order" class="font-weight-bold">Is Thumbnail?: <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="checkbox" class="form-control font-weight-bold" id="add_is_thumbnail" name="is_thumbnail"
+                                        required>
+                                    </div>
+                                </div>
                             </form>                            
                             `,
                             icon: '',
@@ -64,9 +74,9 @@ export class MenuDocument {
                                 formData.append('file', $('#add_document')[0].files[0]);
                                 formData.append('sort_order', $('#add_sort_order').val());
                                 $.ajax({
-                                    url: api_urls["menu_document_upload"],
+                                    url: api_urls["dashboard_menu_document_upload"],
                                     type: "POST",
-                                    data : formData,
+                                    data: formData,
                                     processData: false,  // tell jQuery not to process the data
                                     contentType: false,  // tell jQuery not to set contentType
                                     success: function (response) {
@@ -133,23 +143,23 @@ export class MenuDocument {
                 },
                 {
                     extend: 'copy',
-                    exportOptions: {orthogonal: 'export'}
+                    exportOptions: { orthogonal: 'export' }
                 },
                 {
                     extend: 'pdf',
-                    exportOptions: {orthogonal: 'export'}
+                    exportOptions: { orthogonal: 'export' }
                 },
                 {
                     extend: 'excel',
-                    exportOptions: {orthogonal: 'export'}
+                    exportOptions: { orthogonal: 'export' }
                 },
                 {
                     extend: 'csv',
-                    exportOptions: {orthogonal: 'export'}
+                    exportOptions: { orthogonal: 'export' }
                 },
                 {
                     extend: 'print',
-                    exportOptions: {orthogonal: 'export'}
+                    exportOptions: { orthogonal: 'export' }
                 },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
@@ -244,6 +254,7 @@ export class MenuDocument {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
                         if (key === 'is_active') (value === true) ? $('input[name=is_active]').click() : "";
+                        if (key === 'is_thumbnail') (value === true) ? $('input[name=is_thumbnail]').click() : "";
                         if (key === 'document') $('input[name=document]').val(value.uuid);
                         else $('[name=' + key + ']', form).val(value);
                     });
@@ -262,6 +273,15 @@ export class MenuDocument {
                                 placeholder="max 50 chars" required>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="edit_is_thumbnail" class="font-weight-bold">Is Thumbnail?: <span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-8">
+                            <input type="checkbox" class="form-control font-weight-bold" id="edit_is_thumbnail" name="is_thumbnail" required>
+                        </div>
+                    </div>
                 </form>
                 `,
                     icon: '',
@@ -275,6 +295,7 @@ export class MenuDocument {
                             url: `${api_urls["menu_document_list"]}${_uuid}/`,
                             data: JSON.stringify({
                                 "sort_order": $("#edit_sort_order").val(),
+                                "is_thumbnail": $("#edit_is_thumbnail").is(":checked"),
                             }),
                             type: "PUT",
                             contentType: "application/json",

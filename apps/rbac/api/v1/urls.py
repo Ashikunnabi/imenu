@@ -18,12 +18,12 @@ urlpatterns = [
     path(
         'users/',
         UserListCreateAPIView.as_view(),
-        name='user-list-create'
+        name='user_list_create'
     ),
     path(
         'users/<uuid:uuid>/',
         UserRetrieveUpdateDestroyAPIView.as_view(),
-        name='user-retrieve-update-delete'
+        name='user_retrieve_update_delete'
     ),
     path(
         'users/staffs/',
@@ -33,22 +33,22 @@ urlpatterns = [
     path(
         'groups/',
         GroupListCreateAPIView.as_view(),
-        name='group-list-create'
+        name='group_list_create'
     ),
     path(
         'groups/<int:id>/',
         GroupRetrieveUpdateDestroyAPIView.as_view(),
-        name='group-retrieve-update-delete'
+        name='group_retrieve_update_delete'
     ),
     path(
         'permisisons/',
         PermissionListCreateAPIView.as_view(),
-        name='permission-list-create'
+        name='permission_list_create'
     ),
     path(
         'permisisons/<int:id>/',
         PermissionRetrieveUpdateDestroyAPIView.as_view(),
-        name='permission-retrieve-update-delete'
+        name='permission_retrieve_update_delete'
     ),
     path(
         'update-info',
