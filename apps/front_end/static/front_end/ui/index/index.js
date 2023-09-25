@@ -1,4 +1,6 @@
 // Main script: app.js
 import { categoryModule } from "./categoryModule.js";
+import { menuModule } from "./menuModule.js";
 
-console.log(categoryModule.getCategories());
+categoryModule.getCategories();
+menuModule.getMenus();

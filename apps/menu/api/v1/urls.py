@@ -4,7 +4,7 @@ from .viewsets import (
     MenuDocumentListCreateAPIView,
     MenuDocumentRetrieveUpdateDestroyAPIView,
     MenuDocumentUploadAPIView,
-    MenuItemListCreateAPIView,
+    MenuItemListAPIView,
     MenuItemRetrieveUpdateDestroyAPIView,
     MenuListAPIView,
     MenuRetrieveUpdateDestroyAPIView,
@@ -16,12 +16,12 @@ app_name = "v1"
 
 urlpatterns = [
     path(
-        "menu-types/",
+        "types/",
         MenuTypeListCreateAPIView.as_view(),
         name="menu_type_list_create",
     ),
     path(
-        "menu-types/<uuid:uuid>/",
+        "types/<uuid:uuid>/",
         MenuTypeRetrieveUpdateDestroyAPIView.as_view(),
         name="menu_type_retrieve_update_delete",
     ),
@@ -36,12 +36,12 @@ urlpatterns = [
         name="menu_retrieve_update_delete",
     ),
     path(
-        "menu-items/",
-        MenuItemListCreateAPIView.as_view(),
-        name="menu_item_list_create",
+        "<uuid:menu_uuid>/items/",
+        MenuItemListAPIView.as_view(),
+        name="menu_item_list",
     ),
     path(
-        "menu-items/<uuid:uuid>/",
+        "<uuid:menu_uuid>/items/<uuid:uuid>/",
         MenuItemRetrieveUpdateDestroyAPIView.as_view(),
         name="menu_item_retrieve_update_delete",
     ),
