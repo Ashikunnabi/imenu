@@ -6,7 +6,7 @@ from .viewsets import (
     MenuDocumentUploadAPIView,
     MenuItemListCreateAPIView,
     MenuItemRetrieveUpdateDestroyAPIView,
-    MenuListCreateAPIView,
+    MenuListAPIView,
     MenuRetrieveUpdateDestroyAPIView,
     MenuTypeListCreateAPIView,
     MenuTypeRetrieveUpdateDestroyAPIView,
@@ -27,8 +27,8 @@ urlpatterns = [
     ),
     path(
         "",
-        MenuListCreateAPIView.as_view(),
-        name="menu_list_create",
+        MenuListAPIView.as_view(),
+        name="menu_list",
     ),
     path(
         "<uuid:uuid>/",

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.custom_viewset import (
     BaseCreateAPIView,
+    BaseListAPIView,
     BaseListCreateAPIView,
     BaseRetrieveUpdateDestroyAPIView,
 )
@@ -98,17 +99,17 @@ class MenuTypeRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
         )
 
 
-class MenuListCreateAPIView(BaseListCreateAPIView):
+class MenuListAPIView(BaseListAPIView):
     service_class = MenuService
     input_serializer_class = MenuInputSerializer
     output_serializer_class = MenuOutputSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes=[AllowAny]
-    http_methods = ["get"]
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         today = datetime.now().date()
         service = self.service_class()
+
         search = {
             "search": request.GET.get("search[value]", request.GET.get("q", None)),
             "is_active": True,
@@ -123,17 +124,6 @@ class MenuListCreateAPIView(BaseListCreateAPIView):
 
         serializer = self.get_output_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def create(self, request, *args, **kwargs):
-        data = request.data
-
-        serializer = self.get_input_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        service = self.service_class()
-        instance = service.create_menu(**serializer.validated_data)
-        serializer = self.get_output_serializer(instance)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class MenuRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
@@ -156,9 +146,7 @@ class MenuRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
         serializer.is_valid(raise_exception=True)
 
         service = self.service_class()
-        instance = service.update_menu(
-            instance=instance, **serializer.validated_data
-        )
+        instance = service.update_menu(instance=instance, **serializer.validated_data)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -239,7 +227,6 @@ class MenuItemRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
             {"detail": "MenuItem deleted successfully"},
             status=status.HTTP_204_NO_CONTENT,
         )
-
 
 
 class MenuDocumentListCreateAPIView(BaseListCreateAPIView):
