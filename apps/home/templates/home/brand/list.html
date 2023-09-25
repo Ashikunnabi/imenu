@@ -124,7 +124,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
     <script>
         const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
         {# brand api #}
-        const brand_api_url = "{% url 'main:inventory:api:v1:brand-list' %}";
+        const brand_api_url = "{% url 'main:inventory:dashboard_api:v1:brand-list' %}";
     </script>
     <!-- NavCategory JS -->
     <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>

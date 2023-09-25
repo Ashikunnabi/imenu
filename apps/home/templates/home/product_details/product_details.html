@@ -558,8 +558,8 @@
 {% block js %}
     <script>
         let product_hashed_id = "{{ hashed_id }}";
-        let product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
-        const product_live_stock_api_url = "{% url 'main:inventory:api:v1:product-get-live-stock' %}";
+        let product_api_url = "{% url 'main:inventory:dashboard_api:v1:product-list' %}";
+        const product_live_stock_api_url = "{% url 'main:inventory:dashboard_api:v1:product-get-live-stock' %}";
         let related_product_api_url = "{% url 'main:home:api:v1:related_random_products_based_on_category' %}";
         const banner_api_url = "{% url 'main:home:api:v1:banner-list' %}";
         const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";

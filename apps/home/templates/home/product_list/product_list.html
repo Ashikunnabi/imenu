@@ -470,11 +470,11 @@
 
 {% block js %}
     <script>
-        let product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
+        let product_api_url = "{% url 'main:inventory:dashboard_api:v1:product-list' %}";
         const banner_api_url = "{% url 'main:home:api:v1:banner-list' %}";
-        const product_live_stock_api_url = "{% url 'main:inventory:api:v1:product-get-live-stock' %}";
-        const product_category_api_url = "{% url 'main:inventory:api:v1:product_category-list' %}";
-        const brand_api_url = "{% url 'main:inventory:api:v1:brand-list' %}";
+        const product_live_stock_api_url = "{% url 'main:inventory:dashboard_api:v1:product-get-live-stock' %}";
+        const product_category_api_url = "{% url 'main:inventory:dashboard_api:v1:product_category-list' %}";
+        const brand_api_url = "{% url 'main:inventory:dashboard_api:v1:brand-list' %}";
         const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
         const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
         const cart_api_url = "{% url 'main:user_panel:api:v1:cart-list' %}";

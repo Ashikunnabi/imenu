@@ -100,10 +100,10 @@
 
 {% block js %}
 <script>
-    const warehouse_api_url = "{% url 'apps:inventory:api:v1:warehouse-list' %}";
+    const warehouse_api_url = "{% url 'apps:inventory:dashboard_api:v1:warehouse-list' %}";
     const purchase_order_api_url = "{% url 'apps:user_panel:api:v1:purchase_order-list' %}";
-    const product_api_url = "{% url 'apps:inventory:api:v1:product-list' %}";
-    const stock_transaction_api_url = "{% url 'apps:inventory:api:v1:stock_transaction-list' %}";
+    const product_api_url = "{% url 'apps:inventory:dashboard_api:v1:product-list' %}";
+    const stock_transaction_api_url = "{% url 'apps:inventory:dashboard_api:v1:stock_transaction-list' %}";
 </script>
 
 <!-- POR JS -->

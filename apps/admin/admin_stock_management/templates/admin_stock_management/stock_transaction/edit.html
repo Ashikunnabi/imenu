@@ -440,8 +440,8 @@
 
 
 <script>
-    const stock_transaction_api_url = "{% url 'apps:inventory:api:v1:stock_transaction-list' %}";
-    const product_api_url = "{% url 'apps:inventory:api:v1:product-list' %}";
+    const stock_transaction_api_url = "{% url 'apps:inventory:dashboard_api:v1:stock_transaction-list' %}";
+    const product_api_url = "{% url 'apps:inventory:dashboard_api:v1:product-list' %}";
     const po_api_url = "{% url 'apps:user_panel:api:v1:purchase_order-list' %}";
     const po_list_url = "{% url 'admin:admin_order:purchase_order_list' %}";
     const uuid = "{{ uuid }}";

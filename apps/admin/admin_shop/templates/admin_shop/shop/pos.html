@@ -364,7 +364,7 @@
 
 {% block js %}
 <script>
-    const list_api_url = "{% url 'apps:inventory:api:v1:product-search' %}";
+    const list_api_url = "{% url 'apps:inventory:dashboard_api:v1:product-search' %}";
     const cart_api_url = "{% url 'apps:cart:api:v1:cart_list_create' %}";
     const table_api_url = "{% url 'apps:table:api:v1:table_list_create' %}";
     const shop_order_pos_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-list' %}";

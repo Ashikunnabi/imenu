@@ -37,8 +37,8 @@
 {% block js %}
     <script>
         const dealer_api_url = "{% url 'apps:rbac:api:v1:dealer-list' %}";
-        const brand_api_url = "{% url 'apps:inventory:api:v1:brand-list' %}";
-        const dealer_brand_api_url = "{% url 'apps:inventory:api:v1:dealer_brand-list' %}";
+        const brand_api_url = "{% url 'apps:inventory:dashboard_api:v1:brand-list' %}";
+        const dealer_brand_api_url = "{% url 'apps:inventory:dashboard_api:v1:dealer_brand-list' %}";
         const uuid = "{{ uuid }}";
     </script>
 
