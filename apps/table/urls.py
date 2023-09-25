@@ -5,5 +5,6 @@ from .views import *
 app_name = "table"
 
 urlpatterns = [
+    path("api/", include("apps.table.dashboard_api.urls"), name="api"),
     path("api/", include("apps.table.api.urls"), name="api"),
 ]

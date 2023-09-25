@@ -107,11 +107,11 @@
     const page_type = "edit";
     const uuid = "{{ uuid }}";
     const api_urls = {
-        "table_list": "{% url 'apps:table:api:v1:table_list_create' %}",
-        "table_type_list": "{% url 'apps:table:api:v1:table_type_list_create' %}",
-        "table_code_list": "{% url 'apps:table:api:v1:table_code_list_create' table_uuid=uuid %}",
-        "table_document_list": "{% url 'apps:table:api:v1:table_document_list_create' table_uuid=uuid %}",
-        "table_document_upload": "{% url 'apps:table:api:v1:table_document_upload' table_uuid=uuid %}",
+        "table_list": "{% url 'apps:table:dashboard_api:v1:dashboard_table_list_create' %}",
+        "table_type_list": "{% url 'apps:table:dashboard_api:v1:dashboard_table_type_list_create' %}",
+        "table_code_list": "{% url 'apps:table:dashboard_api:v1:dashboard_table_code_list_create' table_uuid=uuid %}",
+        "table_document_list": "{% url 'apps:table:dashboard_api:v1:dashboard_table_document_list_create' table_uuid=uuid %}",
+        "dashboard_table_document_upload": "{% url 'apps:table:dashboard_api:v1:dashboard_table_document_upload' table_uuid=uuid %}",
     }
     const table_list_url = "{% url 'admin:admin_table:table_list' %}";
 </script>

@@ -64,7 +64,7 @@ export class TableDocument {
                                 formData.append('file', $('#add_document')[0].files[0]);
                                 formData.append('sort_order', $('#add_sort_order').val());
                                 $.ajax({
-                                    url: api_urls["table_document_upload"],
+                                    url: api_urls["dashboard_table_document_upload"],
                                     type: "POST",
                                     data : formData,
                                     processData: false,  // tell jQuery not to process the data
