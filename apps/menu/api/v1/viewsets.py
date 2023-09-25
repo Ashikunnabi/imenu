@@ -107,12 +107,14 @@ class MenuListCreateAPIView(BaseListCreateAPIView):
     http_methods = ["get"]
 
     def list(self, request, *args, **kwargs):
+        today = datetime.now().date()
         service = self.service_class()
         search = {
             "search": request.GET.get("search[value]", request.GET.get("q", None)),
             "is_active": True,
         }
         queryset = service.list(**search)
+        queryset = queryset.filter(start_at__date__lte=today, end_at__date__gte=today)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
