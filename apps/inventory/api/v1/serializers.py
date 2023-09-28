@@ -1,3 +1,4 @@
+from apps.inventory.constants import ProductDocumentTypes, ProductPriceTypes
 from rest_framework import serializers
 
 from apps.base.utils.basic import build_media_url
@@ -451,6 +452,8 @@ class ProductOutputSerializer(serializers.ModelSerializer):
     group = GroupOutputSerializer()
     parent = serializers.SerializerMethodField()
     type = TypeOutputSerializer()
+    documents = serializers.SerializerMethodField()
+    prices = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -467,12 +470,32 @@ class ProductOutputSerializer(serializers.ModelSerializer):
             "short_description",
             "type",
             "uuid",
+            "documents",
+            "prices",
             "qr_code_path",
         ]
 
     def get_parent(self, obj):
         if obj.parent:
             return self.__class__(obj.parent).data
+
+    def get_documents(self, obj):
+        data = [
+            product_document.document.file.url
+            for product_document in obj.documents.filter(
+                type=ProductDocumentTypes.IMAGE
+            )
+        ]
+        return data
+
+    def get_prices(self, obj):
+        data = [
+            product_price.price
+            for product_price in obj.prices.filter(
+                type=ProductPriceTypes.SALES_PRICE
+            )
+        ] or [0]
+        return data
 
 
 class ProductSearchOutputSerializer(serializers.Serializer):

@@ -14,6 +14,7 @@ export const menuModule = (function () {
     }
 
     function menuItemHTML(item) {
+        let document = item.documents ? item.documents[0] : "/static/front_end/assets/images/product/2.jpg"
         let html = `
             <div class="swiper-btn-center-lr mt-0">
                 <div class="swiper product-swiper">
@@ -21,22 +22,22 @@ export const menuModule = (function () {
                         <div class="swiper-slide">
                             <div class="card-item style-6">
                                 <a href="/product-detail" class="dz-media">
-                                    <img src="/static/front_end/assets/images/product/2.jpg" alt="image">
+                                    <img src="${document}" alt="image">
                                 </a>
                                 <div class="dz-content">
-                                    <span class="product-title">Combo pack</span>
+                                    <!-- <span class="product-title">Combo pack</span> -->
                                     <h4 class="item-name">
                                         <a href="/product-detail">
                                             ${item.name}
                                         </a>
                                     </h4>
-                                    <div class="offer-code">
+                                    <!-- <div class="offer-code">
                                         FLAT 40% off Code: 636G8P
-                                    </div>
+                                    </div> -->
                                     <div class="footer-wrapper">
                                         <div class="price-wrapper">
-                                            <h6 class="current-price"><i class="fa-solid fa-indian-rupee-sign"></i>830</h6>
-                                            <span class="old-price"><i class="fa-solid fa-indian-rupee-sign"></i>1000</span>
+                                            <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk</h6>
+                                            <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
                                         </div>
                                         <a href="/product-detail" class="btn btn-sm btn-outline-primary">ADD</a>
                                     </div>
