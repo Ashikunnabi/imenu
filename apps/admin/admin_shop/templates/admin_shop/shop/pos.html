@@ -365,7 +365,7 @@
 {% block js %}
 <script>
     const list_api_url = "{% url 'apps:inventory:dashboard_api:v1:product-search' %}";
-    const cart_api_url = "{% url 'apps:cart:api:v1:cart_list_create' %}";
+    const cart_api_url = "{% url 'apps:cart:api:v1:dashboard_cart_list_create' %}";
     const table_api_url = "{% url 'apps:table:dashboard_api:v1:dashboard_table_list_create' %}";
     const shop_order_pos_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-list' %}";
     const shop_order_pos_search_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-search' %}";

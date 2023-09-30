@@ -3,18 +3,21 @@ export const menuModule = (function () {
     // Private variables and functions
 
     function menuHTML(menu) {
+        let menu__item_class_name = `menu_${menu.uuid}_item-bx`;
         let items = getMenuItems(menu.uuid)
+
         let html = `
             <div class="title-bar">
                 <span class="title mb-0">${menu.name}</span>
             </div>
-            <div class="menu_${menu.uuid}_item-bx"></div>
+            <div class="${menu__item_class_name}"></div>
         `
         return html
     }
 
     function menuItemHTML(item) {
         let document = item.documents ? item.documents[0] : "/static/front_end/assets/images/product/2.jpg"
+
         let html = `
             <div class="swiper-btn-center-lr mt-0">
                 <div class="swiper product-swiper">
@@ -39,10 +42,10 @@ export const menuModule = (function () {
                                             <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk</h6>
                                             <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
                                         </div>
-                                        <a href="/product-detail" class="btn btn-sm btn-outline-primary">ADD</a>
+                                        <a class="btn btn-sm btn-outline-primary add-to-cart" data-json=${JSON.stringify(item)}>ADD</a>
                                     </div>
                                 </div>
-                            </div>       
+                            </div>
                         </div>
                     </div>
                 </div>
