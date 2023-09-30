@@ -13,6 +13,7 @@ export class TableCode {
     **/
     list = () => {
         let self = this;
+        let table_data = {}
 
         let table = $('#dataTableTableCode').DataTable({
             "processing": true,
@@ -267,6 +268,10 @@ export class TableCode {
                                 placeholder="max 50 chars" required>
                         </div>
                     </div>
+                    <br>
+                    <div class="col-10">
+                        <button id="generate_table_qr_code">Generate Table Code</button>
+                    </div>
                 </form>
                 
                 `,
@@ -373,6 +378,21 @@ export class TableCode {
     };
 
     /*
+    * =========================================================================
+    *                       Generate Table URL for QR code
+    * =========================================================================
+    **/
+
+    generate_table_url = () => {
+        let self = this
+        let url = `${window.location.protocol}${window.location.host}/?table=${uuid}`;
+        $(document).on("click", "#generate_table_qr_code", function (e) {
+            e.preventDefault();
+            $("#edit_value").val(url)
+        })
+    };
+
+    /*
    * =========================================================================
    *                       Main function of this class
    * =========================================================================
@@ -382,6 +402,7 @@ export class TableCode {
         if (page_type === "edit") {
             this.list();
             this.generate_qr_code();
+            this.generate_table_url();
         }
     }
 }

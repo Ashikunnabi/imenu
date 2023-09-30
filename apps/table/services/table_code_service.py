@@ -95,7 +95,7 @@ class TableCodeService(BaseModelService):
             "table_id": table_code.table_id,
         }
 
-        table_documents = table_document_service.list(**data)
+        table_documents = table_document_service.list(**data).order_by("id")
 
         if table_documents:
             pattern = f"{table_code.type}_{table_code.uuid}"

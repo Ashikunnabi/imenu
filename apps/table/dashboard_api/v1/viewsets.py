@@ -213,7 +213,9 @@ class TableCodeRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
     output_serializer_class = TableCodeOutputSerializer
 
     def retrieve(self, request, *args, **kwargs):
+        service = self.service_class()
         instance = self.get_object()
+        instance = service.detail_response(instance)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
