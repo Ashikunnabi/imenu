@@ -77,6 +77,7 @@ from .serializers import (
     WarehouseInputSerializer,
     WarehouseOutputSerializer,
 )
+from rest_framework.permissions import AllowAny
 
 # from apps.inventory.stock_transaction import Transaction
 
@@ -1026,6 +1027,7 @@ class ProductRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
     service_class = ProductService
     input_serializer_class = ProductInputSerializer
     output_serializer_class = ProductOutputSerializer
+    permission_classes = [AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
         service = self.service_class()

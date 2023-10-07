@@ -24,13 +24,13 @@ export const menuModule = (function () {
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="card-item style-6">
-                                <a href="/product-detail" class="dz-media">
+                                <a href="/product-detail/${item.uuid}/" class="dz-media">
                                     <img src="${document}" alt="image">
                                 </a>
                                 <div class="dz-content">
                                     <!-- <span class="product-title">Combo pack</span> -->
                                     <h4 class="item-name">
-                                        <a href="/product-detail">
+                                        <a href="/product-detail/${item.uuid}/">
                                             ${item.name}
                                         </a>
                                     </h4>
@@ -43,6 +43,9 @@ export const menuModule = (function () {
                                             <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
                                         </div>
                                         <a class="btn btn-sm btn-outline-primary add-to-cart" data-json=${JSON.stringify(item)}>ADD</a>
+                                    </div>
+                                    <div class="offer-code">
+                                        VAT & SC excluded
                                     </div>
                                 </div>
                             </div>

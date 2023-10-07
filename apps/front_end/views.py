@@ -9,7 +9,7 @@ def category(request):
     return render(request, "front_end/category.html")
 
 
-def product_detail(request):
+def product_detail(request, uuid):
     return render(request, "front_end/product-detail.html")
 
 
