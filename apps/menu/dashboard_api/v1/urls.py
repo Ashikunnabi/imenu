@@ -36,12 +36,12 @@ urlpatterns = [
         name="dashboard_menu_retrieve_update_delete",
     ),
     path(
-        "menu-items/",
+        "<uuid:menu_uuid>/menu-items/",
         MenuItemListCreateAPIView.as_view(),
         name="dashboard_menu_item_list_create",
     ),
     path(
-        "menu-items/<uuid:uuid>/",
+        "<uuid:menu_uuid>/menu-items/<uuid:uuid>/",
         MenuItemRetrieveUpdateDestroyAPIView.as_view(),
         name="mdashboard_enu_item_retrieve_update_delete",
     ),

@@ -10,7 +10,13 @@ export const menuModule = (function () {
             <div class="title-bar">
                 <span class="title mb-0">${menu.name}</span>
             </div>
-            <div class="${menu__item_class_name}"></div>
+            <div class="swiper-btn-center-lr mt-0">
+                <div class="swiper product-swiper">
+                    <div class="swiper-wrapper ${menu__item_class_name}">
+                        <!-- <div class="${menu__item_class_name}"></div> -->
+                    </div>
+                </div>
+            </div>
         `
         return html
     }
@@ -19,36 +25,30 @@ export const menuModule = (function () {
         let document = item.documents ? item.documents[0] : "/static/front_end/assets/images/product/2.jpg"
 
         let html = `
-            <div class="swiper-btn-center-lr mt-0">
-                <div class="swiper product-swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="card-item style-6">
-                                <a href="/product-detail/${item.uuid}/" class="dz-media">
-                                    <img src="${document}" alt="image">
-                                </a>
-                                <div class="dz-content">
-                                    <!-- <span class="product-title">Combo pack</span> -->
-                                    <h4 class="item-name">
-                                        <a href="/product-detail/${item.uuid}/">
-                                            ${item.name}
-                                        </a>
-                                    </h4>
-                                    <!-- <div class="offer-code">
-                                        FLAT 40% off Code: 636G8P
-                                    </div> -->
-                                    <div class="footer-wrapper">
-                                        <div class="price-wrapper">
-                                            <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk</h6>
-                                            <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
-                                        </div>
-                                        <a class="btn btn-sm btn-outline-primary add-to-cart" data-json=${JSON.stringify(item)}>ADD</a>
-                                    </div>
-                                    <div class="offer-code">
-                                        VAT & SC excluded
-                                    </div>
-                                </div>
+            <div class="swiper-slide">
+                <div class="card-item style-6">
+                    <a href="/product-detail/${item.uuid}/" class="dz-media">
+                        <img src="${document}" alt="image">
+                    </a>
+                    <div class="dz-content">
+                        <span class="product-title">${item.code}</span>
+                        <h4 class="item-name">
+                            <a href="/product-detail/${item.uuid}/">
+                            ${item.name}
+                            </a>
+                        </h4>
+                        <!-- <div class="offer-code">
+                            FLAT 40% off Code: 636G8P
+                        </div> -->
+                        <div class="footer-wrapper">
+                            <div class="price-wrapper">
+                                <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk+</h6>
+                                <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
                             </div>
+                            <!--<a class="btn btn-sm btn-outline-primary add-to-cart" data-json=${JSON.stringify(item)}>ADD</a>-->
+                        </div>
+                        <div class="offer-code">
+                            VAT & SC excluded
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,7 @@ export const menuModule = (function () {
                         menuItemHTML(v)
                     )
                 })
+                initiateProductSlider("product-swiper")
             },
             error: function (xhr, status, error) {
                 // Handle errors here
@@ -99,6 +100,25 @@ export const menuModule = (function () {
             }
         });
 
+        function initiateProductSlider(container_class) {
+            if (jQuery(`.${container_class}`).length > 0) {
+                var swiperRecomandSwiper = new Swiper('.product-swiper', {
+                    speed: 500,
+                    parallax: true,
+                    slidesPerView: 'auto',
+                    spaceBetween: 0,
+                    loop: false,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                });
+            }
+        }
     }
 
     // Public methods

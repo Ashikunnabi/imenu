@@ -39,6 +39,7 @@ export class ProductDocument {
                                     </div>
                                     <div class="col-8">
                                         <input type="file" class="form-control font-weight-bold" id="add_document" name="file" required>
+                                        <span><small>width=600 pixels, height=400 pixels</small></span>
                                     </div>
                                 </div>
                                 <br>
