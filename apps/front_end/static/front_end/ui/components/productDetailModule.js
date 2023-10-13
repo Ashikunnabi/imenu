@@ -14,8 +14,9 @@ export const productDetailModule = (function () {
                     <div class="company-detail">
                         <div class="detail-content">
                             <div class="flex-1">
+                                <span class="product-title">${item.code}</span>
                                 <h4>${item.name}</h4>
-                                <p class="text-light">${item.description}</p>
+                                <!--<p class="text-light">${item.description}</p>-->
                             </div>
                         </div>
                         <ul class="item-inner">
@@ -30,7 +31,7 @@ export const productDetailModule = (function () {
                             <li>
                                 <div class="reviews-info">
                                     <i class="fa-regular font-16 text-primary fa-clock"></i>
-                                    <h6 class="reviews">6 - 7 min</h6>
+                                    <h6 class="reviews">16 - 27 min</h6>
                                 </div>
                             </li>
                             <li class="me-0">
@@ -46,15 +47,24 @@ export const productDetailModule = (function () {
                     <div class="item-list-2">
                         <div class="price">
                             <span class="text-style text-soft">Price</span>
-                            <h3 class="sub-title"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk <!--<del><i class="fa-solid fa-bangladeshi-taka-sign"></i>1140</del>--></h3>
+                            <h3 class="sub-title"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk+ <!--<del><i class="fa-solid fa-bangladeshi-taka-sign"></i>1140</del>--></h3>
+                            <div class="offer-code">
+                                VAT & SC excluded
+                            </div>
                         </div>
-                        <div class="dz-stepper border-1 rounded-stepper stepper-fill small-stepper">
+                        <!--<div class="dz-stepper border-1 rounded-stepper stepper-fill small-stepper">
                             <input readonly="" class="stepper form-control" type="text" value="0" name="demo3">
-                        </div>
+                        </div>-->
                     </div>
-                    <div class="d-flex align-items-center justify-content-between">
+                    <!--<div class="d-flex align-items-center justify-content-between">
                         <div class="badge bg-accent rounded-sm badge-warning font-w400">20% OFF DISCOUNT</div>     
                         <a href="javascript:void(0);"><h6 class="mb-0 font-14">Apply promo code</h6></a>
+                    </div>-->
+                    <div class="detail-content">
+                        <div class="flex-1">
+                            <h4>Description</h4>
+                            <p class="text-light">${item.description}</p>
+                        </div>
                     </div>
                 </div>
             </div>

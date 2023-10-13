@@ -9457,6 +9457,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .h1, .h2, .h3, .h4, .h5, .
 .sub-title {
   font-family: var(--font-family-sub-title); }
 
+.offer-code {
+  color: #eb8e57;
+  font-size: 12px; }
+
+.product-title {
+  font-weight: 500;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--primary); }
+
 .title-head {
   font-family: var(--font-family-title); }
 
