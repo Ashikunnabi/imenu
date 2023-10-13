@@ -17,6 +17,7 @@ class Menu(BaseModel):
     )
     start_at = models.DateTimeField(blank=True)
     end_at = models.DateTimeField(blank=True)
+    is_pinned = models.BooleanField(default=False)
 
     class Meta:
         constraints = [

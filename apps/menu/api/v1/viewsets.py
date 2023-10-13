@@ -114,6 +114,7 @@ class MenuListAPIView(BaseListAPIView):
         search = {
             "search": request.GET.get("search[value]", request.GET.get("q", None)),
             "is_active": True,
+            "is_pinned": True,
         }
         queryset = service.list(**search)
         queryset = queryset.filter(start_at__date__lte=today, end_at__date__gte=today)

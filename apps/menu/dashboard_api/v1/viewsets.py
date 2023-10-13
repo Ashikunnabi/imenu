@@ -110,7 +110,7 @@ class MenuListCreateAPIView(BaseListCreateAPIView):
         search = {
             "search": request.GET.get("search[value]", request.GET.get("q", None))
         }
-        queryset = service.list(**search)
+        queryset = service.list(**search).order_by("-is_pinned", "-updated_at")
 
         page = self.paginate_queryset(queryset)
         if page is not None:

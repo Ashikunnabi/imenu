@@ -127,6 +127,7 @@ class Menu {
                 { "title": "End At", "data": "end_at" },
                 { "title": "Start At", "data": "start_at" },
                 { "title": "Status", "data": "is_active" },
+                { "title": "Pinned", "data": "is_pinned" },
             ],
             "columnDefs": [
                 {
@@ -146,6 +147,22 @@ class Menu {
                         if (type === "export") {
                             if (data) return "Active"
                             return "Inactive"
+                        }
+                        if (data) return active_html
+                        return inactive_html
+                    },
+                },
+                
+                {
+                    "targets": [6],
+                    "visible": true,
+                    "searchable": true,
+                    "render": function (data, type, row, meta) {
+                        let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
+                        let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Pinned"
+                            return ""
                         }
                         if (data) return active_html
                         return inactive_html
@@ -228,6 +245,7 @@ class Menu {
                 if (menu_add_form_data.has('start_at')) menu_add_form_data.append('start_at', moment($("#start_at")).format());
                 if (menu_add_form_data.has('end_at')) menu_add_form_data.append('end_at', moment($("#end_at")).format());
                 if (!menu_add_form_data.has('is_active')) menu_add_form_data.append('is_active', 0);
+                if (!menu_add_form_data.has('is_pinned')) menu_add_form_data.append('is_pinned', 0);
                 // submit an ajax request to the api endpoint
                 $.ajax({
                     url: api_urls["menu_list"],
@@ -271,6 +289,7 @@ class Menu {
                 function populate(form, data) {
                     $.each(data, function (key, value) {
                         if (key === 'is_active') (value === true) ? $('input[name=is_active]').click() : "";
+                        if (key === 'is_pinned') (value === true) ? $('input[name=is_pinned]').click() : "";
                         else if (key === 'start_at') $('[name=' + key + ']', form).val(`${moment(value).format('YYYY-MM-DD')}`);
                         else if (key === 'end_at') $('[name=' + key + ']', form).val(`${moment(value).format('YYYY-MM-DD')}`);
                         else $('[name=' + key + ']', form).val(value);
@@ -313,6 +332,7 @@ class Menu {
                 if (menu_edit_form_data.has('start_at')) menu_edit_form_data.set('start_at', moment($("#start_at").val()).format("YYYY-MM-DDTHH:mm:ss"));
                 if (menu_edit_form_data.has('end_at')) menu_edit_form_data.set('end_at', moment($("#end_at").val()).format("YYYY-MM-DDTHH:mm:ss"));
                 if (!menu_edit_form_data.has('is_active')) menu_edit_form_data.append('is_active', 0);
+                if (!menu_edit_form_data.has('is_pinned')) menu_edit_form_data.append('is_pinned', 0);
 
                 // submit an ajax request to the api endpoint
                 $.ajax({

@@ -40,6 +40,7 @@ class MenuInputSerializer(serializers.ModelSerializer):
             "start_at",
             "end_at",
             "is_active",
+            "is_pinned",
         ]
 
 
@@ -55,6 +56,7 @@ class MenuOutputSerializer(serializers.ModelSerializer):
             "start_at",
             "end_at",
             "is_active",
+            "is_pinned",
         ]
 
 
