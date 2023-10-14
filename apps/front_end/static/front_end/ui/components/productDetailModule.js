@@ -90,9 +90,7 @@ export const productDetailModule = (function () {
         }
 
         // Check if a UUID was found
-        if (uuid !== null) {
-            console.log("UUID: " + uuid);
-        } else {
+        if (uuid == null) {
             console.log("UUID not found in the URL.");
         }
         return uuid

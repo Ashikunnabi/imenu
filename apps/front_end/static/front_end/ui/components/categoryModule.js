@@ -16,9 +16,9 @@ export const categoryModule = (function () {
         return html
     }
 
-    function getCategories() {
+    function getCategories(is_pinned=0) {
         $.ajax({
-            url: "/api/v1/menus/",
+            url: `/api/v1/menus/?is_pinned=${is_pinned}`,
             method: "GET",
             dataType: "json",
             success: function (data) {

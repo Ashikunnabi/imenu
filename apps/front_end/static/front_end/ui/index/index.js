@@ -2,5 +2,5 @@
 import { categoryModule } from "../components/categoryModule.js";
 import { menuModule } from "../components/menuModule.js";
 
-categoryModule.getCategories();
+categoryModule.getCategories(1);
 menuModule.getMenus();

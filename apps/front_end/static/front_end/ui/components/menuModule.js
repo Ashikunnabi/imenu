@@ -59,7 +59,7 @@ export const menuModule = (function () {
 
     function getMenus() {
         $.ajax({
-            url: "/api/v1/menus/",
+            url: "/api/v1/menus/?is_pinned=1",
             method: "GET",
             dataType: "json",
             success: function (data) {
