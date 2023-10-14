@@ -83,8 +83,36 @@ export const productListModule = (function () {
 
     }
 
+    function getFavouriteProducts() {
+        let key = "favourite_products"
+        let favourite_products = getLocalWithExpiry(key) || []
+        let parent_component = `menu_product_list`
+
+        $.map(favourite_products, function (v, i) {
+            $.ajax({
+                url: `/api/v1/inventory/products/${v}/`,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $(document).find(`.${parent_component}`).append(
+                        productListItemHTML(data.data)
+                    )
+                    $(document).find(`.${parent_component}`).append(
+                        "<br>"
+                    )
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    console.error("AJAX request failed:", status, error);
+                }
+            });
+        })
+
+    }
+
     // Public methods
     return {
         getProducts: getProducts,
+        getFavouriteProducts: getFavouriteProducts,
     };
 })();

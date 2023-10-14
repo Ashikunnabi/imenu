@@ -68,6 +68,10 @@ export const productDetailModule = (function () {
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
         `
         return html
     }
@@ -117,8 +121,34 @@ export const productDetailModule = (function () {
 
     }
 
+    function toggleFavourite() {
+        let key = "favourite_products"
+        let favourite_products = getLocalWithExpiry(key) || []
+        let itemToToggle = getProductUUIDFromURL()
+
+        if (favourite_products.includes(itemToToggle)) {
+            document.querySelectorAll(".item-bookmark")[0].classList.add("active")
+        }
+
+        $(document).on("click", ".item-bookmark", function (e) {
+
+            // Check if the item exists in the array
+            var itemIndex = favourite_products.indexOf(itemToToggle);
+
+            if (itemIndex !== -1) {
+                // If the item exists, remove it (pop)
+                favourite_products.splice(itemIndex, 1);
+            } else {
+                // If the item doesn't exist, add it (push)
+                favourite_products.push(itemToToggle);
+            }
+            setLocalWithExpiry(key, favourite_products, 60)
+        })
+    }
+
     // Public methods
     return {
         getProductDetail: getProductDetail,
+        toggleFavourite: toggleFavourite,
     };
 })();
