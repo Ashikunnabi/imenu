@@ -37,5 +37,5 @@ def edit_profile(request):
     return render(request, "front_end/edit-profile.html")
 
 
-def product_list(request):
+def product_list(request, uuid):
     return render(request, "front_end/product-list.html")

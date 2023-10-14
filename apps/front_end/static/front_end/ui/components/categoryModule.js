@@ -5,7 +5,7 @@ export const categoryModule = (function () {
     function categoryHTML(category) {
         let html = `
         <div class="col-4 text-center">
-            <a href="/category">
+            <a href="/category/${category.uuid}/product-list">
                 <div class="dz-media media-60">
                     <img src="${category.document_thumbnail || "/static/front_end/assets/images/categore/5.png"}" alt="image">
                 </div>
