@@ -29,7 +29,7 @@ export const productListModule = (function () {
                 <a href="/product-detail/${item.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
                 </a>
-                <a href="/product-detail/${item.uuid}/" class="btn btn-sm btn-block btn-outline-primary">DETAILS</a>
+                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.uuid}" data-uuid="${item.uuid}" data-json=${JSON.stringify(item)}>SELECT</a>
             </div>	
         </div>
         `
@@ -60,6 +60,17 @@ export const productListModule = (function () {
         return uuid
     }
 
+
+    function toggleSelectedItem(uuid) {
+        let key = "selected_items"
+        let selected_items = getLocalWithExpiry(key) || []
+
+        if (selected_items.includes(uuid)) {
+            $(document).find(`.${uuid}`).addClass("active")
+            $(document).find(`.${uuid}`).text("Selected")
+        }
+    }
+
     function getProducts() {
         let menu_uuid = getMenuUUIDFromURL()
         $.ajax({
@@ -73,6 +84,7 @@ export const productListModule = (function () {
                     $(document).find(`.${parent_component}`).append(
                         productListItemHTML(v)
                     )
+                    toggleSelectedItem(v.uuid);
                 })
             },
             error: function (xhr, status, error) {
@@ -83,12 +95,12 @@ export const productListModule = (function () {
 
     }
 
-    function getFavouriteProducts() {
-        let key = "favourite_products"
-        let favourite_products = getLocalWithExpiry(key) || []
+    function getSelectedItems() {
+        let key = "selected_items"
+        let selected_items = getLocalWithExpiry(key) || []
         let parent_component = `menu_product_list`
 
-        $.map(favourite_products, function (v, i) {
+        $.map(selected_items, function (v, i) {
             $.ajax({
                 url: `/api/v1/inventory/products/${v}/`,
                 method: "GET",
@@ -100,6 +112,7 @@ export const productListModule = (function () {
                     $(document).find(`.${parent_component}`).append(
                         "<br>"
                     )
+                    toggleSelectedItem(data.data.uuid);
                 },
                 error: function (xhr, status, error) {
                     // Handle errors here
@@ -113,6 +126,6 @@ export const productListModule = (function () {
     // Public methods
     return {
         getProducts: getProducts,
-        getFavouriteProducts: getFavouriteProducts,
+        getSelectedItems: getSelectedItems,
     };
 })();
