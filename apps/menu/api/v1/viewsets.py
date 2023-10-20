@@ -317,3 +317,26 @@ class MenuDocumentUploadAPIView(BaseCreateAPIView):
         instance = service.upload_document(**validated_data)
         serializer = self.get_output_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class MenuItemSearchListAPIView(BaseListAPIView):
+    service_class = MenuItemService
+    input_serializer_class = MenuItemInputSerializer
+    output_serializer_class = ProductOutputSerializer
+    pagination_class = LargeResultsSetPagination
+    permission_classes = [AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        service = self.service_class()
+        search = {
+            "search": request.GET.get("search", request.GET.get("q", None)),
+        }
+        queryset = service.list(**search).distinct("item_id")
+        items = [menu_item.item for menu_item in queryset]
+
+        page = self.paginate_queryset(items)
+        if page is not None:
+            serializer = self.get_output_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_output_serializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

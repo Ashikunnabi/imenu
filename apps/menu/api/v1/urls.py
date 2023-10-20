@@ -6,6 +6,7 @@ from .viewsets import (
     MenuDocumentUploadAPIView,
     MenuItemListAPIView,
     MenuItemRetrieveUpdateDestroyAPIView,
+    MenuItemSearchListAPIView,
     MenuListAPIView,
     MenuRetrieveUpdateDestroyAPIView,
     MenuTypeListCreateAPIView,
@@ -59,5 +60,10 @@ urlpatterns = [
         "<uuid:menu_uuid>/upload-document/",
         MenuDocumentUploadAPIView.as_view(),
         name="menu_document_upload",
+    ),
+    path(
+        "search/items/",
+        MenuItemSearchListAPIView.as_view(),
+        name="menu_item_search_list",
     ),
 ]

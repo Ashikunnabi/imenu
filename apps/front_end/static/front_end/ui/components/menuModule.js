@@ -79,6 +79,36 @@ export const menuModule = (function () {
 
     }
 
+    function initiateProductSlider(container_class) {
+        if (jQuery(`.${container_class}`).length > 0) {
+            var swiperRecomandSwiper = new Swiper('.product-swiper', {
+                speed: 500,
+                parallax: true,
+                slidesPerView: 'auto',
+                spaceBetween: 0,
+                loop: false,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+            });
+        }
+    }
+
+    function toggleSelectedItem(uuid) {
+        let key = "selected_items"
+        let selected_items = getLocalWithExpiry(key) || []
+
+        if (selected_items.includes(uuid)) {
+            $(document).find(`.${uuid}`).addClass("active")
+            $(document).find(`.${uuid}`).text("Selected")
+        }
+    }
+
     function getMenuItems(menu_uuid) {
         $.ajax({
             url: `/api/v1/menus/${menu_uuid}/items/`,
@@ -100,40 +130,58 @@ export const menuModule = (function () {
                 console.error("AJAX request failed:", status, error);
             }
         });
+    }
 
-        function initiateProductSlider(container_class) {
-            if (jQuery(`.${container_class}`).length > 0) {
-                var swiperRecomandSwiper = new Swiper('.product-swiper', {
-                    speed: 500,
-                    parallax: true,
-                    slidesPerView: 'auto',
-                    spaceBetween: 0,
-                    loop: false,
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
+    function getSearchItems() {
+        let parent_search_result_class_name = "search-result-bx"
+        let search_result_title_class_name = "search-result-title"
+        let search_result_class_name = "search-result-items"
+        $(document).find(`.${parent_search_result_class_name}`).hide()
+
+        $(document).on('change paste keyup', '.search-input,.form-control', function () {
+            $(document).find(`.${parent_search_result_class_name}`).show()
+
+            if ($(this).val().length > 0) {
+                let search_text = $(this).val()
+
+                $.ajax({
+                    url: `/api/v1/menus/search/items/?is_pinned=0&search=${search_text}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        // Handle the successful response here
+                        $(document).find(`.${search_result_class_name}`).html("")
+                        $(document).find(`.${search_result_title_class_name}`).html(`We found ${data.data.length} results for "${search_text}"`)
+
+                        $.map(data.data, function (v, i) {
+                            $(document).find(`.${search_result_class_name}`).append(
+                                menuItemHTML(v)
+                            )
+                            toggleSelectedItem(v.uuid)
+                        })
+
+                        if (data.data.length < 1) {
+                            $(document).find(`.${search_result_title_class_name}`).html(`Sorry, we found ${data.data.length} results for "${search_text}"`)
+                            $(document).find(`.${search_result_class_name}`).html("<span style='margin: 0 auto'>No results found</span>")
+                        } else {
+                            initiateProductSlider("product-swiper")
+                        }
                     },
-                    pagination: {
-                        el: ".swiper-pagination",
-                        clickable: true,
-                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors here
+                        console.error("AJAX request failed:", status, error);
+                        $(document).find(`.${search_result_class_name}`).html("No results found")
+                    }
                 });
+            } else {
+                $(document).find(`.${parent_search_result_class_name}`).hide()
             }
-        }
-
-        function toggleSelectedItem(uuid) {
-            let key = "selected_items"
-            let selected_items = getLocalWithExpiry(key) || []
-
-            if (selected_items.includes(uuid)) {
-                $(document).find(`.${uuid}`).addClass("active")
-                $(document).find(`.${uuid}`).text("Selected")
-            }
-        }
+        })
     }
 
     // Public methods
     return {
         getMenus: getMenus,
+        getSearchItems: getSearchItems,
     };
 })();

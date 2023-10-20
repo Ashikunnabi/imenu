@@ -4,3 +4,4 @@ import { menuModule } from "../components/menuModule.js";
 
 // categoryModule.getCategories(1);
 menuModule.getMenus();
+menuModule.getSearchItems();
