@@ -170,7 +170,7 @@ export const menuModule = (function () {
                     error: function (xhr, status, error) {
                         // Handle errors here
                         console.error("AJAX request failed:", status, error);
-                        $(document).find(`.${search_result_class_name}`).html("No results found")
+                        $(document).find(`.${search_result_class_name}`).html("<span style='margin: 0 auto'>No results found</span>")
                     }
                 });
             } else {
