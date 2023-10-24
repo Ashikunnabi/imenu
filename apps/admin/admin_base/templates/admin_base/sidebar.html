@@ -38,7 +38,7 @@
     {% if "tab_home_page" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_home_page_a"
-            data-target="#sidebar_option_home_page_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_home_page_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-home"></i>
             <span>Home Page</span>
         </a>
@@ -89,7 +89,7 @@
     {% if "rbac.view_user" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_user_management_a"
-            data-target="#sidebar_option_user_management_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_user_management_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-users"></i>
             <span>User Management</span>
         </a>
@@ -101,9 +101,9 @@
                 <a class="collapse-item" href="{% url 'admin:admin_rbac:user_list' %}"
                     id="sidebar_option_user_management_user">User</a>
                 {% endif %}
-                {% if "auth.view_group" in CURRENT_USER_PERMISSIONS %}
+                <!-- {% if "auth.view_group" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_rbac:group_list' %}"
-                    id="sidebar_option_user_management_group">Group</a>
+                    id="sidebar_option_user_management_group">Group</a> -->
                 {% endif %}
                 {% if "sub_tab_user_management_sales_reps" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_user_panel:sales_reps_list' %}"
@@ -120,7 +120,7 @@
 
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_dealer_management_a"
-            data-target="#sidebar_option_dealer_management_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_dealer_management_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-user-circle"></i>
             <span>Dealer Management</span>
         </a>
@@ -138,7 +138,7 @@
     {% if "tab_stock_management" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_stock_management_a"
-            data-target="#sidebar_option_stock_management_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_stock_management_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-chart-bar"></i>
             <span>Stock Management</span>
         </a>
@@ -166,7 +166,7 @@
     {% if "tab_order_management" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_order_management_a"
-            data-target="#sidebar_option_order_management_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_order_management_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-cubes"></i>
             <span>Order Management</span>
         </a>
@@ -202,7 +202,7 @@
     {% if "inventory.view_product" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_inventory_a"
-            data-target="#sidebar_option_inventory_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_inventory_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-hamburger"></i>
             <span>Inventory</span>
         </a>
@@ -210,14 +210,14 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Control Inventory:</h6>
-                {% if "inventory.view_attributegroup" in CURRENT_USER_PERMISSIONS %}
+                <!-- {% if "inventory.view_attributegroup" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:attribute_group_list' %}"
                     id="sidebar_option_inventory_attribute_group">Attribute Group</a>
                 {% endif %}
                 {% if "inventory.view_attribute" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:attribute_list' %}"
                     id="sidebar_option_inventory_attribute">Attribute</a>
-                {% endif %}
+                {% endif %} -->
                 {% if "inventory.view_brand" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:brand_list' %}"
                     id="sidebar_option_inventory_brand">Brand</a>
@@ -234,10 +234,10 @@
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:product_list' %}"
                     id="sidebar_option_inventory_product">Product</a>
                 {% endif %}
-                {% if "inventory.view_product" in CURRENT_USER_PERMISSIONS %}
+                <!-- {% if "inventory.view_product" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:supplier_list' %}"
                     id="sidebar_option_inventory_supplier">Supplier</a>
-                {% endif %}
+                {% endif %} -->
                 {% if "inventory.view_type" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:type_list' %}"
                     id="sidebar_option_inventory_type">Type</a>
@@ -250,10 +250,10 @@
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:vat_list' %}"
                     id="sidebar_option_inventory_vat">Vat</a>
                 {% endif %}
-                {% if "inventory.view_warehouse" in CURRENT_USER_PERMISSIONS %}
+                <!-- {% if "inventory.view_warehouse" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_inventory:warehouse_list' %}"
                     id="sidebar_option_inventory_warehouse">Warehouse</a>
-                {% endif %}
+                {% endif %} -->
             </div>
         </div>
     </li>
@@ -262,7 +262,7 @@
     {% if "menu.view_menu" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_menu_a"
-            data-target="#sidebar_option_menu_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_menu_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-hamburger"></i>
             <span>Menu</span>
         </a>
@@ -285,7 +285,7 @@
     {% if "table.view_table" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_table_a"
-            data-target="#sidebar_option_table_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_table_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-hamburger"></i>
             <span>Table</span>
         </a>
@@ -309,7 +309,7 @@
     {% if "tab_others" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_others_a"
-            data-target="#sidebar_option_others_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_others_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-hamburger"></i>
             <span>Others</span>
         </a>
@@ -337,7 +337,7 @@
     {% if "__shop.view_shop" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_shop_management_a"
-            data-target="#sidebar_option_shop_management_options" aria-expanded="true" aria-controls="collapseTwo">
+            data-target="#sidebar_option_shop_management_options" aria-expanded="false" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-store"></i>
             <span>Shop Management</span>
         </a>

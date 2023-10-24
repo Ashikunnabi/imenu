@@ -321,7 +321,6 @@ class Product {
         if (default_value) {
             let newOption = new Option(default_value.text, default_value.id, true, true);
             $('#type_uuid').append(newOption).trigger('change');
-            console.log(default_value)
         }
     }
 
