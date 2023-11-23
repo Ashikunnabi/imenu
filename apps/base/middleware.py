@@ -23,7 +23,6 @@ class LoginRequiredMiddleware(MiddlewareMixin):
             # if not any(m.match(path) for m in EXEMPT_URLS):
             if path.startswith("admin"):
                 return redirect(settings.LOGIN_URL + "?next=/" + path)
-            pass
         else:
             if not request.user.is_active:
                 logout(request)
