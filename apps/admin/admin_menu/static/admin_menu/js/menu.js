@@ -332,6 +332,7 @@ class Menu {
                 if (menu_edit_form_data.has('start_at')) menu_edit_form_data.set('start_at', moment($("#start_at").val()).format("YYYY-MM-DDTHH:mm:ss"));
                 if (menu_edit_form_data.has('end_at')) menu_edit_form_data.set('end_at', moment($("#end_at").val()).format("YYYY-MM-DDTHH:mm:ss"));
                 if (!menu_edit_form_data.has('is_active')) menu_edit_form_data.append('is_active', 0);
+                if (menu_edit_form_data.has('is_active')) menu_edit_form_data.append('is_active', 1);
                 if (!menu_edit_form_data.has('is_pinned')) menu_edit_form_data.append('is_pinned', 0);
 
                 // submit an ajax request to the api endpoint
