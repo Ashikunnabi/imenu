@@ -86,38 +86,6 @@
     </li>
     {% endif %}
 
-    {% if "rbac.view_user" in CURRENT_USER_PERMISSIONS %}
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_user_management_a"
-            data-target="#sidebar_option_user_management_options" aria-expanded="false" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-users"></i>
-            <span>User Management</span>
-        </a>
-        <div id="sidebar_option_user_management_options" class="collapse" aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Control Users:</h6>
-                {% if "rbac.view_user" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_rbac:user_list' %}"
-                    id="sidebar_option_user_management_user">User</a>
-                {% endif %}
-                <!-- {% if "auth.view_group" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_rbac:group_list' %}"
-                    id="sidebar_option_user_management_group">Group</a> -->
-                {% endif %}
-                {% if "sub_tab_user_management_sales_reps" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_user_panel:sales_reps_list' %}"
-                    id="sidebar_option_user_management_sales_reps">Sales Reps</a>
-                {% endif %}
-                {% if "sub_tab_user_management_dealer" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_dealer:dealer_list' %}"
-                    id="sidebar_option_dealer_management_dealer">Dealer</a>
-                {% endif %}
-            </div>
-        </div>
-    </li>
-    {% endif %}
-
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_dealer_management_a"
             data-target="#sidebar_option_dealer_management_options" aria-expanded="false" aria-controls="collapseTwo">
@@ -157,42 +125,6 @@
                 {% if "sub_tab_stock_management_stock_transaction" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_stock_management:stock_transaction_list' %}"
                     id="sidebar_option_stock_management_stock_transaction">Stock Transaction</a>
-                {% endif %}
-            </div>
-        </div>
-    </li>
-    {% endif %}
-
-    {% if "tab_order_management" in CURRENT_USER_PERMISSIONS %}
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_order_management_a"
-            data-target="#sidebar_option_order_management_options" aria-expanded="false" aria-controls="collapseTwo">
-            <i class="fas fa-cubes"></i>
-            <span>Order Management</span>
-        </a>
-        <div id="sidebar_option_order_management_options" class="collapse" aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Control orders:</h6>
-                {% if "sub_tab_order_management_order" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_order:order_list' %}"
-                    id="sidebar_option_order_management_order">Order</a>
-                {% endif %}
-                {% if "sub_tab_order_management_finale_invoice" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_order:finale_invoice_list' %}"
-                    id="sidebar_option_order_management_finale_invoice">Finale Invoice</a>
-                {% endif %}
-                {% if "sub_tab_order_management_manufacturer_invoice" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_order:manufacturer_invoice_list' %}"
-                    id="sidebar_option_order_management_manufacturer_invoice">Manufacturer Invoice</a>
-                {% endif %}
-                {% if "sub_tab_order_management_sales_order" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_order:sales_order_list' %}"
-                    id="sidebar_option_order_management_sales_order">Sales Order</a>
-                {% endif %}
-                {% if "sub_tab_order_management_purchase_order" in CURRENT_USER_PERMISSIONS %}
-                <a class="collapse-item" href="{% url 'admin:admin_order:purchase_order_list' %}"
-                    id="sidebar_option_order_management_purchase_order">Purchase Order</a>
                 {% endif %}
             </div>
         </div>
@@ -282,6 +214,42 @@
     </li>
     {% endif %}
 
+    {% if "order.view_order" in CURRENT_USER_PERMISSIONS %}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_order_management_a"
+            data-target="#sidebar_option_order_management_options" aria-expanded="false" aria-controls="collapseTwo">
+            <i class="fas fa-cubes"></i>
+            <span>Order Management</span>
+        </a>
+        <div id="sidebar_option_order_management_options" class="collapse" aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Control orders:</h6>
+                {% if "order.view_order" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_order:order_list' %}"
+                    id="sidebar_option_order_management_order">Orders</a>
+                {% endif %}
+                {% if "sub_tab_order_management_finale_invoice" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_order:finale_invoice_list' %}"
+                    id="sidebar_option_order_management_finale_invoice">Finale Invoice</a>
+                {% endif %}
+                {% if "sub_tab_order_management_manufacturer_invoice" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_order:manufacturer_invoice_list' %}"
+                    id="sidebar_option_order_management_manufacturer_invoice">Manufacturer Invoice</a>
+                {% endif %}
+                {% if "sub_tab_order_management_sales_order" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_order:sales_order_list' %}"
+                    id="sidebar_option_order_management_sales_order">Sales Order</a>
+                {% endif %}
+                {% if "sub_tab_order_management_purchase_order" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_order:purchase_order_list' %}"
+                    id="sidebar_option_order_management_purchase_order">Purchase Order</a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
     {% if "table.view_table" in CURRENT_USER_PERMISSIONS %}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_table_a"
@@ -300,6 +268,38 @@
                 {% if "table.view_table" in CURRENT_USER_PERMISSIONS %}
                 <a class="collapse-item" href="{% url 'admin:admin_table:table_list' %}"
                     id="sidebar_option_table">Table</a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
+
+    {% if "rbac.view_user" in CURRENT_USER_PERMISSIONS %}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" id="sidebar_option_user_management_a"
+            data-target="#sidebar_option_user_management_options" aria-expanded="false" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-users"></i>
+            <span>User Management</span>
+        </a>
+        <div id="sidebar_option_user_management_options" class="collapse" aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Control Users:</h6>
+                {% if "rbac.view_user" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_rbac:user_list' %}"
+                    id="sidebar_option_user_management_user">User</a>
+                {% endif %}
+                <!-- {% if "auth.view_group" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_rbac:group_list' %}"
+                    id="sidebar_option_user_management_group">Group</a> -->
+                {% endif %}
+                {% if "sub_tab_user_management_sales_reps" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_user_panel:sales_reps_list' %}"
+                    id="sidebar_option_user_management_sales_reps">Sales Reps</a>
+                {% endif %}
+                {% if "sub_tab_user_management_dealer" in CURRENT_USER_PERMISSIONS %}
+                <a class="collapse-item" href="{% url 'admin:admin_dealer:dealer_list' %}"
+                    id="sidebar_option_dealer_management_dealer">Dealer</a>
                 {% endif %}
             </div>
         </div>
