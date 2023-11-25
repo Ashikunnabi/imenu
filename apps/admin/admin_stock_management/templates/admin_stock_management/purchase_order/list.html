@@ -47,7 +47,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>
-    const po_api_url = "{% url 'main:user_panel:api:v1:purchase_order-list' %}?is_ready_for_processing=1";
+    const po_api_url = "{% url 'apps:user_panel:api:v1:purchase_order-list' %}?is_ready_for_processing=1";
     const po_add_url = "{% url 'admin:admin_order:purchase_order_add' %}";
     const page = 'list';
 </script>

@@ -355,7 +355,7 @@ business:
     - phone-volume
     - print
     - project-diagram
-    - registered
+    - Registered
     - save
     - sitemap
     - socks
@@ -885,7 +885,7 @@ finance:
     - balance-scale-left
     - balance-scale-right
     - book
-    - cash-register
+    - cash-Register
     - chart-line
     - chart-pie
     - coins
@@ -1361,7 +1361,7 @@ interfaces:
     - wifi
     - wrench
   label: Interfaces
-logistics:
+loinventory.tics:
   icons:
     - box
     - boxes
@@ -1374,7 +1374,7 @@ logistics:
     - shipping-fast
     - truck
     - warehouse
-  label: Logistics
+  label: Loinventory.tics
 maps:
   icons:
     - ambulance
@@ -2133,7 +2133,7 @@ shopping:
     - barcode
     - cart-arrow-down
     - cart-plus
-    - cash-register
+    - cash-Register
     - gift
     - gifts
     - person-booth

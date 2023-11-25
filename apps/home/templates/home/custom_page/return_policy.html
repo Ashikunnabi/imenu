@@ -1,0 +1,138 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/css/custom_page/return_policy/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- General notice for all -->
+{% include 'home/notice.html' %}
+<!-- Start menu -->
+{% include 'home/nav_category.html' %}
+<!-- / menu -->
+<!-- banner -->
+<div class="entry-content th-container snipcss-HV4r7">
+    <div class="th-page-content">
+<br>
+<br>
+        <p>
+            <b>
+                <strong>
+                    <span data-custom-class="subtitle">
+                        Last updated&nbsp;January 11, 2021
+                    </span>
+                </strong>
+            </b>
+        </p>
+        <p data-custom-class="body_text">
+            Thank you for your purchase. We hope you are happy with your purchase. However, if you are not completely
+            satisfied with your purchase for any reason, you may return it to us for&nbsp;a full refund only. Please see
+            below for more information on our return policy.
+        </p>
+        <p data-custom-class="heading_1">
+            <b>
+                <strong>
+                    RETURNS
+                </strong>
+            </b>
+        </p>
+        <p data-custom-class="body_text">
+            All returns must be postmarked within&nbsp;thirty (30)&nbsp;days of the purchase date. All returned items
+            must be in new and unused condition, with all original tags and labels attached.
+        </p>
+        <p data-custom-class="heading_1">
+            <b>
+                <strong>
+                    RETURN PROCESS
+                </strong>
+            </b>
+        </p>
+        <p data-custom-class="body_text">
+            To return an item,&nbsp;please email customer service at&nbsp;sales@giswholesale.com&nbsp;to obtain a Return
+            Merchandise Authorization (RMA) number. After receiving a RMA number,&nbsp;place the item securely in its
+            original packaging&nbsp;and include your proof of purchase,&nbsp;and mail your return to the following
+            address:
+        </p>
+        <p data-custom-class="body_text">
+            GIS Wholesale
+        </p>
+        <p data-custom-class="body_text">
+            Attn: Returns
+        </p>
+        <p data-custom-class="body_text">
+            RMA #
+        </p>
+        <p data-custom-class="body_text">
+            2060 N Collins Blvd
+            <br>
+            Richardson, TX 75080
+        </p>
+        <p data-custom-class="body_text">
+            United States
+        </p>
+        <p data-custom-class="body_text">
+            You may also use the prepaid shipping label enclosed with your package.&nbsp;Return shipping charges will be
+            paid or reimbursed by us.
+        </p>
+        <p data-custom-class="heading_1">
+            <b>
+                <strong>
+                    REFUNDS
+                </strong>
+            </b>
+        </p>
+        <p>
+            &nbsp;
+        </p>
+        <p data-custom-class="body_text">
+            After receiving your return and inspecting the condition of your item, we will process your&nbsp;return.
+            Please allow at least&nbsp;seven (7)&nbsp;days from the receipt of your item to process
+            your&nbsp;return.&nbsp;Refunds may take 1-2 billing cycles to appear on your credit card statement,
+            depending on your credit card company.&nbsp;We will notify you by email when your return has been processed.
+        </p>
+        <p>
+            &nbsp;
+        </p>
+        <p data-custom-class="heading_1">
+            <b>
+                <strong>
+                    EXCEPTIONS &nbsp;
+                </strong>
+            </b>
+        </p>
+        <p data-custom-class="body_text">
+            For defective or damaged products, please contact us at the customer service number below to arrange a
+            refund or exchange.
+        </p>
+        <p data-custom-class="heading_1">
+            <b>
+                <strong>
+                    QUESTIONS
+                </strong>
+            </b>
+        </p>
+        <p data-custom-class="body_text">
+            If you have any questions concerning our return policy, please contact us at:
+        </p>
+        <p data-custom-class="body_text">
+            sales@giswholesale.com
+        </p>
+    </div>
+</div>
+<br>
+<br>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+    const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+</script>
+
+<!-- General Notice JS -->
+<script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+<!-- NavCategory JS -->
+<script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

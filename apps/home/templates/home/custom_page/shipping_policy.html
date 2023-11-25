@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/css/custom_page/shipping_policy/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- General notice for all -->
+{% include 'home/notice.html' %}
+<!-- Start menu -->
+{% include 'home/nav_category.html' %}
+<!-- / menu -->
+<!-- banner -->
+<div class="entry-content th-container snipcss-7FcS6">
+    <div class="th-page-content">
+        <p>
+            <img decoding="async" class="aligncenter wp-image-11983 size-large"
+                src="https://giswholesale.com/wp-content/uploads/2022/05/warehouse-1024x512.jpg" alt="" width="1024"
+                height="512"
+                srcset="https://giswholesale.com/wp-content/uploads/2022/05/warehouse-1024x512.jpg 1024w, https://giswholesale.com/wp-content/uploads/2022/05/warehouse-scaled-300x150.jpg 300w, https://giswholesale.com/wp-content/uploads/2022/05/warehouse-scaled-600x300.jpg 600w, https://giswholesale.com/wp-content/uploads/2022/05/warehouse-768x384.jpg 768w, https://giswholesale.com/wp-content/uploads/2022/05/warehouse-1536x768.jpg 1536w, https://giswholesale.com/wp-content/uploads/2022/05/warehouse-2048x1024.jpg 2048w"
+                sizes="(max-width: 1024px) 100vw, 1024px">
+        </p>
+        <p>
+            Our shipping policy varies depending on the order and the quantities being ordered. We represent the
+            manufacturers that we buy from direct. We can ship in pallets if the order is big enough. Typically, Orders
+            of $649 or more we can ship it free of charge. If our Distribution centers receives the order by 3Pm central
+            time we can ship it the same day. For pick up orders send the orders to orders@giswholesale.com or contact
+            your sales reps for same Day Pick up.
+        </p>
+        <p>
+            For damaged units or damaged shipment received call us or send email to your sales Reps for the items to be
+            replaced. You need to get RMA before any credits can be issued. Our customer service department is very good
+            in handling these claims. If you are not satisfied or face any issues regarding the claims do not hesitate
+            to contact our corporate office at csa@giswholesale.com.
+        </p>
+        <p>
+            For our vendor partners, we usually receive shipments through our Fedex or UPS accounts. Our account name
+            can be found by searching GIS Wholesale in their Database. If you are shipping it using your accounts please
+            let our sales team know about the Pro number or provide Tracking information at sales@giswholsale.com.
+        </p>
+        <p>
+            For International shipment or any questions regarding please contact csa@giswholesale.com and he can assist
+            with the tariffs and customs. Please do note that these policies are handled through our corporate office
+            and it might change anytime without prior Notices. For full updated shipping policies please ask your
+            account rep. TERMS &amp; CONDITIONS APPLY.
+        </p>
+        <p>
+            GIS Wholesale Tools only ships within the Continental US. Orders are typically processed and shipped within
+            72 hours of being placed. You will receive a tracking number once your order has been processed. All orders
+            are shipped FedEx Ground unless otherwise specified.
+        </p>
+    </div>
+</div>
+
+<br>
+<br>
+{% endblock %}
+
+{% block js %}
+<script>
+    const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+    const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+</script>
+
+<!-- General Notice JS -->
+<script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+<!-- NavCategory JS -->
+<script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

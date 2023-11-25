@@ -81,30 +81,41 @@ class Attribute {
                                         dt.ajax.reload()
                                     },
                                     error: function (response) {
-                                        if (response.status === 422) {
-                                            let errors = '';
-                                            $.map(response.responseJSON.details, function (v, i) {
-                                                $.each(v, function (j, k) {
-                                                    errors += `<li>${i}: ${k}</l1>`;
-                                                })
-                                            });
-                                            let final_error = `<ul>${errors}</ul>`;
-
-                                            $('.failed')
-                                                .html(final_error)
-                                                .css('display', 'block')
-                                        }
+                                        let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
+                        }
                                     }
                                 });
                             }
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -129,13 +140,17 @@ class Attribute {
                         return (table.page.info()['start'] + meta['row'] + 1);
                     }
                 },
-                {
+                                {
                     "targets": [2],
                     "visible": true,
                     "searchable": true,
                     "render": function (data, type, row, meta) {
                         let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
                         let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Active"
+                            return "Inactive"
+                        }
                         if (data) return active_html
                         return inactive_html
                     },
@@ -224,9 +239,7 @@ class Attribute {
                         window.location.href = attribute_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

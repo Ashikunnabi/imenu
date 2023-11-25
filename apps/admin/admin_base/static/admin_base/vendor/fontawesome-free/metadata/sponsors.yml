@@ -673,11 +673,11 @@ uncharted:
     - uncharted
   label: Uncharted Software
   url: 'https://uncharted.software'
-uniregistry:
+uniRegistry:
   icons:
-    - uniregistry
-  label: Uniregistry
-  url: 'https://uniregistry.com'
+    - uniRegistry
+  label: UniRegistry
+  url: 'https://uniRegistry.com'
 us-sunnah-foundation:
   icons:
     - ussunnah

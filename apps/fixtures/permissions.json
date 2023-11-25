@@ -75,7 +75,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Tab - Inventory",
+            "name": "Tab - inventory",
             "code": "tab_inventory"
         }
     },
@@ -427,7 +427,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Sub Tab - Inventory - Warehouse",
+            "name": "Sub Tab - inventory - Warehouse",
             "code": "sub_tab_inventory_warehouse"
         }
     },
@@ -443,7 +443,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Sub Tab - Inventory - Brand",
+            "name": "Sub Tab - inventory - Brand",
             "code": "sub_tab_inventory_brand"
         }
     },
@@ -459,7 +459,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Sub Tab - Inventory - Product Category",
+            "name": "Sub Tab - inventory - Product Category",
             "code": "sub_tab_inventory_product_category"
         }
     },
@@ -475,7 +475,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Sub Tab - Inventory - Product",
+            "name": "Sub Tab - inventory - Product",
             "code": "sub_tab_inventory_product"
         }
     },
@@ -539,7 +539,7 @@
             "is_active": true,
             "is_soft_deleted": false,
             "soft_deleted_at": null,
-            "name": "Sub Tab - Inventory - Product Attribute Type",
+            "name": "Sub Tab - inventory - Product Attribute Type",
             "code": "sub_tab_inventory_product_attribute_type"
         }
     },

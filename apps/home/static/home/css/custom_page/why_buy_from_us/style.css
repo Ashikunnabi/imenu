@@ -1,0 +1,63 @@
+.banner_main {
+     display: inline-block;
+     width: 100%;
+     color: grey;
+}
+h3 {
+     font-size: 30px;
+    font-weight: 700;
+     font-family: "Arial";
+     padding: 5px;
+     color: #4b6db5;
+     text-align: left;
+}
+.blue_color {
+     color: #4b6db5;
+}
+img {
+     width: 50%;
+}
+
+.content {
+     display: flex;
+}
+#left {
+     width: 80%;
+     padding: 30px ;
+}
+#right {
+     margin-left: 10px;
+     width: 20%;
+}
+#right img{
+     text-align: right;
+}
+
+
+
+.number {
+     font-weight: 700;
+    font-size: 30px;
+    color: #4b6db5;
+}
+
+.separator {
+     border: 1px solid grey;
+     width: 80%;
+     background-color: grey;
+     margin-bottom: 30px;
+}
+
+.banner_main .container .two_column {
+     display: flex;
+     height: auto;
+}
+
+.banner_main .container .two_column {
+     display: flex;
+}
+
+.banner_main .container .two_column p{
+     padding: 50px;
+}
+

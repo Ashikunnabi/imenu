@@ -15,7 +15,7 @@
                         Report</a> -->
         </div>
         <p class="mb-4">
-            Users are valuable. See list of registered user.
+            Users are valuable. See list of Registered user.
             Only active staff can be an admin of this system.
         </p>
 
@@ -33,7 +33,7 @@
                             <label for="name">Username: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="username" name="username"
                                 data-parsley-maxlength="256" placeholder="Enter username here (max 256 chars)."
-                                required>
+                                autocomplete="off" required>
                         </div>
 
                         <div class="form-group">
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label for="password">Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter password here." required>
+                                placeholder="Enter password here."  autocomplete="off" minlength="8" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -58,7 +58,7 @@
 
                         <div class="form-group">
                             <label for="phone">Phone: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
+                            <input type="number" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
                                 placeholder="Enter phone number here (max 12 chars)." required>
                         </div>
 
@@ -66,7 +66,7 @@
                             <label for="password1">Confirm Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password1" name="password1"
                                 placeholder="Retype password here." data-parsley-equalto="#password"
-                                data-parsley-trigger="change" required>
+                                data-parsley-trigger="change"  autocomplete="off" required>
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_application_document">Application
-                                Document: </label>
+                            <label for="company_application_document">Image 1: </label>
                             <input type="file" class="form-control" id="company_application_document"
                                 name="company_application_document">
                         </div>
@@ -89,15 +88,14 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_store_front">Store Front:</label>
+                            <label for="company_store_front">Image 2:</label>
                             <input type="file" class="form-control" id="company_store_front" name="company_store_front">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_commercial_location">Commercial
-                                Location: </label>
+                            <label for="company_commercial_location">Image 3: </label>
                             <input type="file" class="form-control" id="company_commercial_location"
                                 name="company_commercial_location">
                         </div>
@@ -105,8 +103,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_reseller_permit">Reseller
-                                Permit: </label>
+                            <label for="company_reseller_permit">Image 4: </label>
                             <input type="file" class="form-control" id="company_reseller_permit"
                                 name="company_reseller_permit">
                         </div>
@@ -114,8 +111,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_retail_sales_floor">Retail
-                                Sales Floor: </label>
+                            <label for="company_retail_sales_floor">Image 5: </label>
                             <input type="file" class="form-control" id="company_retail_sales_floor"
                                 name="company_retail_sales_floor">
                         </div>
@@ -148,7 +144,7 @@
 
 {% block js %}
 <script>
-    const user_api_url = "{% url 'core:rbac:api:v1:user-list-create' %}";
+    const user_api_url = "{% url 'apps:rbac:api:v1:user_list_create' %}";
     const user_list_url = "{% url 'admin:admin_rbac:user_list' %}";
 </script>
 

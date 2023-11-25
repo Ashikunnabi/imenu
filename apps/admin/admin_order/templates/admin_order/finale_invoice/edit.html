@@ -36,8 +36,8 @@
 
 {% block js %}
     <script>
-        const dealer_api_url = "{% url 'core:rbac:api:v1:dealer-list' %}";
-        const finale_invoice_api_url = "{% url 'main:user_panel:api:v1:finale_invoice-list' %}";
+        const dealer_api_url = "{% url 'apps:rbac:api:v1:dealer-list' %}";
+        const finale_invoice_api_url = "{% url 'apps:user_panel:api:v1:finale_invoice-list' %}";
         const uuid = "{{ uuid }}";
     </script>
 

@@ -86,7 +86,7 @@
 
 {% block js %}
     <script>
-        const useful_link_api_url = "{% url 'main:home:api:v1:useful_link-list' %}";
+        const useful_link_api_url = "{% url 'apps:home:api:v1:useful_link-list' %}";
         const useful_link_list_url = "{% url 'admin:admin_home:useful_link_list' %}";
         const hashed_id = "{{ hashed_id }}";
         const page = 'edit';

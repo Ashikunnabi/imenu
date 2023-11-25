@@ -382,7 +382,7 @@
                     </table>
                 </div>
             </div>
-            <div class="section3"><textarea id="url" style="resize:auto">https://giswholesale.com</textarea></div>
+            <div class="section3"><textarea id="url" style="resize:auto">https://inventory.wholesale.com</textarea></div>
             <br>
             <div class="section4">
                 <div>
@@ -394,7 +394,7 @@
                         </select>
                         <textarea id="supplier_address"
                             onchange="$(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);"
-                            onkeyup="$(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);">GIS Wholesale &#13;&#10;1225 W College Ave, &#13;&#10;Carrollton, TX 75006 USA&#13;&#10;</textarea>
+                            onkeyup="$(this).css('height', 'auto').css('height', this.scrollHeight + this.offsetHeight - this.clientHeight);">inventoryWholesale &#13;&#10;1225 W College Ave, &#13;&#10;Carrollton, TX 75006 USA&#13;&#10;</textarea>
                     </p>
                 </div>
                 <div
@@ -506,7 +506,7 @@
 
 
 <script>
-    const po_api_url = "{% url 'main:user_panel:api:v1:purchase_order-list' %}";
+    const po_api_url = "{% url 'apps:user_panel:api:v1:purchase_order-list' %}";
     const po_list_url = "{% url 'admin:admin_order:purchase_order_list' %}";
     const uuid = "{{ uuid }}";
     const page = 'edit';

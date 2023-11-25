@@ -85,11 +85,26 @@ class Group {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -125,13 +140,17 @@ class Group {
                         return `<a href="/media/${data}" target="_blank">Image</a>`;
                     },
                 },
-                {
-                    "targets": [4],
+                                {
+                    "targets": [5],
                     "visible": true,
                     "searchable": true,
                     "render": function (data, type, row, meta) {
                         let active_html = `<i class="fa fa-solid fa-check color_green"></i>`
                         let inactive_html = `<i class="fa fa-times color_red"></i>`
+                        if (type === "export") {
+                            if (data) return "Active"
+                            return "Inactive"
+                        }
                         if (data) return active_html
                         return inactive_html
                     },
@@ -224,9 +243,7 @@ class Group {
                         window.location.href = group_list_url;
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }
@@ -268,9 +285,7 @@ class Group {
                 }
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };
@@ -305,9 +320,7 @@ class Group {
                         notify("Success", 'success')
                     },
                     error: function (response) {
-                        $.each(response.responseJSON.error, function (i, v) {
-                            notify(`${i.toUpperCase()} - ${v}`, 'error')
-                        })
+                        notify(`${response.responseJSON.message}`, 'error')
                     }
                 });
             }

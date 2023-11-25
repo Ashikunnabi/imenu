@@ -1,0 +1,13 @@
+h3, h4 {
+    font-weight: bold;
+}
+.account_center {
+    background-color: #d6d6d6;
+    padding: 5px;
+}
+.account_center h5 span{
+    float: right;
+}
+.account_information {
+    margin-top: 30px;
+}

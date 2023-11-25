@@ -1,13 +1,12 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.urls.static import static
-from django.conf import settings
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path("admin/", include("apps.admin.urls")),
-    path("", include("apps.core.urls")),
-    path("", include("apps.main.urls")),
+    path("", include("apps.urls")),
 ]
 
 # static and media url controll
@@ -19,7 +18,7 @@ if settings.DEBUG:
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True
     )
 
-handler400 = "apps.core.base.views.handler400"
-handler403 = "apps.core.base.views.handler403"
-handler404 = "apps.core.base.views.handler404"
-handler500 = "apps.core.base.views.handler500"
+handler400 = "apps.base.views.handler400"
+handler403 = "apps.base.views.handler403"
+handler404 = "apps.base.views.handler404"
+handler500 = "apps.base.views.handler500"
