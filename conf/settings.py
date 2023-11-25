@@ -16,7 +16,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.getenv("DEBUG"))
 
-ALLOWED_HOSTS = []
+# comma separeted value without any space. e.g. 123,456,789
+ALLOWED_HOSTS = (os.getenv("ALLOWED_HOSTS")).split(",") or []
 
 # Application definition
 DJANGO_APPS = [
@@ -36,27 +37,35 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "apps.core.authentication",
-    "apps.core.base",
-    "apps.core.rbac",
-    "apps.core.send_email",
-    "apps.main.inventory",
-    "apps.main.user_panel",
-    "apps.main.document_generation",
-    # "apps.main.shop",
+    "apps.authentication",
+    "apps.base",
+    "apps.home",
+    "apps.document_generation",
+    "apps.inventory",
+    "apps.rbac",
+    "apps.send_email",
+    "apps.user_panel",
+    "apps.menu",
+    "apps.table",
+    "apps.shop",
+    "apps.cart",
+    "apps.front_end",
+    "apps.order",
     # admin
     "apps.admin.admin_base",
     "apps.admin.admin_home",
     "apps.admin.admin_rbac",
     "apps.admin.admin_inventory",
+    "apps.admin.admin_menu",
+    "apps.admin.admin_table",
+    "apps.admin.admin_order",
     # "apps.admin.admin_dealer",
-    # "apps.admin.admin_order",
     # "apps.admin.admin_others",
     # "apps.admin.admin_stock_management",
     # "apps.admin.admin_user_panel",
     # "apps.admin.admin_pos",
     # "apps.admin.admin_por",
-    # "apps.admin.admin_shop",
+    "apps.admin.admin_shop",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -70,10 +79,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # check user authentication
-    "apps.core.base.middleware.LoginRequiredMiddleware",
+    "apps.base.middleware.LoginRequiredMiddleware",
     # this will expose request object to rbac.models
-    "apps.core.base.middleware.RequestExposerMiddleware",
-    "apps.core.base.middleware.APIUserMiddleware",
+    "apps.base.middleware.RequestExposerMiddleware",
+    "apps.base.middleware.APIUserMiddleware",
     "auditlog.middleware.AuditlogMiddleware",
 ]
 
@@ -139,16 +148,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": (
-        "apps.core.base.rest_utils.renderers.APIJSONRenderer",
-    ),
+    "DEFAULT_RENDERER_CLASSES": ("apps.base.rest_utils.renderers.APIJSONRenderer",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # 'rest_framework.authentication.SessionAuthentication',
-        "apps.core.base.custom_authentication.CustomBasicAuthentication",
+        "apps.base.custom_authentication.CustomBasicAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),
-    "EXCEPTION_HANDLER": "apps.core.base.rest_utils.exceptions.exception_handler",
+    "EXCEPTION_HANDLER": "apps.base.rest_utils.exceptions.exception_handler",
 }
 
 # JWT config
@@ -268,11 +275,6 @@ EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = int(os.getenv("EMAIL_USE_TLS"))
-
-# Finale Inventory Configuration
-FINALE_URL = os.getenv("FINALE_URL")
-FINALE_USERNAME = os.getenv("FINALE_USERNAME")
-FINALE_PASSWORD = os.getenv("FINALE_PASSWORD")
 
 # File Encryption key!
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")

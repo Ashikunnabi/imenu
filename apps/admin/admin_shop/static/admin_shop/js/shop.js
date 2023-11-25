@@ -96,11 +96,26 @@ class Shop {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
                 // {
                 //     extend: 'print',
                 //     title: 'USERS',
@@ -215,7 +230,7 @@ class Shop {
             url: list_api_url + uuid + '/',
             type: "GET",
             success: function (resp) {
-                let data = resp
+                let data = resp.data
                 self.edit_data = data
 
                 function populate(form, data) {
@@ -245,7 +260,7 @@ class Shop {
             type: "get",
             success: function (response) {
                 let html = "";
-                $.each(response, function (i, v) {
+                $.each(response.data, function (i, v) {
                     html += `
                         <option value=${v.id}>${v.name} (${v.email})</option>
                     `

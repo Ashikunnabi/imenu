@@ -9,7 +9,7 @@
         background-color: #f5f5f5;
     }
 
-    .left {
+    .right {
         flex-grow: 1;
         height: 70vh;
         min-width: 500px;
@@ -21,7 +21,7 @@
         overflow-y: auto;
     }
 
-    .right {
+    .left {
         flex-grow: 5;
         height: 70vh;
         padding: 5px;
@@ -37,33 +37,33 @@
         justify-content: space-evenly;
     }
 
-    .left .product-name {
+    .right .product-name {
         max-width: 200px;
     }
 
-    .left .product-quantity,
-    .left .product-quantity input {
+    .right .product-quantity,
+    .right .product-quantity input {
         max-width: 50px;
     }
 
     /* Firefox */
-    .left .product-quantity input[type=number] {
+    .right .product-quantity input[type=number] {
         border: none;
         color: #858796;
     }
 
-    .left #products table tfoot {
+    .right #products table tfoot {
         border-top: 2px solid;
     }
 
-    .left #products table tfoot tr td {
+    .right #products table tfoot tr td {
         padding-top: 5px;
         padding-bottom: 5px;
     }
 
-    .right .product {
-        width: 200px;
-        height: 200px;
+    .left .product {
+        width: 300px;
+        height: 300px;
         background-color: white;
         padding: 5px;
         overflow: hidden;
@@ -72,7 +72,7 @@
         cursor: pointer;
     }
 
-    .right .product .stock {
+    .left .product .stock {
         position: absolute;
         color: white;
         padding: 2px;
@@ -80,27 +80,27 @@
         right: 0;
     }
 
-    .right .product img {
-        width: 70%;
+    .left .product img {
+        width: 50%;
     }
 
-    .right .product p {
+    .left .product p {
         width: inherit;
         text-overflow: ellipsis;
         display: block;
         overflow: hidden;
         position: absolute;
-        white-space: nowrap;
+        /* white-space: nowrap; */
         transform: translateX(0);
         transition: 5s;
     }
 
-    .right .product p:hover {
+    /* .left .product p:hover {
         width: auto;
         transform: translateX(calc(80px - 100%));
-    }
+    } */
 
-    .right .product .price {
+    .left .product .price {
         color: #4e73df;
     }
 
@@ -202,7 +202,20 @@
         </div>
         <div class="card-body">
             <div class="d-flex" style="gap:20px;">
-                <div id="pos_section" class="left">
+                <div class="left">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <select type="text" id="table_uuid" class="form-control" autofocus></select>
+                                <input type="text" id="barcode_scan_data" class="form-control"
+                                    placeholder="Barcode scan">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex" id="product_image">
+                    </div>
+                </div>
+                <div id="pos_section" class="right">
                     <div class="row" style="flex-flow:column;">
                         <div class="col">
                             <div class="form-group">
@@ -259,21 +272,9 @@
                     <!-- <input type="button" id="update_stock_submit_button" class="btn btn-primary btn-user btn-block"
                         value="Submit"> -->
                 </div>
-                <div class="right">
-                    <div class="col">
-                        <div class="form-group">
-                            <div class="input-group mb-2 mr-sm-2">
-                                <input type="text" id="barcode_scan_data" class="form-control"
-                                    placeholder="Barcode scan" autofocus>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex" id="product_image">
-                    </div>
-                </div>
             </div>
             <div class="pos-footer">
-                <div id="delete_order">
+                <div id="remove_cart">
                     Clear Cart&nbsp;&nbsp;&nbsp;<i class="fas fa-trash"></i>
                 </div>
                 <div>
@@ -363,11 +364,13 @@
 
 {% block js %}
 <script>
-    const list_api_url = "{% url 'main:shop:api:v1:shop-product-search' %}";
-    const shop_order_pos_api_url = "{% url 'main:shop:api:v1:shop-order-pos-list' %}";
-    const shop_order_pos_search_api_url = "{% url 'main:shop:api:v1:shop-order-pos-search' %}";
-    const shop_complete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-complete-order' %}";
-    const shop_delete_order_api_url = "{% url 'main:shop:api:v1:shop-order-pos-delete-order' %}";
+    const list_api_url = "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_search' %}";
+    const cart_api_url = "{% url 'apps:cart:api:v1:cart_list_create' %}";
+    const table_api_url = "{% url 'apps:table:dashboard_api:v1:dashboard_table_list_create' %}";
+    const shop_order_pos_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-list' %}";
+    const shop_order_pos_search_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-search' %}";
+    const shop_complete_order_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-complete-order' %}";
+    const shop_delete_order_api_url = "{% url 'apps:shop:api:v1:shop-order-pos-delete-order' %}";
 </script>
 
 <!-- POS JS -->

@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet"
+          href="{% static 'home/css/custom_page/why_buy_from_us/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <!-- banner -->
+    <section class="banner_main">
+        <div class="container">
+            <div class="content">
+                <div id="left">
+                    <h3>WHY BUY FROM 1120 DISTRIBUTING?</h3>
+                    <div class="separator"></div>
+                    <p>Here are <span class="number"><i>4</i></span> great
+                        reasons to choose 1120 DISTRIBUTING as one of
+                        your store’s key suppliers:</p>
+
+                    <h3>1. Variety of Products, Great Margin</h3>
+                    <div class="separator"></div>
+                    <p>With over 180,000+ SKUs from 200+ top parts and
+                        accessories
+                        brands,
+                        giswholesale.com is your source for the access to
+                        latest
+                        Automotive, RV and powersports industry products. With
+                        unmatched
+                        customer service and mix of named brands and exclusive
+                        brands
+                        at
+                        competitive prices, there is no doubt you would be
+                        diversifying
+                        your business. Looking for tuning or offroad parts?
+                        1120 has
+                        quite
+                        possibly the widest selection available.</p>
+
+                    <h3>2. Fast Delivery, Free Shipping</h3>
+                    <div class="separator"></div>
+                    <p>In addition to GIS Wholesale’s 6 own fleet of
+                        vehicles, Our
+                        popular free Ground/3Day shipping starts at orders of
+                        $649. We
+                        offer Drop shipping at a flat rate each month. We are
+                        now
+                        offering UPS Next Day for 2 Day rates and 2 Day Air for
+                        3 Day
+                        rates (larger orders see deeper air discounts). Ask
+                        your sales
+                        representative for more information.</p>
+
+                    <h3>3. Dealer Support & Service</h3>
+                    <div class="separator"></div>
+                    <p>1120’s knowledgeable staff is available toll free to
+                        help you
+                        with your order, for bulk orders and answer your
+                        questions to
+                        get you to the correct department the first time. 1120
+                        Distributing also offers you free returns and will
+                        replace the
+                        items damaged through shipments. Never worry about lost
+                        or
+                        damaged items, peace of mind is what we offer you for
+                        your
+                        business.</p>
+
+                    <h3>4. GISWHOLESALE.COM</h3>
+                    <div class="separator"></div>
+                    <p>365 DAYS 24/7 secure online real time stock checking for
+                        your
+                        convenience to order for your business needs. Also,
+                        view
+                        invoices, track packages, check closeouts and see the
+                        latest
+                        products we have added to our expanding inventory.</p>
+                </div>
+                <div id="right">
+                    <img src="https://1120distributing.com/wp-content/uploads/2020/01/dealers-wanted-star.png">
+                    <div class="separator"></div>
+                    <span class="number">FREE SHIPPING </span>
+                    <p class="blue_color">Orders over $649</p>
+                    <small><a href="{% url 'main:home:shipping_policy' %}" class="blue_color">Learn More</a></small>
+                    <div class="separator"></div>
+
+                    <a href="{% url 'main:home:brand_list' %}"
+                       class="blue_color">Unique Brands</a>
+                    <p>Click to view brand list. GIS Wholesale offers 170+
+                        suppliers to choose from to grow your business</p>
+                    <div class="separator"></div>
+
+                    <span class="blue_color">Follow Us</span>
+                    <p>Stay up to date on new products & new arrivals</p>
+                    <a href="https://www.facebook.com/1120distributing/" target="_blank">
+                        <img width="121" height="46"
+                             src="https://1120distributing.com/wp-content/uploads/2020/01/fb-icon.png"
+                             sizes="(max-width: 121px) 100vw, 121px">
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <br>
+    <br>
+    <br>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

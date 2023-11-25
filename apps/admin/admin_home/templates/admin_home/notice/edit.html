@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="order">Order Score: <span class="text-danger">*</span></label>
+                        <label for="order">Order S <span class="text-danger">*</span></label>
                         <input type="text"
                                class="form-control"
                                id="order"
@@ -126,7 +126,7 @@
 
 {% block js %}
     <script>
-        const notice_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+        const notice_api_url = "{% url 'apps:home:api:v1:notice-list' %}";
         const notice_list_url = "{% url 'admin:admin_home:notice_list' %}";
         const hashed_id = "{{ hashed_id }}";
         const page = 'edit';

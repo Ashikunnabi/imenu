@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'home/css/custom_page/about_us/style.css' %}">
+<link rel="stylesheet" href="{% static 'home/css/custom_page/about_us/responsive.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- General notice for all -->
+{% include 'home/notice.html' %}
+<!-- Start menu -->
+{% include 'home/nav_category.html' %}
+<!-- / menu -->
+<div id="about_us_body">
+   <section class="banner_main">
+      <img src="https://giswholesale.com/wp-content/uploads/2021/01/AdobeStock_247127825-2048x872.jpeg" />
+   </section>
+   <section>
+      <div style="padding: 50px;text-align: justify;">
+         GIS Wholesale invests heavily in promoting the Brands that are added in our catalogs. From printing in house
+         fliers, to seasonal catalogs to making various promotional materials for both our retail customers and dealers.
+         <br><br>
+         We believe that our supplier’s success hinges on their products discoverability. Our SEO experts craft
+         original, compelling, and compliant content that inspires shoppers to purchase and improves your SERP position.
+         Our strategy starts with product and search term research, then we optimize your product titles, bullets,
+         product descriptions, and back-end fields to improve product placement in our site. Our marketing strategy and
+         enhanced content target audience marketing can increase sales by up to 75%.
+         <br><br>
+         Our SEO aficionados excel at building Brand marketing, google ads, SEO, creating an intuitive navigation
+         structure and beautifully designed pages to create a positive customer experience.
+         We also track data insights, such as number of visitors, views, top performing pages, and attributed sales on
+         our site. We strategically use Brand Stores in coordination with other marketing efforts, and other proprietary
+         tools that can only increase your Brand’s market exposure.
+         <br><br>
+         Moreover, our mission is to form mutually beneficial partnerships with small and diverse businesses which allow
+         us to deliver superior and innovative products and services.
+         <br><br>
+
+         There are many ways to qualify as a U.S. small or diverse business within our Supplier Diversity program:
+         <br>
+         &nbsp;&nbsp;&nbsp;* Must be a U.S. Citizen or have U.S. Resident Alien status<br>
+         &nbsp;&nbsp;&nbsp;* Small Business (Manufacturing/Product Companies) Under 500 employees<br>
+         &nbsp;&nbsp;&nbsp;* Small Business (Services Companies) Between $7M and $25M in annual revenues<br>
+         &nbsp;&nbsp;&nbsp;* Minority-owned Business<br>
+
+      </div>
+   </section>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+   const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+</script>
+<!-- NavCategory JS -->
+<script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

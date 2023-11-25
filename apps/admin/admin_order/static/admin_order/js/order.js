@@ -29,11 +29,26 @@ class Order {
             "bJQueryUI": true,
             "dom": '<"mb-3"B><"extra_btn">flrtip',
             "buttons": [
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
                 // {
                 //     extend: 'print',
                 //     title: 'USERS',
@@ -54,11 +69,11 @@ class Order {
             },
             "columns": [
                 {"title": "SL", "data": ""},
+                {"title": "Status", "data": "status"},
                 {"title": "Order ID", "data": ""},
-                {"title": "User", "data": ""},
-                {"title": "Phone", "data": "phone"},
-                {"title": "Tracking Number", "data": "tracking_number"},
-                {"title": "Status", "data": ""}
+                {"title": "Table", "data": "table.name"},
+                {"title": "total_price_ex_vat", "data": "total_price_ex_vat"},
+                {"title": "total_price_in_vat", "data": "total_price_in_vat"},
             ],
             "columnDefs": [
                 {
@@ -68,32 +83,23 @@ class Order {
                     }
                 },
                 {
-                    targets: 1,
+                    targets: 2,
                     render: function (data, type, row, meta) {
                         return '140' + row.id;
                     }
                 },
-                {
-                    targets: 2,
-                    render: function (data, type, row, meta) {
-                        return row.user_json.name;
-                    }
-                },
-                {
-                    targets: 3,
-                    render: function (data, type, row, meta) {
-                        return row.user_json.phone;
-                    }
-                },
-                {
-                    targets: 5,
-                    render: function (data, type, row, meta) {
-                        if (row.is_ordered && row.is_cancelled) return 'Cancelled';
-                        if (row.is_ordered && row.is_delivered) return 'Delivered';
-                        if (row.is_ordered && row.in_processing) return 'Processing';
-                        if (row.is_ordered) return 'Pending';
-                    }
-                },
+                // {
+                //     targets: 2,
+                //     render: function (data, type, row, meta) {
+                //         return row.user_json.name;
+                //     }
+                // },
+                // {
+                //     targets: 3,
+                //     render: function (data, type, row, meta) {
+                //         return row.user_json.phone;
+                //     }
+                // },
             ],
         });
 
@@ -215,22 +221,18 @@ class Order {
             url: order_api_url + `${uuid}/`,
             type: "GET",
             success: function (resp) {
-                self.order_detail_template(resp)
+                self.order_detail_template(resp.data)
             },
             error: function (response) {
-                if (response.status === 422) {
-                    let errors = '';
-                    $.map(response.responseJSON.details, function (v, i) {
-                        $.each(v, function (j, k) {
-                            errors += `<li>${i}: ${k}</l1>`;
-                        })
-                    });
-                    let final_error = `<ul>${errors}</ul>`;
-
-                    $('.failed')
-                        .html(final_error)
-                        .css('display', 'block')
-                }
+                let response_json = response.responseJSON
+                        for (var field in response_json.error) {
+                            if (response_json.error.hasOwnProperty(field)) {
+                                var errorMessages = response_json.error[field];
+                                for (var i = 0; i < errorMessages.length; i++) {
+                                    notify(`${field.toUpperCase()}: ${errorMessages[i]}`, 'error');
+                                }
+                            }
+                        }
             }
         });
     };
@@ -242,22 +244,16 @@ class Order {
     **/
 
     order_detail_template = (order) => {
-        let payment_status = {
-            '1': 'Approved by Authorized.net',
-            '2': 'Declined by Authorized.net',
-            '3': 'Error by Authorized.net',
-            '4': 'Held for Review by Authorized.net',
-        }
         let order_detail = `
             <div class="row">
                 <div class="col-md-12">
                     <div class="cart-view-area">
                         <div class="cart-view-table">
+                            <span class="delivery_address"><strong>Status:</strong> ${order.status}</span><br>
                             <span class="order_id"><strong>Order ID:</strong> 140${order.id}</span>
                             <br>
+                            <span><strong>Table:</strong> ${order.table.name}</span><br>
                             <span><strong>Ordered At:</strong> ${moment(order.created_at).format('LLLL')}</span><br>
-                            <span class="delivery_address"><strong>Payment Status:</strong> ${payment_status[order.transaction_response.transactionResponse.responseCode]}</span><br>
-                            <span><strong>Transaction ID:</strong> ${order.transaction_code}</span>
                             <hr>
                             <div class="table-responsive">
                                 <table class="table">
@@ -265,7 +261,7 @@ class Order {
                                     <tr>
                                         <th>SL</th>
                                         <th>Image</th>
-                                        <th>Part Number</th>
+                                        <th>Item</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Total</th>
@@ -277,12 +273,12 @@ class Order {
                                     <tr>
                                         <td colspan="4"></td>
                                         <td>Subtotal</td>
-                                        <td>${order.total_price}</td>
+                                        <td>${order.total_price_ex_vat}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="4"></td>
                                         <td>Total</td>
-                                        <td>${order.total_price}</td>
+                                        <td>${order.total_price_in_vat}</td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -294,60 +290,20 @@ class Order {
         `;
         $('#order_detail').append(order_detail);
 
-        $.map(order.carts_json, function (v, i) {
-            let image_url = v.product_json.image ? '/media/' + v.product_json.image :
-                            v.product_json.image_url ? v.product_json.image_url :'/static/base/img/no_image.png';
+        $.map(order.lines, function (v, i) {
+            let image_url = v.product.documents ? v.product.documents[0] : '/static/base/img/no_image.png';
             let cart_item = `<tr>
                 <td>${i+1}</td>
                 <td><img src="${image_url}" alt="img" width="50" height="50"></td>
-                <td>${v.product_json.part_no}</td>
-                <td>${v.unit_price}</td>
+                <td>${v.product.code} - ${v.product.name}</td>
+                <td>${v.product.prices[0]}</td>
                 <td>${v.quantity}</td>
-                <td>${v.total_price}</td>
+                <td>${v.total_price_in_vat}</td>
             </tr>`
             $(`#order_detail tbody`).append(cart_item)
         });
 
-        // set shipping details
-        let shipping_state = JSON.parse(order.shipping_state).text;
-        $('#shipping_address').html(`        
-            <span><strong>Full name:</strong> ${order.shipping_full_name}</span><br>
-            <span><strong>Email:</strong> ${order.shipping_email}</span><br>
-            <span><strong>Phone:</strong> ${order.shipping_phone}</span><br>
-            <span><strong>Address:</strong> ${order.delivery_address}</span><br>
-            <span><strong>City:</strong> ${order.shipping_city}</span><br>
-            <span><strong>State:</strong> ${shipping_state}</span><br>
-            <span><strong>Postal Code:</strong> ${order.shipping_postal_code}</span>
-        `);
-
-        // set billing details
-        let billing_state = JSON.parse(order.billing_state).text;
-        $('#billing_address').html(`      
-            <span><strong>Full name:</strong> ${order.billing_full_name}</span><br>
-            <span><strong>Email:</strong> ${order.billing_email}</span><br>
-            <span><strong>Phone:</strong> ${order.billing_phone}</span><br>
-            <span><strong>Address:</strong> ${order.billing_address}</span><br>
-            <span><strong>City:</strong> ${order.billing_city}</span><br>
-            <span><strong>State:</strong> ${billing_state}</span><br>
-            <span><strong>Postal Code:</strong> ${order.billing_postal_code}</span>
-        `);
-
-        // set card details
-        $('#payment_details').html(`          
-            <span><strong>PO Number:</strong> ${order.po_number}</span><br>
-            <span><strong>Transaction ID:</strong> ${order.transaction_response.transactionResponse.transId}</span><br>
-            <span><strong>Reference ID:</strong> ${order.transaction_response.refId}</span><br>
-            <span><strong>Card Type:</strong> ${order.transaction_response.transactionResponse.accountType}</span><br>
-            <span><strong>Card Number:</strong> ${order.transaction_response.transactionResponse.accountNumber}</span>
-        `);
-
-        // order status setup
-        if (order.is_ordered && order.in_processing) $(`#in_processing`).attr('checked', 'checked');
-        if (order.is_ordered && order.is_delivered)  $(`#is_delivered`).attr('checked', 'checked');
-        if (order.is_ordered && order.is_cancelled)  $(`#is_cancelled`).attr('checked', 'checked');
-        // if (order.is_ordered) return 'Pending';
-        $('#tracking_number').val(order.tracking_number);
-        $('#tracking_number_added_at').val(order.tracking_number_added_at);
+        $(`#status`).val(order.status)
     };
 
     /*
@@ -360,18 +316,10 @@ class Order {
         // edit user
         $(document).on('click', '#submit_changes', function (e) {
             e.preventDefault();
-            let in_processing = ($(`#in_processing`).is(':checked') === true) ? 1 : 0;
-            let is_delivered = ($(`#is_delivered`).is(':checked') === true) ? 1 : 0;
-            let is_cancelled = ($(`#is_cancelled`).is(':checked') === true) ? 1 : 0;
-            let tracking_number = $('#tracking_number').val();
-            let tracking_number_added_at = $('#tracking_number_added_at').val();
+            let status = $(`#status`).val();
 
             let data = {
-                in_processing: in_processing,
-                is_delivered: is_delivered,
-                is_cancelled: is_cancelled,
-                tracking_number: tracking_number,
-                tracking_number_added_at: tracking_number_added_at
+                status: status,
             };
 
             // submit an ajax request to the api endpoint

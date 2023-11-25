@@ -5235,7 +5235,7 @@
 
     var $target = $__default['default'](target).one(EVENT_SHOW$2, function (showEvent) {
       if (showEvent.isDefaultPrevented()) {
-        // Only register focus restorer if modal will actually get shown
+        // Only Register focus restorer if modal will actually get shown
         return;
       }
 

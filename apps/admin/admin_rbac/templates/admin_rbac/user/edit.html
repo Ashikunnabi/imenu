@@ -15,7 +15,7 @@
         </a> -->
     </div>
     <p class="mb-4">
-        Users are valuable. See list of registered user.
+        Users are valuable. See list of Registered user.
         Only active staff can be an admin of this system.
     </p>
 
@@ -42,11 +42,11 @@
                                 placeholder="Enter name here (max 256 chars)." required>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="password">Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Enter password here." required>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-6">
 
@@ -58,16 +58,16 @@
 
                         <div class="form-group">
                             <label for="phone">Phone: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
+                            <input type="number" class="form-control" id="phone" name="phone" data-parsley-maxlength="12"
                                 placeholder="Enter phone number here (max 12 chars)." required>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="password1">Confirm Password: <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password1" name="password1"
                                 placeholder="Retype password here." data-parsley-equalto="#password"
                                 data-parsley-trigger="change" required>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -80,8 +80,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_application_document">Application
-                                Document: (<a href="#" target="_blank" id="editCompanyApplicationDocument">Current
+                            <label for="company_application_document">Image 1: (<a href="#" target="_blank" id="editCompanyApplicationDocument">Current
                                     File</a>)</label>
                             <input type="file" class="form-control" id="company_application_document"
                                 name="company_application_document">
@@ -90,7 +89,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_store_front">Store Front:
+                            <label for="company_store_front">Image 2:
                                 (<a href="#" target="_blank" id="editCompanyStoreFront">Current File</a>)</label>
                             <input type="file" class="form-control" id="company_store_front" name="company_store_front">
                         </div>
@@ -98,8 +97,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_commercial_location">Commercial
-                                Location: (<a href="#" target="_blank" id="editCompanyCommercialLocation">Current
+                            <label for="company_commercial_location">Image 3: (<a href="#" target="_blank" id="editCompanyCommercialLocation">Current
                                     File</a>)</label>
                             <input type="file" class="form-control" id="company_commercial_location"
                                 name="company_commercial_location">
@@ -108,8 +106,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_reseller_permit">Reseller
-                                Permit: (<a href="#" target="_blank" id="editCompanyResellerPermit">Current
+                            <label for="company_reseller_permit">Image 4: (<a href="#" target="_blank" id="editCompanyResellerPermit">Current
                                     File</a>)</label>
                             <input type="file" class="form-control" id="company_reseller_permit"
                                 name="company_reseller_permit">
@@ -118,8 +115,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="company_retail_sales_floor">Retail
-                                Sales Floor: (<a href="#" target="_blank" id="editCompanyRetailSalesFloor">Current
+                            <label for="company_retail_sales_floor">Image 5: (<a href="#" target="_blank" id="editCompanyRetailSalesFloor">Current
                                     File</a>)</label>
                             <input type="file" class="form-control" id="company_retail_sales_floor"
                                 name="company_retail_sales_floor">
@@ -147,7 +143,7 @@
         </div>
     </div>
 
-    <div class="card shadow mb-4">
+    <!-- <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
         </div>
@@ -160,23 +156,23 @@
             </button>
             <span class="text" id="last_email_sent_at"></span>
             <br>
-            <br>
+            <br> -->
             <!-- <label for="sales_reps">Sales Reps</label>
             <select id="sales_reps" name="sales_reps" multiple="multiple" style="width: 200px">
             </select>
             <button id="sales_reps_save_btn" class="btn btn-dark">Save</button> -->
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 </div>
 {% endblock %}
 
 
 {% block js %}
 <script>
-    const user_api_url = "{% url 'core:rbac:api:v1:user-retrieve-update-delete' uuid %}";
+    const user_api_url = "{% url 'apps:rbac:api:v1:user_retrieve_update_delete' uuid %}";
     const user_list_url = "{% url 'admin:admin_rbac:user_list' %}";
-    const account_activation_email_send_api_url = "{% url 'core:send_email:api:v1:send_account_activation_email_to_user' %}";
-    const last_account_activation_sent_at_api_url = "{% url 'core:rbac:api:v1:last_account_activation_email_sent_at' %}";
+    const account_activation_email_send_api_url = "{% url 'apps:send_email:api:v1:send_account_activation_email_to_user' %}";
+    const last_account_activation_sent_at_api_url = "{% url 'apps:rbac:api:v1:last_account_activation_email_sent_at' %}";
     const uuid = "{{ uuid }}";
 </script>
 

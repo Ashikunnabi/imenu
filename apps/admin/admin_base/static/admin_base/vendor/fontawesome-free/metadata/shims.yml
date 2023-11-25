@@ -213,7 +213,7 @@ pie-chart:
   name: chart-pie
 refresh:
   name: sync
-registered:
+Registered:
   prefix: far
 repeat:
   name: redo

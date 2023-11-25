@@ -47,7 +47,7 @@ export class ProductVat {
                                         <label for="flat" class="font-weight-bold">Flat: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control font-weight-bold" id="add_flat" name="flat" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_flat" name="flat" data-parsley-maxlength="50" value="0"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@ export class ProductVat {
                                         <label for="percentage" class="font-weight-bold">Percentage: <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control font-weight-bold" id="add_percentage" name="percentage" data-parsley-maxlength="50"
+                                        <input type="text" class="form-control font-weight-bold" id="add_percentage" name="percentage" data-parsley-maxlength="50" value="0"
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
@@ -68,7 +68,13 @@ export class ProductVat {
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Save'
+                            confirmButtonText: 'Save',
+                            preConfirm: () => {
+                                if ($("#add_flat").val() != "0" && $("#add_percentage").val() != "0") {
+                                    Swal.showValidationMessage('Flat/Percentage at least one must be 0', 'error');
+                                    return;
+                                }
+                            }
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -143,11 +149,26 @@ export class ProductVat {
                         })
                     }
                 },
-                'copy',
-                'excel',
-                'pdf',
-                'csv',
-                'print',
+                {
+                    extend: 'copy',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {orthogonal: 'export'}
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {orthogonal: 'export'}
+                },
             ],
             "lengthMenu": [10, 25, 50, 75, 100],
             "ajax": {
@@ -292,7 +313,14 @@ export class ProductVat {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Save'
+                    confirmButtonText: 'Save',
+                    preConfirm: () => {
+                        if (parseFloat($("#edit_flat").val() || 0) != parseFloat("0") && parseFloat($("#edit_percentage").val() || 0) != parseFloat("0")) {
+                            console.log($("#edit_flat").val(), $("#edit_percentage").val())
+                            Swal.showValidationMessage('Flat/Percentage at least one must be 0', 'error');
+                            return;
+                        }
+                    }
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
@@ -335,9 +363,7 @@ export class ProductVat {
                 }
             },
             error: function (response) {
-                $.each(response.responseJSON.error, function (i, v) {
-                    notify(`${i.toUpperCase()} - ${v}`, 'error')
-                })
+                notify(`${response.responseJSON.message}`, 'error')
             }
         });
     };

@@ -17,27 +17,18 @@ class POS {
     //     $('#sidebar_option_others_product_image').addClass('active');
     // };
 
-    /*
-    * =========================================================================
-    *                       SET PRODUCTS
-    * =========================================================================
-    **/
-    image_url_generator(product) {
-        let url = '/static/base/img/no_image.png';
-        url = product.image_url ? product.image_url :
-            product.image ? '/media/' + product.image : url
-        return url;
-    }
+
     set_products = (products) => {
         let self = this
         $("#product_image").html("")
         $.map(products, function (product, i) {
             $("#product_image").append(`
                 <div class="product" data-uuid=${product.uuid}
-                    title="${product.product_id}"><span class="stock">${product.stock}</span>
-                    <img src="${self.image_url_generator(product)}">
-                    <h4 class="price">$${product.retail_price}</h4>
-                    <p>${product.product_id}</p>
+                    title="${product.name}">
+                    <!-- <span class="stock">${product.stock}</span> -->
+                    <img src="${product.documents.length ? product.documents[0].document.file : ""}">
+                    <h4 class="price">${product.prices.length ? product.prices[0].price : "00.00"}</h4>
+                    <p>${product.name}</p>
                 </div>
             `)
         })
@@ -83,42 +74,51 @@ class POS {
         // })
     }
 
-    /*
-    * =========================================================================
-    *                       FETCH PRODUCTS
-    * =========================================================================
-    **/
-    fetch_order = () => {
-        let self = this
-        $.ajax({
-            url: shop_order_pos_api_url,
-            type: "GET",
-            success: function (resp) {
-                self.order = resp
-            },
-            error: function (response) {
-                notify(response.responseText, 'error', 5000);
+    table_search = (default_value = null) => {
+        $("#table_uuid").select2({
+            // dropdownParent: $("#pos_section"),
+            allowClear: true,
+            placeholder: "Select Table",
+            minimumInputLength: 3,
+            ajax: {
+                url: table_api_url,
+                dataType: 'json',
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    let results = []
+                    $.each(data.data, function (i, v) {
+                        results.push({
+                            id: v.uuid,
+                            text: `${v.name}`,
+                            other: v
+                        })
+                    })
+                    return {
+                        results: results
+                    };
+                }
             }
         });
     }
+
     /*
     * =========================================================================
     *                       SET CART
     * =========================================================================
     **/
-    set_cart = (products) => {
+    set_cart = (lines) => {
         let self = this
         $("#cart").html("")
-        $.map(products, function (product, i) {
+        $.map(lines, function (line, i) {
             $("#cart").append(`
                 <tr>
-                    <td class="product-name">${product.product_id}</td>
+                    <td class="product-name">${line.product.name}</td>
                     <td class="product-quantity">
-                        <input type="number" value="${product.quantity}" class="cart_product_quantity" id="cart_product_quantity_${product.product_uuid}">
+                        <input type="number" value="${line.quantity}" class="cart_product_quantity" id="cart_line_uuid${line.uuid}">
                     </td>
-                    <td>${product.unit_price}</td>
-                    <td>${product.price}</td>
-                    <td><i class="fas fa-trash cart_product_delete" style="color: red;cursor:pointer" id="cart_product_delete_${product.product_uuid}"></i></td>
+                    <td>${line.price_ex_vat}</td>
+                    <td>${line.total_price_ex_vat}</td>
+                    <td><i class="fas fa-trash cart_product_delete" style="color: red;cursor:pointer" id="cart_line_delete_${line.uuid}"></i></td>
                 </tr>
             `)
         })
@@ -128,12 +128,12 @@ class POS {
     *                       SET CART SUMMARY
     * =========================================================================
     **/
-    set_cart_summary = (order) => {
+    set_cart_summary = (cart) => {
         let self = this
-        $(".cart_subtotal").text(order.sub_total)
-        $(".cart_total").text(order.total)
-        $(".cart_discount").val(order.discount)
-        $(".cart_tax").val(order.tax)
+        $(".cart_subtotal").text(cart.total_price_ex_vat)
+        $(".cart_total").text(cart.total_price_in_vat)
+        $(".cart_discount").val(cart.discount)
+        $(".cart_tax").val(cart.vat)
     }
 
     /*
@@ -143,13 +143,29 @@ class POS {
     **/
     fetch_cart = () => {
         let self = this
+        // Get data and check for expiration
+        let cart_uuid = getLocalWithExpiry('cart_uuid');
+        if (!cart_uuid) {
+            let empty_cart = {
+                total_price_ex_vat: "00.00",
+                total_price_in_vat: "00.00",
+                discount: "00.00",
+                vat: "00.00",
+                lines: []
+            }
+            self.cart = empty_cart
+            self.set_cart(empty_cart.lines)
+            self.set_cart_summary(empty_cart)
+            return
+        }
+
         $.ajax({
-            url: shop_order_pos_api_url,
+            url: `${cart_api_url}${cart_uuid}/`,
             type: "GET",
             success: function (resp) {
-                self.cart = resp
-                let data = resp.data[0]
-                self.set_cart(data.order_lines)
+                let data = resp.data
+                self.cart = data
+                self.set_cart(data.lines)
                 self.set_cart_summary(data)
             },
             error: function (response) {
@@ -158,70 +174,140 @@ class POS {
         });
     }
 
+
+
+    /*
+    * =========================================================================
+    *                       GET CART LINE UUID FROM PRODUCT UUID
+    * =========================================================================
+    **/
+    get_car_line_or_null = (product_uuid) => {
+        let self = this
+        let cart_line_uuid = null
+        $.map(self.cart.lines, function (v, i) {
+            if (product_uuid === v.product.uuid) {
+                cart_line_uuid = v.uuid
+                return cart_line_uuid
+            }
+        })
+        return cart_line_uuid
+    }
+
+
     /*
     * =========================================================================
     *                       ADD TO CART BY PRODUCT IMAGE CLICK
     * =========================================================================
     **/
+
+    create_cart = (table_uuid, lines) => {
+        let self = this
+        let data = {}
+        data.table_uuid = table_uuid
+        data.lines = lines
+
+        $.ajax({
+            url: cart_api_url,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
+
+                // Set data with a 60-minute expiration time
+                setLocalWithExpiry('cart_uuid', resp.data.uuid, 60);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+    add_to_cart_line = (line) => {
+        let self = this
+        let url = `${cart_api_url}${self.cart.uuid}/lines/`
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify(line),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+    update_cart_line = (line_uuid, quantity) => {
+        let self = this
+        let data = {}
+        let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
+        data.quantity = quantity
+
+        $.ajax({
+            url: url,
+            type: "PATCH",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                notify("Success", 'success', 5000);
+                self.fetch_cart();
+            },
+            error: function (response) {
+                notify(response.responseText, 'error', 5000);
+            }
+        });
+    }
+
+
     add_to_cart = () => {
         let self = this
 
         // on click product add to cart
         $(document).on("click", ".product", function (e) {
-            let data = {}
-            data.type = "orderline"
-            data.product_uuid = $(this).attr("data-uuid")
-            data.quantity = parseInt($(`#cart_product_quantity_${$(this).attr("data-uuid")}`).val() || 0) + 1
-            $.ajax({
-                url: shop_order_pos_api_url,
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (resp) {
-                    notify("Success", 'success', 5000);
-                    self.fetch_cart();
-                },
-                error: function (response) {
-                    notify(response.responseText, 'error', 5000);
-                }
-            });
+            let table_uuid = $("#table_uuid").val()
+            let lines = [{
+                "product_uuid": $(this).attr("data-uuid"),
+                "quantity": parseInt($(`#cart_line_uuid${$(this).attr("data-uuid")}`).val() || 0) + 1
+            }]
+            let cart_line_uuid = self.get_car_line_or_null($(this).attr("data-uuid"))
+            if (cart_line_uuid) {
+                let quantity = parseInt($(`#cart_line_uuid${cart_line_uuid}`).val() || 0) + 1
+                self.update_cart_line(cart_line_uuid, quantity)
+            } else if (getLocalWithExpiry('cart_uuid')){
+                self.add_to_cart_line(lines[0])
+            } else {
+                self.create_cart(table_uuid, lines)
+            }
         })
 
         // on change on cart quantity 
         $(document).on("keyup", ".cart_product_quantity", function (e) {
             if (e.key === "Enter") {
                 e.preventDefault();
-                let data = {}
-                data.type = "orderline"
-                data.product_uuid = $(this).attr("id").replace("cart_product_quantity_", "")
-                data.quantity = parseInt($(`#cart_product_quantity_${data.product_uuid}`).val())
-                $.ajax({
-                    url: shop_order_pos_api_url,
-                    type: "POST",
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    contentType: "application/json",
-                    success: function (resp) {
-                        notify("Success", 'success', 5000);
-                        self.fetch_cart();
-                    },
-                    error: function (response) {
-                        notify(response.responseText, 'error', 5000);
-                    }
-                });
+
+                let line_uuid = $(this).attr("id").replace("cart_line_uuid", "")
+                let quantity = parseInt($(`#cart_line_uuid${line_uuid}`).val())
+                self.update_cart_line(line_uuid, quantity)
             }
         })
 
         // delete cart item 
         $(document).on("click", ".cart_product_delete", function (e) {
-            let data = {}
-            data.type = "orderline"
-            data.product_uuid = $(this).attr("id").replace("cart_product_delete_", "")
+            let line_uuid = $(this).attr("id").replace("cart_line_delete_", "")
+            let url = `${cart_api_url}${self.cart.uuid}/lines/${line_uuid}/`
+
             $.ajax({
-                url: shop_order_pos_api_url,
+                url: url,
                 type: "DELETE",
-                data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (resp) {
@@ -389,23 +475,12 @@ class POS {
     *                       DELETE ORDER
     * =========================================================================
     **/
-    delete_order = () => {
+    remove_cart = () => {
         let self = this
-        $(document).on("click", "#delete_order", function (e) {
-            $.ajax({
-                url: shop_delete_order_api_url,
-                type: "POST",
-                // data: JSON.stringify(data),
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (resp) {
-                    notify("Success", 'success', 3000);
-                    setTimeout(() => { window.location.reload(); }, 3000);
-                },
-                error: function (response) {
-                    notify(response.responseText, 'error', 5000);
-                }
-            });
+        $(document).on("click", "#remove_cart", function (e) {
+            removeLocalWithExpiry('cart_uuid');
+            notify("Success", 'success', 5000);
+            self.fetch_cart();
         })
     }
 
@@ -450,12 +525,12 @@ class POS {
         // this.select_sidebar_option();
         let self = this
         self.refresh_products();
+        self.table_search();
         self.add_to_cart();
-        self.fetch_order();
         self.fetch_cart();
         self.barcode_scan();
         self.complete_order();
-        self.delete_order();
+        self.remove_cart();
     }
 }
 

@@ -1,0 +1,177 @@
+/*PROMO SECTION*/
+.aa-promo-left a:hover .aa-promo-banner .aa-prom-content h4{
+    color: #ff6666 !important;
+}
+.aa-promo-right a:hover .aa-promo-banner .aa-prom-content h4{
+    color: #ff6666 !important;
+}
+
+/*FLYER SECTION*/
+
+/* The Modal (background) */
+ .img-size{
+     height: 450px;
+     width: 100%;
+     background-size: cover;
+     overflow: hidden;
+ }
+
+.flyer-modal-content {
+    width: 100%;
+    border:none;
+}
+
+.flyer-modal-body {
+    padding: 0;
+}
+
+.carousel-control-prev {
+    left: 0;
+}
+
+.carousel-control-next {
+    right: 0;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 15%;
+    color: #fff;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+    width: 30px;
+    height: 48px;
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    width: 30px;
+    height: 48px;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 100% 100%;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px) {
+    .flyer_modal_content {
+        width: 100%;
+    }
+}
+
+.aa-blog-img {
+    height: 500px!important;
+}
+
+/* END FLYER SECTION*/
+
+
+/* ADD TO CART PAGE / MODAL DESIGN */
+
+#quick-view-modal {
+    text-align: initial;
+} 
+
+.aa-product-view-content h5 span {
+    color:white;
+    background:blue;
+    padding:5px;
+    border-radius:5px;
+} 
+
+.aa-product-view-content .aa-product-avilability {
+    font-size: 12px;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ff6666;
+    right: 0;
+    top: 0;
+    position: absolute;
+}
+
+.aa-product-view-content .aa-product-avilability span {
+    color: white !important;
+}
+
+.aa-product-view-content .title {
+    color:#707070;
+    text-align:justify
+}
+
+.aa-product-view-content .tag1 {
+    background:#4fd33f;
+    padding:5px;
+    border-radius:5px;
+}
+
+.aa-product-view-content .tag2 {
+    background:#9100ff;
+    padding:5px;
+    border-radius:5px;
+}
+
+.aa-product-view-content .tag a {
+    color:white;
+    font-size:12px;
+}
+
+.aa-product-view-content .productPrice {
+    color:red;
+}
+
+.aa-product-view-content table {
+    width: 100%
+}
+
+.aa-product-view-content table th, td{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.aa-product-view-content .aa-prod-quantity{
+    display: flex;
+    justify-content: space-between;
+}
+
+.aa-prod-quantity input {
+    text-align: center;
+}
+
+.unauthorized_order {
+    font-size: 14px;        
+    display: none;                                
+}
+
+.unauthorized_order a{
+    font-weight: 700;
+    color: blue;                                        
+}
+
+/* END OF ADD TO CART PAGE / MODAL DESIGN */
+

@@ -13,7 +13,7 @@ from conf.context_processors import current_user_permissions
 
 def shop_list(request):
     if (
-        "sub_tab_shop_management_shop"
+        "shop.view_shop"
         not in current_user_permissions(request)["CURRENT_USER_PERMISSIONS"]
     ):
         return HttpResponse(
@@ -24,7 +24,7 @@ def shop_list(request):
 
 def shop_add(request):
     if (
-        "sub_tab_shop_management_shop"
+        "shop.add_shop"
         not in current_user_permissions(request)["CURRENT_USER_PERMISSIONS"]
     ):
         return HttpResponse(
@@ -35,7 +35,7 @@ def shop_add(request):
 
 def shop_edit(request, uuid):
     if (
-        "sub_tab_shop_management_shop"
+        "shop.view_shop"
         not in current_user_permissions(request)["CURRENT_USER_PERMISSIONS"]
     ):
         return HttpResponse(
