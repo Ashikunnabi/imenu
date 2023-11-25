@@ -50,6 +50,7 @@ LOCAL_APPS = [
     "apps.shop",
     "apps.cart",
     "apps.front_end",
+    "apps.order",
     # admin
     "apps.admin.admin_base",
     "apps.admin.admin_home",
