@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.utils.basic import *
 
-from ...models import Order
+from ...models.order import Order
 from .serializers import OrderSerializer
 
 User = get_user_model()
