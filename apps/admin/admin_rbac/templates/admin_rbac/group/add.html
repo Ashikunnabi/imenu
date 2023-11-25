@@ -90,8 +90,8 @@
 {% block js %}
 <script>
     const api_urls = {
-        "staff_list": "{% url 'core:rbac:api:v1:staff-list' %}",
-        "group_list": "{% url 'core:rbac:api:v1:group-list-create' %}",
+        "staff_list": "{% url 'apps:rbac:api:v1:staff-list' %}",
+        "group_list": "{% url 'apps:rbac:api:v1:group_list_create' %}",
     }
     const group_list_url = "{% url 'admin:admin_rbac:group_list' %}";
     const page = "add";

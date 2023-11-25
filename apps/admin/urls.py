@@ -16,4 +16,6 @@ urlpatterns = [
     path('', include('apps.admin.admin_pos.urls')),
     path('', include('apps.admin.admin_por.urls')),
     path('shop-management/', include('apps.admin.admin_shop.urls')),
+    path('', include('apps.admin.admin_menu.urls')),
+    path('', include('apps.admin.admin_table.urls')),
 ]

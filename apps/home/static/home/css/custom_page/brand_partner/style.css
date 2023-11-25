@@ -1,0 +1,20 @@
+h2 {
+     text-align: center;
+}
+img {
+     width: 50%;
+}
+
+.banner_main .container .two_column {
+     display: flex;
+     height: auto;
+}
+
+.banner_main .container .two_column {
+     display: flex;
+}
+
+.banner_main .container .two_column p{
+     padding: 50px;
+}
+

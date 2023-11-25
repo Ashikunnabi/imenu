@@ -1,0 +1,136 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet"
+          href="{% static 'user_panel/css/orders_cancellations.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <div style="display: inline-block; width: 100%;">
+        <div id="wrapper">
+            <!-- Sidebar -->
+            {% include 'user_panel/sidebar.html' %}
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <button class="btn btn-primary" id="menu-toggle">Toggle
+                        Menu
+                    </button>
+                </nav>
+                <div class="container-fluid">
+                    <h2>Orders
+                        <label class="switch">
+                            <input type="checkbox"
+                                   id="toggle_orders_cancellations">
+                            <span class="slider"></span>
+                        </label>
+                        Cancellations</h2>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="cart-view-area">
+                                <div class="order-view-table">
+                                    <form action="">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>SL</th>
+                                                    <th>Order At</th>
+                                                    <th>Order ID</th>
+                                                    <th>Status</th>
+                                                    <th>Invoice</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="orders">
+                                                {#                                                <tr>#}
+                                                {#                                                    <td><a class="remove"#}
+                                                {#                                                           href="#">#}
+                                                {#                                                        <fa class="fa fa-close"></fa>#}
+                                                {#                                                    </a></td>#}
+                                                {#                                                    <td><a href="#"><img#}
+                                                {#                                                            src="img/man/polo-shirt-1.png"#}
+                                                {#                                                            alt="img"></a></td>#}
+                                                {#                                                    <td>#}
+                                                {#                                                        <a class="aa-cart-title"#}
+                                                {#                                                           href="#">Polo#}
+                                                {#                                                            T-Shirt</a></td>#}
+                                                {#                                                    <td>$250</td>#}
+                                                {#                                                    <td><input#}
+                                                {#                                                            class="aa-cart-quantity"#}
+                                                {#                                                            type="number"#}
+                                                {#                                                            value="1"></td>#}
+                                                {#                                                    <td>$250</td>#}
+                                                {#                                                </tr>#}
+                                                {#                                                <tr>#}
+                                                {#                                                    <td colspan="5"#}
+                                                {#                                                        class="aa-cart-view-bottom">#}
+                                                {#                                                    </td>#}
+                                                {#                                                    <td class="aa-cart-view-bottom">#}
+                                                {#                                                        <div class="aa-cart-coupon">#}
+                                                {#                            <input class="aa-coupon-code" type="text" placeholder="Coupon">#}
+                                                {#                            <input class="aa-cart-view-btn" type="submit" value="Apply Coupon">#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <input class="aa-cart-view-btn"#}
+                                                {#                                                               type="submit"#}
+                                                {#                                                               value="Update Cart">#}
+                                                {#                                                    </td>#}
+                                                {#                                                </tr>#}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                    <!-- Cart Total view -->
+                                    <div class="cart-view-total">
+                                        {#                                        <h4>Cart Totals</h4>#}
+                                        {#                                        <table class="aa-totals-table">#}
+                                        {#                                            <tbody>#}
+                                        {#                                            <tr>#}
+                                        {#                                                <th>Subtotal</th>#}
+                                        {#                                                <td>$450</td>#}
+                                        {#                                            </tr>#}
+                                        {#                                            <tr>#}
+                                        {#                                                <th>Total</th>#}
+                                        {#                                                <td>$450</td>#}
+                                        {#                                            </tr>#}
+                                        {#                                            </tbody>#}
+                                        {#                                        </table>#}
+                                    </div>
+                                </div>
+                                <div id="empty_orders">
+                                    <h3>NOTHING FOUND!</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+            <div id="order_details_modals"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const nav_category_api_url = "{% url 'apps:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'apps:home:api:v1:notice-list' %}";
+        const order_api_url = "{% url 'apps:user_panel:api:v1:order-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+    <!-- My account JS -->
+    <script src="{% static 'user_panel/js/orders_cancellations.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}
+

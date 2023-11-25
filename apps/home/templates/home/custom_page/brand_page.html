@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <style>
+        #news_and_updates_div {
+            display: inline-block;
+            width: 100%;
+        }
+
+        #news_and_updates_div h3, h5, strong {
+            text-align: center;
+            margin: 0px;
+        }
+
+        #news_and_updates_div iframe {
+            display: block;
+            margin: 0 auto;
+        }
+
+        #extra_text {
+            background-color: #11182F;
+            color: white;
+            padding: 30px;
+        }
+
+        #news_and_updates_div .rondell-container {
+            margin: 0 auto;
+            margin-bottom: 25px;
+        }
+        .brand_info {
+            {#background: #ff9797;#}
+            background: #1b205b;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .brand_info .title {
+            font-size: 5em;
+            margin-top: 10px;
+            margin-bottom: 0;
+            line-height: 0.8;
+        }
+        .brand_info .email {
+            margin-bottom: 20px;
+        }
+        .brand_info .tagline {
+            letter-spacing: 5px;
+            word-spacing: 10px;
+            {#background: #ff6666;#}
+            background: #4b519f;
+            line-height: 50px;
+        }
+        .brand_info .url {
+            color: white;
+            font-weight: 700;
+            border: 5px solid white;
+            padding: 10px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <div id="news_and_updates_div" class="">
+        <div class="brand_info">
+            <p class="title">BRAND NAME </p>
+            <p class="email">brandemail@gmail.com</p>
+            <p class="tagline">Brand promotional tag line Brand promotional tag line Brand promotional tag line</p>
+            <a href="#" class="url">Visit Brand Store</a>
+        </div>
+        <div class="flyers_div">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-latest-blog-area">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const brand_page_image_api_url = "{% url 'main:inventory:dashboard_api:v1:brand_page_images-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+    <script src="{% static 'home/js/custom_page/brand_page.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

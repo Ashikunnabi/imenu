@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/css/custom_page/advocacy/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- General notice for all -->
+    {% include 'home/notice.html' %}
+    <!-- Start menu -->
+    {% include 'home/nav_category.html' %}
+    <!-- / menu -->
+    <!-- banner -->
+    <section class="banner_main">
+     <div class="container">
+         <div class="content">
+             <div class="div_content">
+                 <img src="https://1120distributing.com/wp-content/uploads/2020/05/52e.png">
+                 <h3>Automotive</h3>
+                 <p>
+                     The automotive aftermarket is the first market serviced by GIS Wholesale. Starting from one market we have come a long way to start stocking other sectors of the market. It is our dealers that believed in us and demanded expansion for the growth of their business.
+                 </p>
+             </div>
+
+             <div class="div_content">
+                 <img src="https://1120distributing.com/wp-content/uploads/2021/02/R563V.png">
+                 <h3>Recreational Vehicle</h3>
+                 <p>
+                     The RV parts and accessory aftermarket demands products and brands that are of high quality serving the industry. We stock and represent manufacturers that produces surge protectors, replacement parts, appliances, covers, accessories and camping supplies for Gas or Diesel Motorhomes, Fifth Wheels, and Travel Trailers etc.
+                 </p>
+             </div>
+
+             <div class="div_content">
+                 <img src="https://1120distributing.com/wp-content/uploads/2020/05/Powersp52orts.png">
+                 <h3>Powersports</h3>
+                 <p>
+                     Motorcyles, ATVs, UTVs, snowmobiles and dirt bikes are all part of the powersports market that GIS Wholesale has expanded to over the last few years. We stock and sell a variety of parts and accessories including but not limited to ropes, bars, brakes, fuel pumps, gas cans, suspension components, exhaust systems, body components and safety apparel.
+                 </p>
+             </div>
+         </div>
+
+     </div>
+    </section>
+
+
+    <section class="updates">
+     <div class="container">
+         <div class="content">
+             <div class="div_content">
+                 <h3><strong>Update</strong></h3>
+                 <a href="{% url 'main:home:news_and_updates' %}">News</a>
+                 <p>
+                     At GIS Wholesale, we like to inform our dealers and friends about the progress we are making. In this competitive industry, if we keep you updated on the BRANDS we add and new Decisions, price changes or new upcoming promotions we can grow your business and it can only have positive impact on us.
+                 </p>
+             </div>
+
+             <div class="div_content">
+                 <h3><strong>Vendor Partners</strong></h3>
+                 <a href="{% url 'main:home:brand_list' %}">Manufacturers</a>
+                 <p>
+                     Links to GIS Wholesale’s vendors list
+                 </p>
+             </div>
+
+             <div class="div_content">
+                 <h3><strong>Regulatory Compliance</strong></h3>
+                 <p>
+                     Motorcyles, ATVs, UTVs, snowmobiles and dirt bikes are all part of the powersports market that GIS Wholesale has expanded to over the last few years. We stock and sell a variety of parts and accessories including but not limited to ropes, bars, brakes, fuel pumps, gas cans, suspension components, exhaust systems, body components and safety apparel.
+                 </p>
+             </div>
+
+             <div class="div_content">
+                 <h3><strong>Community Outreach Program</strong></h3>
+                 <p>
+                    1120Distributing has been a proud sponsor and donor of various organizations across the US market. We believe in giving back to the community we operate on. GIS Wholesale has been proudly donating to various organizations and is always open to organizations needing sponsorship or donations. For sponsorship or donation queries please email :info@1120distirbuting.com
+Our community partners so far have been:
+                 </p>
+                 <a href="https://spreeha.org/" target="_blank">Spreeha Foundation</a>
+                 <a href="https://distressedchildren.org/" target="_blank">Distressed Children Organization</a>
+                 <a href="https://www.americanstandardmotorsports.com/sponsorships.html" target="_blank">American Standard Motorsports Sponsor</a>
+             </div>
+
+             <div class="div_content">
+                 <h3><strong>Future Forest Initiative</strong></h3>
+                 <p>
+                    GIS Wholesale is stoked to partner with the National Forest Foundation in their Trees for US program. The program, nicknamed the Future Forest Initiative, enables organizations to help with the restoration of national forests one tree at a time.
+
+Working together, GIS Wholesale and the National Forest Foundation will plant trees in targeted national forests around the United States. It’s a commitment and tradition that GIS Wholesale couldn’t be more proud of.
+
+Our community partners so far have been:
+                 </p>
+                 <a href="https://www.nationalforests.org/" target="_blank">National Forest Foundation</a>
+             </div>
+         </div>
+
+     </div>
+    </section>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        const nav_category_api_url = "{% url 'main:home:api:v1:nav_category-list' %}";
+        const notice_category_api_url = "{% url 'main:home:api:v1:notice-list' %}";
+    </script>
+
+    <!-- General Notice JS -->
+    <script src="{% static 'home/js/notice.js' %}?v={{JS_VERSION}}"></script>
+    <!-- NavCategory JS -->
+    <script src="{% static 'home/js/nav_category.js' %}?v={{JS_VERSION}}"></script>
+{% endblock %}

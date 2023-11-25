@@ -32,13 +32,13 @@
                     <a class="nav-item nav-link" id="nav-codes-tab" data-toggle="tab" href="#nav-codes" role="tab"
                         aria-controls="nav-codes" aria-selected="false">Codes</a>
                     <a class="nav-item nav-link" id="nav-documents-tab" data-toggle="tab" href="#nav-documents"
-                        role="tab" aria-controls="nav-documents" aria-selected="false">Documents</a>
+                        role="tab" aria-controls="nav-documents" aria-selected="false">Images</a>
                         <a class="nav-item nav-link" id="nav-prices-tab" data-toggle="tab" href="#nav-prices"
                             role="tab" aria-controls="nav-prices" aria-selected="false">Prices</a>
-                            <a class="nav-item nav-link" id="nav-warehouses-tab" data-toggle="tab" href="#nav-warehouses"
-                                role="tab" aria-controls="nav-warehouses" aria-selected="false">Warehouses</a>
-                    <a class="nav-item nav-link" id="nav-attributes-tab" data-toggle="tab" href="#nav-attributes"
-                        role="tab" aria-controls="nav-attributes" aria-selected="false">Attributes</a>
+                            <!-- <a class="nav-item nav-link" id="nav-warehouses-tab" data-toggle="tab" href="#nav-warehouses"
+                                role="tab" aria-controls="nav-warehouses" aria-selected="false">Warehouses</a> -->
+                    <!-- <a class="nav-item nav-link" id="nav-attributes-tab" data-toggle="tab" href="#nav-attributes"
+                        role="tab" aria-controls="nav-attributes" aria-selected="false">Attributes</a> -->
                     <a class="nav-item nav-link" id="nav-units-tab" data-toggle="tab" href="#nav-units" role="tab"
                         aria-controls="nav-units" aria-selected="false">Units</a>
                     <a class="nav-item nav-link" id="nav-vats-tab" data-toggle="tab" href="#nav-vats" role="tab"
@@ -185,16 +185,17 @@
     const page_type = "edit";
     const uuid = "{{ uuid }}";
     const api_urls = {
-        "product_list": "{% url 'main:inventory:api:v1:product-list-create' %}",
-        "product_code_list": "{% url 'main:inventory:api:v1:product-code-list-create' product_uuid=uuid %}",
-        "product_document_list": "{% url 'main:inventory:api:v1:product-document-list-create' product_uuid=uuid %}",
-        "product_attribute_list": "{% url 'main:inventory:api:v1:product-attribute-list-create' product_uuid=uuid %}",
-        "product_price_list": "{% url 'main:inventory:api:v1:product-price-list-create' product_uuid=uuid %}",
-        "product_warehouse_list": "{% url 'main:inventory:api:v1:product-warehouse-list-create' product_uuid=uuid %}",
-        "product_unit_list": "{% url 'main:inventory:api:v1:product-unit-list-create' product_uuid=uuid %}",
-        "product_vat_list": "{% url 'main:inventory:api:v1:product-vat-list-create' product_uuid=uuid %}",
-        "unit_list": "{% url 'main:inventory:api:v1:unit-list-create' %}",
-        "vat_list": "{% url 'main:inventory:api:v1:vat-list-create' %}",
+        "product_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_list_create' %}",
+        "product_code_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_code_list_create' product_uuid=uuid %}",
+        "product_document_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_document_list_create' product_uuid=uuid %}",
+        "dashboard_product_document_upload": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_document_upload' product_uuid=uuid %}",
+        "product_attribute_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_attribute_list_create' product_uuid=uuid %}",
+        "product_price_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_price_list_create' product_uuid=uuid %}",
+        "product_warehouse_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_warehouse_list_create' product_uuid=uuid %}",
+        "product_unit_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_unit_list_create' product_uuid=uuid %}",
+        "product_vat_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_product_vat_list_create' product_uuid=uuid %}",
+        "unit_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_unit_list_create' %}",
+        "vat_list": "{% url 'apps:inventory:dashboard_api:v1:dashboard_vat_list_create' %}",
     }
     const product_list_url = "{% url 'admin:admin_inventory:product_list' %}";
 </script>

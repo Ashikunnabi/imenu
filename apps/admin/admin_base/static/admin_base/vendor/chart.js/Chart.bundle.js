@@ -7225,7 +7225,7 @@ core_defaults._set('global', {
  */
 
 // The layout service is very self explanatory.  It's responsible for the layout within a chart.
-// Scales, Legends and Plugins all rely on the layout service and can easily register to be placed anywhere they need
+// Scales, Legends and Plugins all rely on the layout service and can easily Register to be placed anywhere they need
 // It is this service's responsibility of carrying out that layout.
 var core_layouts = {
 	defaults: {},
@@ -7315,7 +7315,7 @@ var core_layouts = {
 		// The areas L1 and L2 are the left axes. R1 is the right axis, T1 is the top axis and
 		// B1 is the bottom axis
 		// There are also 4 quadrant-like locations (left to right instead of clockwise) reserved for chart overlays
-		// These locations are single-box locations only, when trying to register a chartArea location that is already taken,
+		// These locations are single-box locations only, when trying to Register a chartArea location that is already taken,
 		// an error will be thrown.
 		//
 		// |----------------------------------------------------|
@@ -7632,7 +7632,7 @@ function watchForRender(node, handler) {
 	// #4737: Chrome might skip the CSS animation when the CSS_RENDER_MONITOR class
 	// is removed then added back immediately (same animation frame?). Accessing the
 	// `offsetParent` property will force a reflow and re-evaluate the CSS animation.
-	// https://gist.github.com/paulirish/5d52fb081b3570c81e3a#box-metrics
+	// https://inventory.t.github.com/paulirish/5d52fb081b3570c81e3a#box-metrics
 	// https://github.com/chartjs/Chart.js/issues/4737
 	expando.reflow = !!node.offsetParent;
 
@@ -7921,7 +7921,7 @@ var platform = helpers$1.extend({
 	addEventListener: function() {},
 
 	/**
-	 * Removes the specified listener previously registered with addEventListener.
+	 * Removes the specified listener previously Registered with addEventListener.
 	 * @param {Chart} chart - Chart from which to remove the listener
 	 * @param {string} type - The ({@link IEvent}) type to remove
 	 * @param {function} listener - The listener function to remove from the event target.
@@ -7941,24 +7941,24 @@ core_defaults._set('global', {
  */
 var core_plugins = {
 	/**
-	 * Globally registered plugins.
+	 * Globally Registered plugins.
 	 * @private
 	 */
 	_plugins: [],
 
 	/**
 	 * This identifier is used to invalidate the descriptors cache attached to each chart
-	 * when a global plugin is registered or unregistered. In this case, the cache ID is
+	 * when a global plugin is Registered or unRegistered. In this case, the cache ID is
 	 * incremented and descriptors are regenerated during following API calls.
 	 * @private
 	 */
 	_cacheId: 0,
 
 	/**
-	 * Registers the given plugin(s) if not already registered.
+	 * Registers the given plugin(s) if not already Registered.
 	 * @param {IPlugin[]|IPlugin} plugins plugin instance(s).
 	 */
-	register: function(plugins) {
+	Register: function(plugins) {
 		var p = this._plugins;
 		([]).concat(plugins).forEach(function(plugin) {
 			if (p.indexOf(plugin) === -1) {
@@ -7970,10 +7970,10 @@ var core_plugins = {
 	},
 
 	/**
-	 * Unregisters the given plugin(s) only if registered.
+	 * UnRegisters the given plugin(s) only if Registered.
 	 * @param {IPlugin[]|IPlugin} plugins plugin instance(s).
 	 */
-	unregister: function(plugins) {
+	unRegister: function(plugins) {
 		var p = this._plugins;
 		([]).concat(plugins).forEach(function(plugin) {
 			var idx = p.indexOf(plugin);
@@ -7986,7 +7986,7 @@ var core_plugins = {
 	},
 
 	/**
-	 * Remove all registered plugins.
+	 * Remove all Registered plugins.
 	 * @since 2.1.5
 	 */
 	clear: function() {
@@ -7995,7 +7995,7 @@ var core_plugins = {
 	},
 
 	/**
-	 * Returns the number of registered plugins?
+	 * Returns the number of Registered plugins?
 	 * @returns {number}
 	 * @since 2.1.5
 	 */
@@ -8004,7 +8004,7 @@ var core_plugins = {
 	},
 
 	/**
-	 * Returns all registered plugin instances.
+	 * Returns all Registered plugin instances.
 	 * @returns {IPlugin[]} array of plugin objects.
 	 * @since 2.1.5
 	 */
@@ -8098,7 +8098,7 @@ var core_plugins = {
 };
 
 var core_scaleService = {
-	// Scale registration object. Extensions can register new scale types (such as log or DB scales) and then
+	// Scale registration object. Extensions can Register new scale types (such as log or DB scales) and then
 	// use the new chart options to grab the correct scale
 	constructors: {},
 	// Use a registration function so that we can move to an ES6 map when we no longer need to support
@@ -8106,7 +8106,7 @@ var core_scaleService = {
 
 	// Scale config defaults
 	defaults: {},
-	registerScaleType: function(type, scaleConstructor, scaleDefaults) {
+	RegisterScaleType: function(type, scaleConstructor, scaleDefaults) {
 		this.constructors[type] = scaleConstructor;
 		this.defaults[type] = helpers$1.clone(scaleDefaults);
 	},
@@ -12670,7 +12670,7 @@ var scale_category = core_scale.extend({
 	}
 });
 
-// INTERNAL: static default options, registered in src/index.js
+// INTERNAL: static default options, Registered in src/index.js
 var _defaults = defaultConfig;
 scale_category._defaults = _defaults;
 
@@ -13083,7 +13083,7 @@ var scale_linear = scale_linearbase.extend({
 	}
 });
 
-// INTERNAL: static default options, registered in src/index.js
+// INTERNAL: static default options, Registered in src/index.js
 var _defaults$1 = defaultConfig$1;
 scale_linear._defaults = _defaults$1;
 
@@ -13386,7 +13386,7 @@ var scale_logarithmic = core_scale.extend({
 	}
 });
 
-// INTERNAL: static default options, registered in src/index.js
+// INTERNAL: static default options, Registered in src/index.js
 var _defaults$2 = defaultConfig$2;
 scale_logarithmic._defaults = _defaults$2;
 
@@ -13492,7 +13492,7 @@ function determineLimits(angle, pos, size, min, max) {
 function fitWithPointLabels(scale) {
 
 	// Right, this is really confusing and there is a lot of maths going on here
-	// The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9
+	// The inventory.t of the problem is here: https://inventory.t.github.com/nnnick/696cc9c55f4b0beb8fe9
 	//
 	// Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif
 	//
@@ -13939,7 +13939,7 @@ var scale_radialLinear = scale_linearbase.extend({
 	_drawTitle: helpers$1.noop
 });
 
-// INTERNAL: static default options, registered in src/index.js
+// INTERNAL: static default options, Registered in src/index.js
 var _defaults$3 = defaultConfig$3;
 scale_radialLinear._defaults = _defaults$3;
 
@@ -14040,7 +14040,7 @@ function getMax(options) {
  * @param {string} distribution - If 'linear', timestamps will be spread linearly along the min
  * and max range, so basically, the table will contains only two items: {min, 0} and {max, 1}.
  * If 'series', timestamps will be positioned at the same distance from each other. In this
- * case, only timestamps that break the time linearity are registered, meaning that in the
+ * case, only timestamps that break the time linearity are Registered, meaning that in the
  * best case, all timestamps are linear, the table contains only min and max.
  */
 function buildLookupTable(timestamps, min, max, distribution) {
@@ -14698,7 +14698,7 @@ var scale_time = core_scale.extend({
 	}
 });
 
-// INTERNAL: static default options, registered in src/index.js
+// INTERNAL: static default options, Registered in src/index.js
 var _defaults$4 = defaultConfig$4;
 scale_time._defaults = _defaults$4;
 
@@ -14720,7 +14720,7 @@ var moment = createCommonjsModule(function (module, exports) {
         return hookCallback.apply(null, arguments);
     }
 
-    // This is done to register the method called with moment()
+    // This is done to Register the method called with moment()
     // without creating circular dependencies.
     function setHookCallback (callback) {
         hookCallback = callback;
@@ -16552,7 +16552,7 @@ var moment = createCommonjsModule(function (module, exports) {
 
     function loadLocale(name) {
         var oldLocale = null;
-        // TODO: Find a better way to register and load all the locales in Node
+        // TODO: Find a better way to Register and load all the locales in Node
         if (!locales[name] && ('object' !== 'undefined') &&
                 module && module.exports) {
             try {
@@ -20332,7 +20332,7 @@ var plugin_legend = {
 	id: 'legend',
 
 	/**
-	 * Backward compatibility: since 2.1.5, the legend is registered as a plugin, making
+	 * Backward compatibility: since 2.1.5, the legend is Registered as a plugin, making
 	 * Chart.Legend obsolete. To avoid a breaking change, we export the Legend as part of
 	 * the plugin, which one will be re-exposed in the chart.js file.
 	 * https://github.com/chartjs/Chart.js/pull/2640
@@ -20576,7 +20576,7 @@ var plugin_title = {
 	id: 'title',
 
 	/**
-	 * Backward compatibility: since 2.1.5, the title is registered as a plugin, making
+	 * Backward compatibility: since 2.1.5, the title is Registered as a plugin, making
 	 * Chart.Title obsolete. To avoid a breaking change, we export the Title as part of
 	 * the plugin, which one will be re-exposed in the chart.js file.
 	 * https://github.com/chartjs/Chart.js/pull/2640
@@ -20650,17 +20650,17 @@ core_controller.Tooltip = core_tooltip;
 // Register built-in scales
 
 core_controller.helpers.each(scales, function(scale, type) {
-	core_controller.scaleService.registerScaleType(type, scale, scale._defaults);
+	core_controller.scaleService.RegisterScaleType(type, scale, scale._defaults);
 });
 
-// Load to register built-in adapters (as side effects)
+// Load to Register built-in adapters (as side effects)
 
 
 // Loading built-in plugins
 
 for (var k in plugins) {
 	if (plugins.hasOwnProperty(k)) {
-		core_controller.plugins.register(plugins[k]);
+		core_controller.plugins.Register(plugins[k]);
 	}
 }
 
@@ -20711,7 +20711,7 @@ core_controller.pluginService = core_controller.plugins;
 
 /**
  * Provided for backward compatibility, inheriting from Chart.PlugingBase has no
- * effect, instead simply create/register plugins via plain JavaScript objects.
+ * effect, instead simply create/Register plugins via plain JavaScript objects.
  * @interface Chart.PluginBase
  * @deprecated since version 2.5.0
  * @todo remove at version 3

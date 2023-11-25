@@ -100,10 +100,10 @@
 
 {% block js %}
 <script>
-    const warehouse_api_url = "{% url 'main:inventory:api:v1:warehouse-list' %}";
-    const sales_order_api_url = "{% url 'main:user_panel:api:v1:sales_order-list' %}";
-    const product_api_url = "{% url 'main:inventory:api:v1:product-list' %}";
-    const stock_transaction_api_url = "{% url 'main:inventory:api:v1:stock_transaction-list' %}";
+    const warehouse_api_url = "{% url 'apps:inventory:dashboard_api:v1:warehouse-list' %}";
+    const sales_order_api_url = "{% url 'apps:user_panel:api:v1:sales_order-list' %}";
+    const product_api_url = "{% url 'apps:inventory:dashboard_api:v1:product-list' %}";
+    const stock_transaction_api_url = "{% url 'apps:inventory:dashboard_api:v1:stock_transaction-list' %}";
 </script>
 
 <!-- POS JS -->
