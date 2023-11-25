@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
-    image: inventory_web
-    container_name: inventory_web
+    image: imenu_web
+    container_name: imenu_web
     command: /start
     restart: unless-stopped
     volumes:
@@ -14,28 +14,28 @@ services:
     depends_on:
       - db
     networks:
-      - inventory_network
+      - imenu_network
 
   db:
     image: postgres:13.0-alpine
-    container_name: inventory_db
+    container_name: imenu_db
     restart: unless-stopped
     volumes:
-      - inventory_postgres_data:/var/lib/postgresql/data
-      - inventory_postgres_data_dbback:/dbback
+      - imenu_postgres_data:/var/lib/postgresql/data
+      - imenu_postgres_data_dbback:/dbback
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     networks:
-      - inventory_network
+      - imenu_network
 
   nginx:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
-    image: inventory_nginx
-    container_name: inventory_nginx
+    image: imenu_nginx
+    container_name: imenu_nginx
     restart: unless-stopped
     volumes:
       - .:/var/www/html:cached
@@ -44,12 +44,12 @@ services:
     ports:
       - "8082:80"
     networks:
-      - inventory_network
+      - imenu_network
 
 networks:
-    inventory_network:
+    imenu_network:
         driver: bridge
 
 volumes:
-  inventory_postgres_data: {}
-  inventory_postgres_data_dbback: {}
+  imenu_postgres_data: {}
+  imenu_postgres_data_dbback: {}
