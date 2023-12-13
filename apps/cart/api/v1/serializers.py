@@ -23,7 +23,7 @@ class CartLineOutputSerializer(serializers.ModelSerializer):
 
 
 class CartInputSerializer(serializers.Serializer):
-    table_uuid = serializers.UUIDField()
+    table_uuid = serializers.UUIDField(required=False)
     lines = CartLineInputSerializer(many=True)
 
 

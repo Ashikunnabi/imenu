@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import permissions
 
 from apps.base.custom_pagination import LargeResultsSetPagination
 from apps.base.custom_viewset import (
@@ -25,6 +26,7 @@ class CartListCreateAPIView(BaseListCreateAPIView):
     input_serializer_class = CartInputSerializer
     output_serializer_class = CartOutputSerializer
     pagination_class = LargeResultsSetPagination
+    permission_classes = [permissions.AllowAny]
 
     def list(self, request, *args, **kwargs):
         service = self.service_class()
@@ -58,6 +60,7 @@ class CartRetrieveAPIView(BaseRetrieveAPIView):
     input_serializer_class = CartInputSerializer
     output_serializer_class = CartOutputSerializer
     pagination_class = LargeResultsSetPagination
+    permission_classes = [permissions.AllowAny]
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -69,8 +72,9 @@ class CartLineListCreateAPIView(BaseListCreateAPIView):
     service_class = CartLineService
     cart_service_class = CartService
     input_serializer_class = CartLineInputSerializer
-    output_serializer_class = CartLineOutputSerializer
+    output_serializer_class = CartOutputSerializer
     pagination_class = LargeResultsSetPagination
+    permission_classes = [permissions.AllowAny]
 
     def list(self, request, *args, **kwargs):
         service = self.service_class()
@@ -95,12 +99,11 @@ class CartLineListCreateAPIView(BaseListCreateAPIView):
         validated_data = serializer.validated_data
         validated_data["cart_uuid"] = kwargs["cart_uuid"]
 
-        print("============77777777")
         service = self.service_class()
         cart_service = self.cart_service_class()
         instance = service.create_cart_line(**validated_data)
         cart_service.calculate_price(cart=instance.cart)
-        serializer = self.get_output_serializer(instance)
+        serializer = self.get_output_serializer(instance.cart)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -108,8 +111,9 @@ class CartLineRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
     service_class = CartLineService
     cart_service_class = CartService
     input_serializer_class = CartLineInputSerializer
-    output_serializer_class = CartLineOutputSerializer
+    output_serializer_class = CartOutputSerializer
     pagination_class = LargeResultsSetPagination
+    permission_classes = [permissions.AllowAny]
 
     def update(self, request, *args, **kwargs):
         data = request.data
@@ -124,7 +128,7 @@ class CartLineRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
             instance=instance, **serializer.validated_data
         )
         cart_service.calculate_price(cart=instance.cart)
-        serializer = self.get_output_serializer(instance)
+        serializer = self.get_output_serializer(instance.cart)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, *args, **kwargs):
@@ -132,4 +136,5 @@ class CartLineRetrieveUpdateDestroyAPIView(BaseRetrieveUpdateDestroyAPIView):
         instance.delete()
         cart_service = self.cart_service_class()
         cart_service.calculate_price(cart=instance.cart)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = self.get_output_serializer(instance.cart)
+        return Response(serializer.data, status=status.HTTP_200_OK)

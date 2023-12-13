@@ -196,3 +196,21 @@ function removeLocalWithExpiry(key) {
     }
     localStorage.removeItem(key); // Remove the item if it has expired
 }
+
+class AjaxRequest {
+	constructor(url, method = 'GET') {
+		this.url = url;
+		this.method = method;
+	}
+
+	// Function to make an Ajax request
+	makeRequest(data = null) {
+		return $.ajax({
+			url: this.url,
+			method: this.method,
+			data: data ? JSON.stringify(data) : null,
+			dataType: 'json', // Change this based on the expected response type
+            contentType: "application/json; charset=utf-8",
+		});
+	}
+}

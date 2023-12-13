@@ -36,6 +36,71 @@ export const productListModule = (function () {
         return html
     }
 
+    function cartListItemHTML(item) {
+        let document = item.product.documents ? item.product.documents[0] : "/static/front_end/assets/images/product/2.jpg"
+
+        let html = `
+        <div class="product-list">
+            <div class="dz-content">
+                <span class="product-title">${item.product.code}</span>
+                <h4 class="item-name">
+                    <a href="/product-detail/${item.product.uuid}/">
+                        ${item.product.name}
+                    </a>
+                </h4>
+                <div class="price-wrapper">
+                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.total_price_ex_vat} Tk+</h6>
+                    <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
+                </div>
+                <div class="offer-code">
+                    VAT & SC excluded
+                </div>
+                <!--<div class="footer-wrapper">
+                    <span class="product-title">Combo pack</span>
+                </div>-->
+            </div>
+            <div class="text-end">
+                <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
+                    <img class="rounded-sm" src="${document}" alt="image">
+                </a>
+                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.product.uuid}" data-uuid="${item.product.uuid}" data-json=${JSON.stringify(item)}>SELECT</a>
+            </div>	
+        </div>
+        `
+        return html
+    }
+
+    function cartSummaryHTML(cart) {
+
+        let html = `
+        <div class="product-list">
+            <div class="dz-content">
+                <span class="product-title"></span>
+                <h4 class="item-name">
+                    <a href="/product-detail//">
+                    </a>
+                </h4>
+                <div class="price-wrapper">
+                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i></h6>
+                    <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
+                </div>
+                <div class="offer-code">
+                    VAT & SC excluded
+                </div>
+                <!--<div class="footer-wrapper">
+                    <span class="product-title">Combo pack</span>
+                </div>-->
+            </div>
+            <div class="text-end">
+            Total Ex Vat: ${cart.total_price_ex_vat}
+            Total In Vat: ${cart.total_price_in_vat}
+            Vat: ${cart.vat}
+            </div>	
+        </div>
+        `
+        return html
+    }
+
     function getMenuUUIDFromURL() {
         // Get the current URL
         var url = window.location.href;
@@ -96,30 +161,24 @@ export const productListModule = (function () {
     }
 
     function getSelectedItems() {
-        let key = "selected_items"
-        let selected_items = getLocalWithExpiry(key) || []
+        let cart = new Cart().get()
         let parent_component = `menu_product_list`
 
-        $.map(selected_items, function (v, i) {
-            $.ajax({
-                url: `/api/v1/inventory/products/${v}/`,
-                method: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $(document).find(`.${parent_component}`).append(
-                        productListItemHTML(data.data)
-                    )
-                    $(document).find(`.${parent_component}`).append(
-                        "<br>"
-                    )
-                    toggleSelectedItem(data.data.uuid);
-                },
-                error: function (xhr, status, error) {
-                    // Handle errors here
-                    console.error("AJAX request failed:", status, error);
-                }
-            });
+        $.map(cart.lines, function (v, i) {
+
+            $(document).find(`.${parent_component}`).append(
+                cartListItemHTML(v)
+            )
+            $(document).find(`.${parent_component}`).append(
+                "<br>"
+            )
+            toggleSelectedItem(v.product.uuid);
         })
+
+        $(document).find(`.${parent_component}`).append(
+            cartSummaryHTML(cart)
+        )
+        
 
     }
 

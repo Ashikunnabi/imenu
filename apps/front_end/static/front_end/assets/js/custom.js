@@ -621,9 +621,11 @@ w3kit = function () {
 			if (itemIndex !== -1) {
 				// If the item exists, remove it (pop)
 				selected_items.splice(itemIndex, 1);
+				new CartLine().delete(itemToToggle)
 			} else {
 				// If the item doesn't exist, add it (push)
 				selected_items.push(itemToToggle);
+				new CartLine().add(itemToToggle)
 			}
 			setLocalWithExpiry(key, selected_items, 60)
 		})
