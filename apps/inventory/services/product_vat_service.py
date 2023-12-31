@@ -64,7 +64,7 @@ class ProductVatService(BaseModelService):
             product__uuid=product_uuid,
             vat__is_active=True,
             is_active=True,
-        ).first()
+        ).last()
 
         if product_vat:
             if product_vat.flat:
