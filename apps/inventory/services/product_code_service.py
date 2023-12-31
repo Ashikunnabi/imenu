@@ -101,7 +101,7 @@ class ProductCodeService(BaseModelService):
                 document__name__startswith=pattern
             )
         if product_documents:
-            qr_code_file_path = product_documents.last().document.path
+            qr_code_file_path = product_documents.last().document.file
             qr_code_file_path = build_media_url(qr_code_file_path)
 
         return qr_code_file_path

@@ -120,3 +120,9 @@ def is_absolute_uri(uri):
 def build_media_url(url):
     media_url = f"/media/{url}"
     return media_url
+
+
+def datetime_now(with_tz=False):
+    if with_tz:
+        return datetime.now().astimezone()
+    return datetime.now()

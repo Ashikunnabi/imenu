@@ -1,4 +1,5 @@
 from apps.base.service import BaseModelService
+from apps.base.utils.basic import datetime_now
 from apps.inventory.services.product_service import ProductService
 from apps.menu.services.menu_service import MenuService
 
@@ -51,3 +52,39 @@ class MenuItemService(BaseModelService):
         kwargs, m2m_data = self.validated_data(**kwargs)
         instance = self.update_model_instance(instance, **kwargs)
         return instance
+
+    def is_active_menu_item(self, menu_item_uuid):
+        """
+        Check if a menu item is currently active based on various criteria.
+
+        :param menu_item_uuid: The UUID of the menu item to be checked.
+        :type menu_item_uuid: str
+
+        :return: True if the menu item is active, False otherwise.
+        :rtype: bool
+        """
+        is_active = True
+        menu_item = self.read_by_uuid(uuid_value=menu_item_uuid)
+
+        if not menu_item.is_active:
+            is_active = False
+
+        if not menu_item.menu.is_active:
+            is_active = False
+
+        if not menu_item.item.is_active:
+            is_active = False
+
+        if menu_item.start_at > datetime_now(with_tz=True):
+            is_active = False
+
+        if menu_item.end_at < datetime_now(with_tz=True):
+            is_active = False
+
+        if menu_item.menu.start_at > datetime_now(with_tz=True):
+            is_active = False
+
+        if menu_item.menu.end_at < datetime_now(with_tz=True):
+            is_active = False
+
+        return is_active

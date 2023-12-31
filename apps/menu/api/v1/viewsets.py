@@ -182,7 +182,7 @@ class MenuItemListAPIView(BaseListAPIView):
             "menu__uuid": kwargs.get("menu_uuid"),
         }
         queryset = service.list(**search)
-        items = [menu_item.item for menu_item in queryset]
+        items = [menu_item.item for menu_item in queryset if service.is_active_menu_item(menu_item_uuid=menu_item.uuid)]
 
         page = self.paginate_queryset(items)
         if page is not None:

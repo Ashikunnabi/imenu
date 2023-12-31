@@ -291,8 +291,8 @@ class BaseModelService:
         queryset = self.search_queryset(queryset=queryset, **query_params)
         if hasattr(self.model, "sort_order"):
             queryset = queryset.order_by("sort_order")
-        elif hasattr(self.model, "date_created"):
-            queryset = queryset.order_by("-date_created")
+        elif hasattr(self.model, "created_at"):
+            queryset = queryset.order_by("-created_at")
 
         return queryset
 
