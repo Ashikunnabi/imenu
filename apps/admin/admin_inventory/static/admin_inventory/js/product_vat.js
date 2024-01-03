@@ -313,7 +313,13 @@ export class ProductVat {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Save'
+                    confirmButtonText: 'Save',
+                    preConfirm: () => {
+                        if ($("#add_flat").val() != "0" && $("#add_percentage").val() != "0") {
+                            Swal.showValidationMessage('Flat/Percentage at least one must be 0', 'error');
+                            return;
+                        }
+                    }
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
