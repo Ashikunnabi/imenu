@@ -415,9 +415,9 @@ w3kit = function () {
 		$(document).on('click', ".item-bookmark", function () {
 			$(this).toggleClass("active");
 			if ($(this).hasClass("active")) {
-				$(this).text("Selected");
+				$(this).text("Remove");
 			} else {
-				$(this).text("Select");
+				$(this).text("Add");
 			}
 		});
 	}
