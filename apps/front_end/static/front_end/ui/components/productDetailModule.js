@@ -47,7 +47,7 @@ export const productDetailModule = (function () {
                     <div class="item-list-2">
                         <div class="price">
                             <span class="text-style text-soft">Price</span>
-                            <h3 class="sub-title"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk+ <!--<del><i class="fa-solid fa-bangladeshi-taka-sign"></i>1140</del>--></h3>
+                            <h3 class="sub-title"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk <!--<del><i class="fa-solid fa-bangladeshi-taka-sign"></i>1140</del>--></h3>
                             <div class="offer-code">
                                 VAT & SC excluded
                             </div>

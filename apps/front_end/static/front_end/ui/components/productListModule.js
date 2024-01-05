@@ -15,7 +15,7 @@ export const productListModule = (function () {
                     </a>
                 </h4>
                 <div class="price-wrapper">
-                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk+</h6>
+                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk</h6>
                     <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
                 </div>
                 <div class="offer-code">
@@ -49,7 +49,7 @@ export const productListModule = (function () {
                     </a>
                 </h4>
                 <div class="price-wrapper">
-                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.total_price_ex_vat} Tk+</h6>
+                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.total_price_ex_vat} Tk</h6>
                     <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
                 </div>
                 <div class="offer-code">
