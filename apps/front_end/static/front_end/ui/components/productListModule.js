@@ -29,7 +29,7 @@ export const productListModule = (function () {
                 <a href="/product-detail/${item.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
                 </a>
-                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.uuid}" data-uuid="${item.uuid}" data-json=${JSON.stringify(item)}>SELECT</a>
+                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.uuid}" data-uuid="${item.uuid}" data-json=${JSON.stringify(item)}>Add</a>
             </div>	
         </div>
         `
@@ -63,7 +63,7 @@ export const productListModule = (function () {
                 <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
                 </a>
-                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.product.uuid}" data-uuid="${item.product.uuid}" data-json=${JSON.stringify(item)}>SELECT</a>
+                <a class="btn btn-sm btn-block btn-outline-primary item-bookmark ${item.product.uuid}" data-uuid="${item.product.uuid}" data-json=${JSON.stringify(item)}>Add</a>
             </div>	
         </div>
         `
@@ -132,7 +132,7 @@ export const productListModule = (function () {
 
         if (selected_items.includes(uuid)) {
             $(document).find(`.${uuid}`).addClass("active")
-            $(document).find(`.${uuid}`).text("Selected")
+            $(document).find(`.${uuid}`).text("Remove")
         }
     }
 

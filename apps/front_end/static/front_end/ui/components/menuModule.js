@@ -45,7 +45,7 @@ export const menuModule = (function () {
                                 <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.prices[0]} Tk</h6>
                                 <!-- <span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1000</span> -->
                             </div>
-                            <a class="btn btn-sm btn-outline-primary add-to-cart item-bookmark ${item.uuid}" data-uuid="${item.uuid}" data-json=${JSON.stringify(item)}>SELECT</a>
+                            <a class="btn btn-sm btn-outline-primary add-to-cart item-bookmark ${item.uuid}" data-uuid="${item.uuid}" data-json=${JSON.stringify(item)}>Add</a>
                         </div>
                         <div class="offer-code">
                             VAT & SC excluded
@@ -105,7 +105,7 @@ export const menuModule = (function () {
 
         if (selected_items.includes(uuid)) {
             $(document).find(`.${uuid}`).addClass("active")
-            $(document).find(`.${uuid}`).text("Selected")
+            $(document).find(`.${uuid}`).text("Remove")
         }
     }
 
