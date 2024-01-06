@@ -81,21 +81,34 @@ export const productListModule = (function () {
                     </a>
                 </h4>
                 <div class="price-wrapper">
-                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i></h6>
-                    <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
+                    <h6 class="current-price-"><i class="fa-solid fa-bangladeshi-taka-sign"></i>TOTAL PAYABLE</h6>
+                    <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->                    
                 </div>
                 <div class="offer-code">
-                    VAT & SC excluded
+                    Enjoy your meal!
                 </div>
                 <!--<div class="footer-wrapper">
                     <span class="product-title">Combo pack</span>
                 </div>-->
             </div>
             <div class="text-end">
-            Total Ex Vat: ${cart.total_price_ex_vat}
-            Total In Vat: ${cart.total_price_in_vat}
-            Vat: ${cart.vat}
-            </div>	
+                <table>
+                    <tr>
+                        <td style="padding-right:50px">Subtotal</td>
+                        <td style="text-align:left">${cart.total_price_ex_vat} Tk</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:50px">Vat</td>
+                        <td style="text-align:left">${cart.vat} Tk</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:50px"><h5 style="color:#009688;">Total</h5></td>
+                        <td style="text-align:left"><h5 style="color:#009688;">${cart.total_price_in_vat} Tk</h5></td>
+                    </tr>
+                </table>
+                <a class="btn btn-sm btn-block btn-outline-primary active">Place Order</a><br>
+                <a class="btn btn-sm btn-block btn-outline-danger">Clear Cart</a>
+            </div>
         </div>
         `
         return html
