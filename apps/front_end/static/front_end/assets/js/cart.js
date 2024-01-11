@@ -26,14 +26,16 @@ class Cart {
 			});
 		return getLocalWithExpiry("cart") || {}
 	}
-	add(product_uuid) {
+
+	add(product_uuid, table_uuid) {
 		let data = {
 			"lines": [
 				{
 					"product_uuid": product_uuid,
 					"quantity": 1
 				}
-			]
+			],
+			"table_uuid": table_uuid
 
 		}
 
@@ -68,9 +70,10 @@ class CartLine {
 	add(product_uuid) {
 		let cart = getLocalWithExpiry("cart") || null
 		let cart_already_exists = cart || false
+		let table_uuid = getLocalWithExpiry("table_uuid") || null
 
 		if (!cart_already_exists) {
-			new Cart().add(product_uuid)
+			new Cart().add(product_uuid, table_uuid)
 			return
 		} else {
 			this.cart_uuid = cart.uuid
