@@ -106,8 +106,82 @@ export const productListModule = (function () {
                         <td style="text-align:left"><h5 style="color:#009688;">${cart.total_price_in_vat} Tk</h5></td>
                     </tr>
                 </table>
-                <a class="btn btn-sm btn-block btn-outline-primary active">Place Order</a><br>
+                <a class="btn btn-sm btn-block btn-outline-primary active btn_place_order">Place Order</a><br>
                 <a class="btn btn-sm btn-block btn-outline-danger">Clear Cart</a>
+            </div>
+        </div>
+        `
+        return html
+    }
+
+    function orderListItemHTML(item) {
+        let document = item.product.documents ? item.product.documents[0] : "/static/front_end/assets/images/product/2.jpg"
+
+        let html = `
+        <div class="product-list" style="padding: 0;background: none;box-shadow: none;margin: 0;">
+            <div class="dz-content">
+                <span class="product-title">${item.product.code}</span>
+                <h4 class="item-name">
+                    <a href="/product-detail/${item.product.uuid}/">
+                        ${item.product.name}
+                    </a>
+                </h4>
+                <div class="price-wrapper">
+                    <h6 class="current-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.total_price_ex_vat} Tk</h6>
+                    <!--<span class="old-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>1100</span>-->
+                </div>
+                <!--<div class="offer-code">
+                    VAT & SC excluded
+                </div>
+                <div class="footer-wrapper">
+                    <span class="product-title">Combo pack</span>
+                </div>-->
+            </div>
+            <div class="text-end">
+                <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
+                    <img class="rounded-sm" src="${document}" alt="image">
+                </a>
+            </div>	
+        </div>
+        `
+        return html
+    }
+
+    function orderSummaryHTML(order) {
+
+        let html = `
+        <div class="product-list">
+            <div class="dz-content">
+                <span class="product-title">Recent Order</span>
+                <h4 class="item-name">
+                    <a href="/product-detail//">
+                    </a>
+                </h4>
+                <div class="order_summary_order_list">                   
+                </div>
+
+            <div class="text-end">
+            <table>
+                <tr>
+                    <td style="padding-right:50px">Subtotal</td>
+                    <td style="text-align:left">${order.total_price_ex_vat} Tk</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:50px">Vat</td>
+                    <td style="text-align:left">${order.vat} Tk</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:50px"><h5 style="color:#009688;">Total</h5></td>
+                    <td style="text-align:left"><h5 style="color:#009688;">${order.total_price_in_vat} Tk</h5></td>
+                </tr>
+            </table>
+        </div>
+                <!--<div class="offer-code">
+                    Enjoy your meal!
+                </div>-->
+                <!--<div class="footer-wrapper">
+                    <span class="product-title">Combo pack</span>
+                </div>-->
             </div>
         </div>
         `
@@ -191,6 +265,27 @@ export const productListModule = (function () {
         $(document).find(`.${parent_component}`).append(
             cartSummaryHTML(cart)
         )
+
+
+        // order section
+        let order = new Order().get()
+        let order_summary_order_list = "order_summary_order_list"
+
+        $(document).find(`.${parent_component}`).append(
+            "<br><hr><br>"
+        )
+        $(document).find(`.${parent_component}`).append(
+            orderSummaryHTML(order)
+        )
+
+        $.map(order.lines, function (v, i) {
+            $(document).find(`.${order_summary_order_list}`).append(
+                orderListItemHTML(v)
+            )
+            $(document).find(`.${order_summary_order_list}`).append(
+                "<br>"
+            )
+        })
         
 
     }

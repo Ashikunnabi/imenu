@@ -1,16 +1,19 @@
-from django.urls import include, path
-
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 from .viewsets import *
 
+app_name = "v1"
 
-app_name = 'v1'
-
-
-router = DefaultRouter()
-router.register(r'order', OrderViewSet, basename='order')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path(
+        "",
+        OrderListCreateAPIView.as_view(),
+        name="order_list_create",
+    ),
+    path(
+        "<uuid:uuid>/",
+        OrderRetrieveAPIView.as_view(),
+        name="order_retrieve",
+    ),
 ]

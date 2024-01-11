@@ -1,15 +1,32 @@
 from rest_framework import serializers
 
-from ...models.order import Order
+from apps.inventory.api.v1.serializers import ProductOutputSerializer
+
+from ...models import Order, OrderLine
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    user_json = serializers.SerializerMethodField()
+class OrderLineOutputSerializer(serializers.ModelSerializer):
+    product = ProductOutputSerializer()
+    price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+
+    class Meta:
+        model = OrderLine
+        fields = "__all__"
+
+
+class OrderInputSerializer(serializers.Serializer):
+    cart_uuid = serializers.UUIDField()
+
+
+class OrderOutputSerializer(serializers.ModelSerializer):
+    lines = OrderLineOutputSerializer(many=True)
+    total_price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    total_price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    vat = serializers.DecimalField(max_digits=18, decimal_places=2)
 
     class Meta:
         model = Order
         fields = "__all__"
-
-    @staticmethod
-    def get_user_json(obj):
-        return {"name": obj.user.name, "phone": obj.user.phone}

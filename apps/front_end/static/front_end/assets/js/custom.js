@@ -631,6 +631,22 @@ w3kit = function () {
 		})
 	}
 
+	var handleOrderFromCart = function () {
+		let cart = getLocalWithExpiry("cart") || null;
+		let cart_already_exists = cart || false
+
+		$(document).on("click", ".btn_place_order", function (e) {
+			if (!cart_already_exists) {
+				console.log("Cart not found. Maybe expired.")
+				return
+			}
+
+			let cart_uuid = cart.uuid
+			new Order().add(cart_uuid)
+			removeLocalWithExpiry("cart")
+		})
+	}
+
 	/* Function ============ */
 	return {
 		init: function () {
@@ -666,6 +682,7 @@ w3kit = function () {
 			masonryBox();
 			handleContentLoad();
 			handleSelectedItem();
+			handleOrderFromCart();
 		},
 
 		load: function () {
