@@ -249,45 +249,54 @@ export const productListModule = (function () {
 
     function getSelectedItems() {
         let cart = new Cart().get()
+        let order = new Order().get()
         let parent_component = `menu_product_list`
+        let order_summary_order_list = "order_summary_order_list"
 
-        $.map(cart.lines, function (v, i) {
+        if (!cart && !order) {
+            $(document).find(`.${parent_component}`).append(
+                "<h6>No recent order/cart found.</h6>"
+            )
+            return
+        }
+
+        // cart section
+        if (cart) {
+            $.map(cart.lines, function (v, i) {
+
+                $(document).find(`.${parent_component}`).append(
+                    cartListItemHTML(v)
+                )
+                $(document).find(`.${parent_component}`).append(
+                    "<br>"
+                )
+                toggleSelectedItem(v.product.uuid);
+            })
 
             $(document).find(`.${parent_component}`).append(
-                cartListItemHTML(v)
+                cartSummaryHTML(cart)
             )
-            $(document).find(`.${parent_component}`).append(
-                "<br>"
-            )
-            toggleSelectedItem(v.product.uuid);
-        })
-
-        $(document).find(`.${parent_component}`).append(
-            cartSummaryHTML(cart)
-        )
+        }
 
 
         // order section
-        let order = new Order().get()
-        let order_summary_order_list = "order_summary_order_list"
-
-        $(document).find(`.${parent_component}`).append(
-            "<br><hr><br>"
-        )
-        $(document).find(`.${parent_component}`).append(
-            orderSummaryHTML(order)
-        )
-
-        $.map(order.lines, function (v, i) {
-            $(document).find(`.${order_summary_order_list}`).append(
-                orderListItemHTML(v)
+        if (order) {
+            $(document).find(`.${parent_component}`).append(
+                "<br><hr><br>"
             )
-            $(document).find(`.${order_summary_order_list}`).append(
-                "<br>"
+            $(document).find(`.${parent_component}`).append(
+                orderSummaryHTML(order)
             )
-        })
-        
 
+            $.map(order.lines, function (v, i) {
+                $(document).find(`.${order_summary_order_list}`).append(
+                    orderListItemHTML(v)
+                )
+                $(document).find(`.${order_summary_order_list}`).append(
+                    "<br>"
+                )
+            })
+        }
     }
 
     // Public methods
