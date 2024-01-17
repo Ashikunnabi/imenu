@@ -107,7 +107,7 @@ export const productListModule = (function () {
                     </tr>
                 </table>
                 <a class="btn btn-sm btn-block btn-outline-primary active btn_place_order">Place Order</a><br>
-                <a class="btn btn-sm btn-block btn-outline-danger">Clear Cart</a>
+                <a class="btn btn-sm btn-block btn-outline-danger btn_clear_cart">Clear Cart</a>
             </div>
         </div>
         `

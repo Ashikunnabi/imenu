@@ -631,6 +631,25 @@ w3kit = function () {
 		})
 	}
 
+	var clearCart = function () {
+		removeLocalWithExpiry("cart")
+		removeLocalWithExpiry("selected_items")
+	}
+
+	var handleClearCart = function () {
+		let cart = getLocalWithExpiry("cart") || null;
+		let cart_already_exists = cart || false
+
+		$(document).on("click", ".btn_clear_cart", function (e) {
+			if (!cart_already_exists) {
+				console.log("Cart not found. Maybe expired.")
+				return
+			}
+			clearCart()
+			window.location.reload()
+		})
+	}
+
 	var handleOrderFromCart = function () {
 		let cart = getLocalWithExpiry("cart") || null;
 		let cart_already_exists = cart || false
@@ -643,7 +662,8 @@ w3kit = function () {
 
 			let cart_uuid = cart.uuid
 			new Order().add(cart_uuid)
-			removeLocalWithExpiry("cart")
+			clearCart()
+			window.location.reload()
 		})
 	}
 
@@ -682,6 +702,7 @@ w3kit = function () {
 			masonryBox();
 			handleContentLoad();
 			handleSelectedItem();
+			handleClearCart();
 			handleOrderFromCart();
 		},
 
