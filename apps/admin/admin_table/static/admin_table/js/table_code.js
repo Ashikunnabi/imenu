@@ -57,6 +57,10 @@ export class TableCode {
                                             placeholder="max 50 chars" required>
                                     </div>
                                 </div>
+                                <br>
+                                <div class="col-10">
+                                    <button id="generate_table_qr_code">Generate Unique Table Code</button>
+                                </div>
                             </form>
                             
                             `,
@@ -270,7 +274,7 @@ export class TableCode {
                     </div>
                     <br>
                     <div class="col-10">
-                        <button id="generate_table_qr_code">Generate Table Code</button>
+                        <button id="generate_table_qr_code">Generate Unique Table Code</button>
                     </div>
                 </form>
                 
@@ -388,6 +392,7 @@ export class TableCode {
         let url = `${window.location.protocol}${window.location.host}/?table=${uuid}`;
         $(document).on("click", "#generate_table_qr_code", function (e) {
             e.preventDefault();
+            $("#add_value").val(url)
             $("#edit_value").val(url)
         })
     };
