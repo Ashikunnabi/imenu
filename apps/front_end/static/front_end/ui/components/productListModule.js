@@ -153,6 +153,8 @@ export const productListModule = (function () {
         <div class="product-list">
             <div class="dz-content">
                 <span class="product-title">Recent Order</span>
+                <br>
+                <span style="background: #009688;padding: 2px 5px;border-radius: 2em;color: white;margin-top: 7px;">${order.status} </span>
                 <h4 class="item-name">
                     <a href="/product-detail//">
                     </a>
