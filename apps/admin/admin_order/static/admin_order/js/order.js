@@ -302,6 +302,8 @@ class Order {
             </tr>`
             $(`#order_detail tbody`).append(cart_item)
         });
+
+        $(`#status`).val(order.status)
     };
 
     /*
@@ -314,18 +316,10 @@ class Order {
         // edit user
         $(document).on('click', '#submit_changes', function (e) {
             e.preventDefault();
-            let in_processing = ($(`#in_processing`).is(':checked') === true) ? 1 : 0;
-            let is_delivered = ($(`#is_delivered`).is(':checked') === true) ? 1 : 0;
-            let is_cancelled = ($(`#is_cancelled`).is(':checked') === true) ? 1 : 0;
-            let tracking_number = $('#tracking_number').val();
-            let tracking_number_added_at = $('#tracking_number_added_at').val();
+            let status = $(`#status`).val();
 
             let data = {
-                in_processing: in_processing,
-                is_delivered: is_delivered,
-                is_cancelled: is_cancelled,
-                tracking_number: tracking_number,
-                tracking_number_added_at: tracking_number_added_at
+                status: status,
             };
 
             // submit an ajax request to the api endpoint

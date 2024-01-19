@@ -38,41 +38,24 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="in_processing" name="in_processing">
-                                    <label class="custom-control-label"
-                                           for="in_processing">In Processing (User can not cancel order)</label>
-                                </div>
+                                <select class="form-control"
+                                        id="status"
+                                        name="status">
+                                    <option value="created">Created</option>
+                                    <option value="payment_pending">Payment Pending</option>
+                                    <option value="new">New</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="processed">Processed</option>
+                                    <option value="error">Error</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="refunded">Refunded</option>
+                                </select>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="is_delivered" name="is_delivered">
-                                    <label class="custom-control-label"
-                                           for="is_delivered">Delivered</label>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="is_cancelled" name="is_cancelled">
-                                    <label class="custom-control-label"
-                                           for="is_cancelled">Cancelled</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <br>
 
                     <input type="submit"
                            id="submit_changes"
