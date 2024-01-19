@@ -28,33 +28,6 @@
             </div>
         </div>
 
-        <div style="display: flex; justify-content: space-around">
-            <div class="card shadow mb-4 col-md-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Shipping Address</h6>
-                </div>
-                <div class="card-body">
-                    <div id="shipping_address"></div>
-                </div>
-            </div>
-            <div class="card shadow mb-4 col-md-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Billing Address</h6>
-                </div>
-                <div class="card-body">
-                    <div id="billing_address"></div>
-                </div>
-            </div>
-            <div class="card shadow mb-4 col-md-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Card Details</h6>
-                </div>
-                <div class="card-body">
-                    <div id="payment_details"></div>
-                </div>
-            </div>
-        </div>
-
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
@@ -101,32 +74,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tracking_number">Tracking Number: </label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="tracking_number"
-                                       name="tracking_number"
-                                       data-parsley-maxlength="256"
-                                       placeholder="Enter tracking number."
-                                >
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tracking_number_added_at">Tracking Number Add Date: </label>
-                                <input type="date"
-                                       class="form-control"
-                                       id="tracking_number_added_at"
-                                       name="tracking_number_added_at"
-                                >
-                            </div>
-                        </div>
-                    </div>
-
                     <input type="submit"
                            id="submit_changes"
                            class="btn btn-primary btn-user btn-block">
@@ -139,7 +86,7 @@
 
 {% block js %}
     <script>
-        const order_api_url = "{% url 'apps:user_panel:api:v1:order-list' %}";
+        const order_api_url = "{% url 'apps:order:api:v1:order_list_create' %}";
         const uuid = "{{ uuid }}";
         const page = 'edit';
     </script>

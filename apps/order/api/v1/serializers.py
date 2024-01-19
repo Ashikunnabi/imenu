@@ -1,3 +1,4 @@
+from apps.table.dashboard_api.v1.serializers import TableOutputSerializer
 from rest_framework import serializers
 
 from apps.inventory.api.v1.serializers import ProductOutputSerializer
@@ -26,6 +27,7 @@ class OrderOutputSerializer(serializers.ModelSerializer):
     total_price_ex_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
     total_price_in_vat = serializers.DecimalField(max_digits=18, decimal_places=2)
     vat = serializers.DecimalField(max_digits=18, decimal_places=2)
+    table = TableOutputSerializer()
 
     class Meta:
         model = Order
