@@ -659,11 +659,14 @@ w3kit = function () {
 				console.log("Cart not found. Maybe expired.")
 				return
 			}
-
+			$(this).removeClass("btn_place_order")
+			$(".btn_clear_cart").addClass("disabled")
 			let cart_uuid = cart.uuid
 			new Order().add(cart_uuid)
 			clearCart()
-			window.location.reload()
+			setTimeout(function () {
+				window.location.reload()
+			}, 4000);
 		})
 	}
 

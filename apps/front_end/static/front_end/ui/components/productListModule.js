@@ -257,9 +257,9 @@ export const productListModule = (function () {
             $(document).find(`.${parent_component}`).append(
                 "<h6>No recent order/cart found.</h6>"
             )
+            notify("error", "Please add items to cart first.")
             return
         }
-
         // cart section
         if (cart) {
             $.map(cart.lines, function (v, i) {

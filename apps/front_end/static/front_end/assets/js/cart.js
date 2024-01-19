@@ -45,6 +45,13 @@ class Cart {
 			})
 			.fail(function (error) {
 				console.error('Error in POST Request:', error);
+				let responseJSON = error.responseJSON
+				if (responseJSON.hasOwnProperty("error")) {
+					if (responseJSON.error.hasOwnProperty("table_uuid")) {
+						notify("error", "No table selected. Please scan the QR code.")
+						removeLocalWithExpiry("selected_items")
+					}
+				}
 			});
 
 	}
