@@ -47,7 +47,7 @@ class OrderLine(BaseModel):
     status = models.CharField(
         max_length=50,
         choices=OrderLineStatus.CHOICES,
-        default=OrderLineStatus.CREATED,
+        default=OrderLineStatus.ORDER_PLACED,
     )
 
     @property

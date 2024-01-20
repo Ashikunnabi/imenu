@@ -36,7 +36,7 @@ class Order(BaseModel):
     status = models.CharField(
         max_length=50,
         choices=OrderStatus.CHOICES,
-        default=OrderStatus.CREATED,
+        default=OrderStatus.ORDER_PLACED,
     )
     # def __str__(self):
     #     return self.user.name
