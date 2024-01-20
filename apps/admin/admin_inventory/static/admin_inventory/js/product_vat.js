@@ -315,7 +315,8 @@ export class ProductVat {
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Save',
                     preConfirm: () => {
-                        if ($("#add_flat").val() != "0" && $("#add_percentage").val() != "0") {
+                        if (parseFloat($("#edit_flat").val() || 0) != parseFloat("0") && parseFloat($("#edit_percentage").val() || 0) != parseFloat("0")) {
+                            console.log($("#edit_flat").val(), $("#edit_percentage").val())
                             Swal.showValidationMessage('Flat/Percentage at least one must be 0', 'error');
                             return;
                         }
