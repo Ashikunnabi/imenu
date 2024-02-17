@@ -329,6 +329,7 @@ class MenuItemSearchListAPIView(BaseListAPIView):
         service = self.service_class()
         search = {
             "search": request.GET.get("search", request.GET.get("q", None)),
+            "order_by": 0,  # turn off ordering
         }
         queryset = service.list(**search).distinct("item_id")
         items = [menu_item.item for menu_item in queryset]

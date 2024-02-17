@@ -107,7 +107,7 @@ export const productListModule = (function () {
                     </tr>
                 </table>
                 <a class="btn btn-sm btn-block btn-outline-primary active btn_place_order">Place Order</a><br>
-                <a class="btn btn-sm btn-block btn-outline-danger">Clear Cart</a>
+                <a class="btn btn-sm btn-block btn-outline-danger btn_clear_cart">Clear Cart</a>
             </div>
         </div>
         `
@@ -147,12 +147,29 @@ export const productListModule = (function () {
         return html
     }
 
+    function orderStatusText(status) {
+        let order_status_messages = {
+            "order_placed": "Your culinary journey begins. Order confirmed, let the feast planning commence!",
+            "food_preparation": "Chef is turning up the heat, cooking your masterpiece. Get ready for delicious drama!",
+            "food_ready": "Your dish is now a superstar, ready to make its debut at your table.",
+            "out_for_delivery": "Your order is making a grand entrance! Prepare for the ultimate dining experience.",
+            "on_your_table": "Cue the applause! Your food has arrived. It's showtime at your table!",
+            "ready_to_indulge": "Time to savor the spotlight. Your meal awaits — enjoy the culinary spectacle!",
+            "payment_ready": "Bill's here! It's time to settle up. Enjoy your meal!",
+        }
+        return order_status_messages[status]
+    }
+
     function orderSummaryHTML(order) {
 
         let html = `
         <div class="product-list">
             <div class="dz-content">
                 <span class="product-title">Recent Order</span>
+                <br>
+                <span style="background: #009688;padding: 2px 5px;border-radius: 2em;color: white;margin-top: 7px;">${order.status.replace(/_/g, ' ').toUpperCase()} </span>
+                <br>
+                <span class="offer-code">${orderStatusText(order.status)} </span>
                 <h4 class="item-name">
                     <a href="/product-detail//">
                     </a>
@@ -257,9 +274,9 @@ export const productListModule = (function () {
             $(document).find(`.${parent_component}`).append(
                 "<h6>No recent order/cart found.</h6>"
             )
+            notify("error", "Please add items to cart first.")
             return
         }
-
         // cart section
         if (cart) {
             $.map(cart.lines, function (v, i) {

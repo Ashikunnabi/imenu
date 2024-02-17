@@ -214,3 +214,36 @@ class AjaxRequest {
 		});
 	}
 }
+
+// Noty
+function notify(type, text, timeout = 4000) {
+    new Noty({
+		type: type || 'success',
+		layout: 'topRight',
+		theme: 'relax',
+		text: text || 'Hello, just testing! 🤖',
+		timeout: timeout || '4000',
+		progressBar: true,
+		killer: true,
+	}).show();
+}
+
+function showConfirmationModal(message, callback) {
+    new Noty({
+        text: message,
+        layout: 'center',
+        theme: 'sunset',
+        buttons: [
+            Noty.button('YES', 'btn btn-success', function () {
+                // Call the callback function when the user clicks YES
+                callback(true);
+                this.close();
+            }),
+            Noty.button('NO', 'btn btn-danger', function () {
+                // Call the callback function when the user clicks NO
+                callback(false);
+                this.close();
+            })
+        ]
+    }).show();
+}

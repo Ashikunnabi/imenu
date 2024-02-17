@@ -35,6 +35,7 @@ class Order {
 		new AjaxRequest(this.add_url, "POST").makeRequest(data)
 			.done(function (response) {
 				setLocalWithExpiry("order", response.data, 60)
+				notify("success", "Order created successfully.")
 			})
 			.fail(function (error) {
 				console.error('Error in POST Request:', error);
