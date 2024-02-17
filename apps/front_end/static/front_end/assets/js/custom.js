@@ -650,6 +650,34 @@ w3kit = function () {
 		})
 	}
 
+	var showConfirmationModalForOrderCreate = function(cart_uuid) {
+		let notyInstance;
+		const notyConfig = {
+			text: "Are you sure you want to place this order?",
+			layout: 'center',
+			theme: 'sunset',
+			buttons: [
+				Noty.button('YES', 'btn btn-success', function () {
+					// Call the callback function when the user clicks YES
+					$(".btn_place_order").removeClass("btn_place_order")
+					$(".btn_clear_cart").addClass("disabled")
+					new Order().add(cart_uuid=cart_uuid)
+
+					clearCart()
+					setTimeout(function () {
+						window.location.reload()
+					}, 4000);
+				}),
+				Noty.button('NO', 'btn btn-danger', function () {
+					// Call the callback function when the user clicks NO
+					// callback(false);
+					notyInstance.close();
+				})
+			]
+		}
+		notyInstance = new Noty(notyConfig).show();
+	}
+
 	var handleOrderFromCart = function () {
 		let cart = getLocalWithExpiry("cart") || null;
 		let cart_already_exists = cart || false
@@ -659,14 +687,8 @@ w3kit = function () {
 				console.log("Cart not found. Maybe expired.")
 				return
 			}
-			$(this).removeClass("btn_place_order")
-			$(".btn_clear_cart").addClass("disabled")
 			let cart_uuid = cart.uuid
-			new Order().add(cart_uuid)
-			clearCart()
-			setTimeout(function () {
-				window.location.reload()
-			}, 4000);
+			showConfirmationModalForOrderCreate(cart_uuid=cart_uuid)
 		})
 	}
 
