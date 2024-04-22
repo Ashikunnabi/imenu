@@ -682,9 +682,15 @@ w3kit = function () {
 		let cart = getLocalWithExpiry("cart") || null;
 		let cart_already_exists = cart || false
 
+
 		$(document).on("click", ".btn_place_order", function (e) {
+			let cart_line_count = cart.lines.length
 			if (!cart_already_exists) {
 				console.log("Cart not found. Maybe expired.")
+				return
+			}
+			if (!cart_line_count) {
+				notify("error", "Please add items to cart first.")
 				return
 			}
 			let cart_uuid = cart.uuid

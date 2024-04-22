@@ -270,6 +270,9 @@ export const productListModule = (function () {
         let parent_component = `menu_product_list`
         let order_summary_order_list = "order_summary_order_list"
 
+        // make empty
+        $(document).find(`.${parent_component}`).html("")
+
         if (!cart && !order) {
             $(document).find(`.${parent_component}`).append(
                 "<h6>No recent order/cart found.</h6>"
@@ -316,9 +319,16 @@ export const productListModule = (function () {
         }
     }
 
+    function refetchCartOrder(milisecond=10000) {
+        setInterval(function () {
+            getSelectedItems()
+        }, milisecond);
+    }
+
     // Public methods
     return {
         getProducts: getProducts,
         getSelectedItems: getSelectedItems,
+        refetchCartOrder: refetchCartOrder,
     };
 })();
