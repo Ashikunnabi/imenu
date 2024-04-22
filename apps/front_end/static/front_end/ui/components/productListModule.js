@@ -156,6 +156,8 @@ export const productListModule = (function () {
             "on_your_table": "Cue the applause! Your food has arrived. It's showtime at your table!",
             "ready_to_indulge": "Time to savor the spotlight. Your meal awaits — enjoy the culinary spectacle!",
             "payment_ready": "Bill's here! It's time to settle up. Enjoy your meal!",
+            "payment_done": "Thanks. Your payment has been received. Enjoy your meal!",
+            "canceled": "Your order has been cancelled. We hope to see you again soon!",
         }
         return order_status_messages[status]
     }
