@@ -89,8 +89,13 @@ export class TableCode {
                                         dt.ajax.reload()
                                     },
                                     error: function (response) {
+                                        let is_error_message_shown = false
                                         $.each(response.responseJSON.error, function (i, v) {
-                                            notify(`${i.toUpperCase()} - ${v}`, 'error')
+                                            if (v == "OBJECT_ALREADY_EXISTS") {
+                                                notify("Table code with this value already exists", 'error')
+                                            } else {
+                                                console.log(`${i.toUpperCase()} - ${v}`, 'error')
+                                            }
                                         })
                                     }
                                 });
