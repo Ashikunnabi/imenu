@@ -284,11 +284,12 @@ export class MenuItem {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `${api_urls["product_warehouse_list"]}${_uuid}/`,
+                            url: `${api_urls["menu_item_list"]}${_uuid}/`,
                             data: JSON.stringify({
-                                "product_uuid": uuid,
-                                "warehouse_uuid": $("#edit_warehouse").val(),
-                                "stock": $("#edit_stock").val(),
+                                "menu_uuid": uuid,
+                                "item_uuid": $("#edit__menu_item__uuid").val(),
+                                "start_at": moment($("#edit__menu_item__start_at").val()).format(),
+                                "end_at": moment($("#edit__menu_item__end_at").val()).format(),
                             }),
                             type: "PUT",
                             contentType: "application/json",
