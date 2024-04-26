@@ -167,7 +167,7 @@ export const productListModule = (function () {
         let html = `
         <div class="product-list">
             <div class="dz-content">
-                <span class="product-title">Recent Order</span>
+                <span class="product-title">Recent Order #00000000${order.id}</span>
                 <br>
                 <span style="background: #009688;padding: 2px 5px;border-radius: 2em;color: white;margin-top: 7px;">${order.status.replace(/_/g, ' ').toUpperCase()} </span>
                 <br>
@@ -176,7 +176,7 @@ export const productListModule = (function () {
                     <a href="/product-detail//">
                     </a>
                 </h4>
-                <div class="order_summary_order_list">                   
+                <div class="order_summary_order_list_${order.uuid}">                   
                 </div>
 
             <div class="text-end">
@@ -268,14 +268,14 @@ export const productListModule = (function () {
 
     function getSelectedItems() {
         let cart = new Cart().get()
-        let order = new Order().get()
+        let orders = new Order().get()
         let parent_component = `menu_product_list`
         let order_summary_order_list = "order_summary_order_list"
 
         // make empty
         $(document).find(`.${parent_component}`).html("")
 
-        if (!cart && !order) {
+        if (!cart && !orders) {
             $(document).find(`.${parent_component}`).append(
                 "<h6>No recent order/cart found.</h6>"
             )
@@ -302,21 +302,23 @@ export const productListModule = (function () {
 
 
         // order section
-        if (order) {
+        if (orders) {
             $(document).find(`.${parent_component}`).append(
                 "<br><hr><br>"
             )
-            $(document).find(`.${parent_component}`).append(
-                orderSummaryHTML(order)
-            )
+            $.each(orders, function (index, order) {
+                $(document).find(`.${parent_component}`).append(
+                    orderSummaryHTML(order)
+                )
 
-            $.map(order.lines, function (v, i) {
-                $(document).find(`.${order_summary_order_list}`).append(
-                    orderListItemHTML(v)
-                )
-                $(document).find(`.${order_summary_order_list}`).append(
-                    "<br>"
-                )
+                $.map(order.lines, function (v, i) {
+                    $(document).find(`.${order_summary_order_list}_${order.uuid}`).append(
+                        orderListItemHTML(v)
+                    )
+                    $(document).find(`.${order_summary_order_list}_${order.uuid}`).append(
+                        "<br>"
+                    )
+                })
             })
         }
     }

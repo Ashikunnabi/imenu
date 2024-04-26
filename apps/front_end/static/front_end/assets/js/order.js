@@ -6,25 +6,33 @@ class Order {
 	add_url = "/api/v1/orders/"
 
 	get(order_uuid = '') {
-		let order = getLocalWithExpiry("order") || null
-		let order_already_exists = order || false
+		let self = this
+		let orders = getLocalWithExpiry("orders") || []
+		let order_already_exists = orders || false
 
 		if (!order_already_exists) {
 			console.log("Order not found. Maybe expired.")
 			return
-		} else {
-			this.order_uuid = order.uuid
-			this.list_url = `${this.list_url}${order.uuid}/`
 		}
 
-		new AjaxRequest(this.list_url, "GET").makeRequest()
-			.done(function (response) {
-				setLocalWithExpiry("order", response.data, 60)
-			})
-			.fail(function (error) {
-				console.error('Error in POST Request:', error);
-			});
-		return getLocalWithExpiry("order") || {}
+		// loop through the orders and get the order with the order_uuid
+		$.each(orders, function (index, order) {
+			let list_url = `${self.list_url}${order.uuid}/`
+
+			new AjaxRequest(list_url, "GET").makeRequest()
+				.done(function (response) {
+					$.each(orders, function (index, existing_order) {
+						if (existing_order.uuid == response.data.uuid) {
+							orders[index] = response.data
+							setLocalWithExpiry("orders", orders, 60)
+						}
+					})
+				})
+				.fail(function (error) {
+					console.error('Error in POST Request:', error);
+				});
+		})
+		return getLocalWithExpiry("orders") || []
 	}
 
 	add(cart_uuid) {
@@ -34,7 +42,9 @@ class Order {
 
 		new AjaxRequest(this.add_url, "POST").makeRequest(data)
 			.done(function (response) {
-				setLocalWithExpiry("order", response.data, 60)
+				let existing_orders = getLocalWithExpiry("orders") || []
+				existing_orders.push(response.data)
+				setLocalWithExpiry("orders", existing_orders, 60)
 				notify("success", "Order created successfully.")
 			})
 			.fail(function (error) {
