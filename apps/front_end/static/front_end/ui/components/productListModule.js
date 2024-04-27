@@ -59,6 +59,15 @@ export const productListModule = (function () {
                     <span class="product-title">Combo pack</span>
                 </div>-->
             </div>
+
+            <div class="dz-content">
+                <div class="dz-stepper border-1 stepper-fill">
+                    <br>
+                    <!--<small>Fill Stepper</small>-->
+                    <input class="stepper cart_item_quantity" type="text" data-uuid="${item.uuid}" value="${item.quantity}" name="demo3">
+                </div>
+            </div>
+
             <div class="text-end">
                 <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
@@ -136,6 +145,12 @@ export const productListModule = (function () {
                 <div class="footer-wrapper">
                     <span class="product-title">Combo pack</span>
                 </div>-->
+            </div>
+            <div class="dz-content">
+                <div>
+                    <span>${item.price_ex_vat} X ${item.quantity}</span>
+
+                </div>
             </div>
             <div class="text-end">
                 <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
@@ -289,6 +304,7 @@ export const productListModule = (function () {
             $(document).find(`.${cart_component}`).append(
                 cartSummaryHTML(cart)
             )
+            $(".stepper").TouchSpin();
         }
     }
 
@@ -348,7 +364,7 @@ export const productListModule = (function () {
 
     function refetchCartOrder(milisecond = 10000) {
         setInterval(function () {
-            getSelectedItems(false, true)
+            getSelectedItems(true, true)
         }, milisecond);
     }
 

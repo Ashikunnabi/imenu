@@ -101,9 +101,27 @@ class CartLine {
 				console.error('Error in POST Request:', error);
 			});
 	}
-	edit(cart_line_uuid) {
+
+	edit(cart_line_uuid, data) {
+		let cart = getLocalWithExpiry("cart") || null
+		let cart_already_exists = cart || false
+		let update_url = this.delete_url.replace("cart_uuid", cart.uuid).replace("cart_line_uuid", cart_line_uuid)
+
+		if (!cart_already_exists) {
+			console.log("Cart not found. Maybe expired.")
+			return
+		}
+
+		new AjaxRequest(update_url, "PATCH").makeRequest(data)
+			.done(function (response) {
+				setLocalWithExpiry("cart", response.data, 60)
+			})
+			.fail(function (error) {
+				console.error('Error in PATCH Request:', error);
+			});
 
 	}
+
 	delete(product_uuid) {
 		let cart = getLocalWithExpiry("cart") || null
 		let cart_already_exists = cart || false

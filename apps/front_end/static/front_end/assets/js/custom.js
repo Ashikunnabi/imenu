@@ -629,6 +629,22 @@ w3kit = function () {
 			}
 			setLocalWithExpiry(key, selected_items, 60)
 		})
+
+		$(document).on("change", ".cart_item_quantity", function (e) {
+			let itemToToggle = $(this).data("uuid")
+			let quantity = parseInt($(this).val())
+
+			if (quantity < 1) {
+				notify("error", "Quantity cannot be less than 1")
+				return
+			}
+
+			let data = {
+				quantity: quantity
+			}
+
+			new CartLine().edit(itemToToggle, data)
+		})
 	}
 
 	var clearCart = function () {
