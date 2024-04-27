@@ -266,48 +266,47 @@ export const productListModule = (function () {
 
     }
 
-    function getSelectedItems() {
-        let cart = new Cart().get()
-        let orders = new Order().get()
-        let parent_component = `menu_product_list`
-        let order_summary_order_list = "order_summary_order_list"
+    function getCartItems(instance) {
+        let cart = instance || new Cart().get()
+        let cart_component = `cart_items`
 
         // make empty
-        $(document).find(`.${parent_component}`).html("")
+        $(document).find(`.${cart_component}`).html("")
 
-        if (!cart && !orders) {
-            $(document).find(`.${parent_component}`).append(
-                "<h6>No recent order/cart found.</h6>"
-            )
-            notify("error", "Please add items to cart first.")
-            return
-        }
         // cart section
         if (cart) {
             $.map(cart.lines, function (v, i) {
 
-                $(document).find(`.${parent_component}`).append(
+                $(document).find(`.${cart_component}`).append(
                     cartListItemHTML(v)
                 )
-                $(document).find(`.${parent_component}`).append(
+                $(document).find(`.${cart_component}`).append(
                     "<br>"
                 )
                 toggleSelectedItem(v.product.uuid);
             })
 
-            $(document).find(`.${parent_component}`).append(
+            $(document).find(`.${cart_component}`).append(
                 cartSummaryHTML(cart)
             )
         }
+    }
 
+    function getOrderItems(instances) {
+        let orders = instances || new Order().get()
+        let orders_component = `orders_items`
+        let order_summary_order_list = "order_summary_order_list"
+
+        // make empty
+        $(document).find(`.${orders_component}`).html("")
 
         // order section
         if (orders) {
-            $(document).find(`.${parent_component}`).append(
+            $(document).find(`.${orders_component}`).append(
                 "<br><hr><br>"
             )
             $.each(orders, function (index, order) {
-                $(document).find(`.${parent_component}`).append(
+                $(document).find(`.${orders_component}`).append(
                     orderSummaryHTML(order)
                 )
 
@@ -323,9 +322,33 @@ export const productListModule = (function () {
         }
     }
 
-    function refetchCartOrder(milisecond=10000) {
+
+    function getSelectedItems(refresh_cart = false, refresh_order = false) {
+        let parent_component = `menu_product_list`
+        let cart = new Cart().get()
+        let orders = new Order().get()
+
+        if (!cart && !orders.length) {
+            // make empty
+            $(document).find(`.${parent_component}`).html("").append(
+                "<h6>No recent order/cart found.</h6>"
+            )
+            notify("error", "Please add items to cart first.")
+            return
+        }
+
+        if (refresh_cart) {
+            getCartItems(cart)
+        }
+        if (refresh_order) {
+            getOrderItems(orders)
+        }
+
+    }
+
+    function refetchCartOrder(milisecond = 10000) {
         setInterval(function () {
-            getSelectedItems()
+            getSelectedItems(false, true)
         }, milisecond);
     }
 
