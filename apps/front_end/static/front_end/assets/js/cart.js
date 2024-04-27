@@ -140,7 +140,6 @@ class CartLine {
 				return
 			}
 			this.delete_url = this.delete_url.replace("cart_line_uuid", cart_line_uuid)
-			console.log(this.delete_url)
 		}
 
 
