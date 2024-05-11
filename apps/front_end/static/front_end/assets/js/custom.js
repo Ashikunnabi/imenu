@@ -629,6 +629,22 @@ w3kit = function () {
 			}
 			setLocalWithExpiry(key, selected_items, 60)
 		})
+
+		$(document).on("change", ".cart_item_quantity", function (e) {
+			let itemToToggle = $(this).data("uuid")
+			let quantity = parseInt($(this).val())
+
+			if (quantity < 1) {
+				notify("error", "Quantity cannot be less than 1")
+				return
+			}
+
+			let data = {
+				quantity: quantity
+			}
+
+			new CartLine().edit(itemToToggle, data)
+		})
 	}
 
 	var clearCart = function () {
@@ -679,12 +695,18 @@ w3kit = function () {
 	}
 
 	var handleOrderFromCart = function () {
-		let cart = getLocalWithExpiry("cart") || null;
-		let cart_already_exists = cart || false
+
 
 		$(document).on("click", ".btn_place_order", function (e) {
+			let cart = getLocalWithExpiry("cart") || null;
+			let cart_already_exists = cart || false
+			let cart_line_count = cart.lines.length
 			if (!cart_already_exists) {
 				console.log("Cart not found. Maybe expired.")
+				return
+			}
+			if (!cart_line_count) {
+				notify("error", "Please add items to cart first.")
 				return
 			}
 			let cart_uuid = cart.uuid

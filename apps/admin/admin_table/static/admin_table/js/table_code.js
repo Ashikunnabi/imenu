@@ -89,8 +89,13 @@ export class TableCode {
                                         dt.ajax.reload()
                                     },
                                     error: function (response) {
+                                        let is_error_message_shown = false
                                         $.each(response.responseJSON.error, function (i, v) {
-                                            notify(`${i.toUpperCase()} - ${v}`, 'error')
+                                            if (v == "OBJECT_ALREADY_EXISTS") {
+                                                notify("Table code with this value already exists", 'error')
+                                            } else {
+                                                console.log(`${i.toUpperCase()} - ${v}`, 'error')
+                                            }
                                         })
                                     }
                                 });
@@ -258,8 +263,12 @@ export class TableCode {
                             <label for="type" class="font-weight-bold">Type: <span class="text-danger">*</span></label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control font-weight-bold" id="edit_type" name="type" data-parsley-maxlength="50"
-                                placeholder="max 50 chars" required>
+                        <select type="text" class="form-control font-weight-bold" id="edit_type" name="type" data-parsley-maxlength="50"
+                            placeholder="max 50 chars" required>
+                            <option value="serial">Serial</option>
+                            <option value="upc">UPC</option>
+                            <option value="manufacture">Manufacture</option>
+                        </select>
                         </div>
                     </div>
                     <br>

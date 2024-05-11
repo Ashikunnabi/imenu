@@ -38,19 +38,35 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <select class="form-control"
-                                        id="status"
-                                        name="status">
-                                        <option value="order_placed">Order Placed</option>
-                                        <option value="food_preparation">Food Preparation</option>
-                                        <option value="food_ready">Food Ready</option>
-                                        <option value="out_for_delivery">Out for Delivery</option>
-                                        <option value="on_your_table">On Your Table</option>
-                                        <option value="ready_to_indulge">Ready to Indulge</option>
-                                        <option value="payment_ready">Payment Ready</option>
-                                        <option value="payment_done">Payment Done</option>
-                                        <option value="canceled">Canceled</option>
-                                </select>
+                                <div id="status-radio-buttons">
+                                    <input type="radio" id="order_placed" name="status" value="order_placed">
+                                    <label for="order_placed">Order Placed</label><br>
+                                
+                                    <input type="radio" id="food_preparation" name="status" value="food_preparation">
+                                    <label for="food_preparation">Food Preparation</label><br>
+                                
+                                    <input type="radio" id="food_ready" name="status" value="food_ready">
+                                    <label for="food_ready">Food Ready</label><br>
+                                
+                                    <input type="radio" id="out_for_delivery" name="status" value="out_for_delivery">
+                                    <label for="out_for_delivery">Out for Delivery</label><br>
+                                
+                                    <input type="radio" id="on_your_table" name="status" value="on_your_table">
+                                    <label for="on_your_table">On Your Table</label><br>
+                                
+                                    <input type="radio" id="ready_to_indulge" name="status" value="ready_to_indulge">
+                                    <label for="ready_to_indulge">Ready to Indulge</label><br>
+                                
+                                    <input type="radio" id="payment_ready" name="status" value="payment_ready">
+                                    <label for="payment_ready">Payment Ready</label><br>
+                                
+                                    <input type="radio" id="payment_done" name="status" value="payment_done">
+                                    <label for="payment_done">Payment Done</label><br>
+                                
+                                    <input type="radio" id="canceled" name="status" value="canceled">
+                                    <label for="canceled">Canceled</label><br>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

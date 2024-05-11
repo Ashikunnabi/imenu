@@ -59,6 +59,15 @@ export const productListModule = (function () {
                     <span class="product-title">Combo pack</span>
                 </div>-->
             </div>
+
+            <div class="dz-content">
+                <div class="dz-stepper border-1 stepper-fill">
+                    <br>
+                    <!--<small>Fill Stepper</small>-->
+                    <input class="stepper cart_item_quantity" type="text" data-uuid="${item.uuid}" value="${item.quantity}" name="demo3">
+                </div>
+            </div>
+
             <div class="text-end">
                 <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
@@ -137,6 +146,12 @@ export const productListModule = (function () {
                     <span class="product-title">Combo pack</span>
                 </div>-->
             </div>
+            <div class="dz-content">
+                <div>
+                    <span>${item.price_ex_vat} X ${item.quantity}</span>
+
+                </div>
+            </div>
             <div class="text-end">
                 <a href="/product-detail/${item.product.uuid}/" class="dz-media media-100">
                     <img class="rounded-sm" src="${document}" alt="image">
@@ -156,6 +171,8 @@ export const productListModule = (function () {
             "on_your_table": "Cue the applause! Your food has arrived. It's showtime at your table!",
             "ready_to_indulge": "Time to savor the spotlight. Your meal awaits — enjoy the culinary spectacle!",
             "payment_ready": "Bill's here! It's time to settle up. Enjoy your meal!",
+            "payment_done": "Thanks. Your payment has been received. Enjoy your meal!",
+            "canceled": "Your order has been cancelled. We hope to see you again soon!",
         }
         return order_status_messages[status]
     }
@@ -165,7 +182,7 @@ export const productListModule = (function () {
         let html = `
         <div class="product-list">
             <div class="dz-content">
-                <span class="product-title">Recent Order</span>
+                <span class="product-title">Recent Order #00000000${order.id}</span>
                 <br>
                 <span style="background: #009688;padding: 2px 5px;border-radius: 2em;color: white;margin-top: 7px;">${order.status.replace(/_/g, ' ').toUpperCase()} </span>
                 <br>
@@ -174,7 +191,7 @@ export const productListModule = (function () {
                     <a href="/product-detail//">
                     </a>
                 </h4>
-                <div class="order_summary_order_list">                   
+                <div class="order_summary_order_list_${order.uuid}">                   
                 </div>
 
             <div class="text-end">
@@ -264,61 +281,97 @@ export const productListModule = (function () {
 
     }
 
-    function getSelectedItems() {
-        let cart = new Cart().get()
-        let order = new Order().get()
-        let parent_component = `menu_product_list`
-        let order_summary_order_list = "order_summary_order_list"
+    function getCartItems(instance) {
+        let cart = instance || new Cart().get()
+        let cart_component = `cart_items`
 
-        if (!cart && !order) {
-            $(document).find(`.${parent_component}`).append(
-                "<h6>No recent order/cart found.</h6>"
-            )
-            notify("error", "Please add items to cart first.")
-            return
-        }
+        // make empty
+        $(document).find(`.${cart_component}`).html("")
+
         // cart section
         if (cart) {
             $.map(cart.lines, function (v, i) {
 
-                $(document).find(`.${parent_component}`).append(
+                $(document).find(`.${cart_component}`).append(
                     cartListItemHTML(v)
                 )
-                $(document).find(`.${parent_component}`).append(
+                $(document).find(`.${cart_component}`).append(
                     "<br>"
                 )
                 toggleSelectedItem(v.product.uuid);
             })
 
-            $(document).find(`.${parent_component}`).append(
+            $(document).find(`.${cart_component}`).append(
                 cartSummaryHTML(cart)
             )
+            $(".stepper").TouchSpin();
         }
+    }
 
+    function getOrderItems(instances) {
+        let orders = instances || new Order().get()
+        let orders_component = `orders_items`
+        let order_summary_order_list = "order_summary_order_list"
+
+        // make empty
+        $(document).find(`.${orders_component}`).html("")
 
         // order section
-        if (order) {
-            $(document).find(`.${parent_component}`).append(
+        if (orders) {
+            $(document).find(`.${orders_component}`).append(
                 "<br><hr><br>"
             )
-            $(document).find(`.${parent_component}`).append(
-                orderSummaryHTML(order)
-            )
+            $.each(orders, function (index, order) {
+                $(document).find(`.${orders_component}`).append(
+                    orderSummaryHTML(order)
+                )
 
-            $.map(order.lines, function (v, i) {
-                $(document).find(`.${order_summary_order_list}`).append(
-                    orderListItemHTML(v)
-                )
-                $(document).find(`.${order_summary_order_list}`).append(
-                    "<br>"
-                )
+                $.map(order.lines, function (v, i) {
+                    $(document).find(`.${order_summary_order_list}_${order.uuid}`).append(
+                        orderListItemHTML(v)
+                    )
+                    $(document).find(`.${order_summary_order_list}_${order.uuid}`).append(
+                        "<br>"
+                    )
+                })
             })
         }
+    }
+
+
+    function getSelectedItems(refresh_cart = false, refresh_order = false) {
+        let parent_component = `menu_product_list`
+        let cart = new Cart().get()
+        let orders = new Order().get()
+
+        if (!cart && !orders.length) {
+            // make empty
+            $(document).find(`.${parent_component}`).html("").append(
+                "<h6>No recent order/cart found.</h6>"
+            )
+            notify("error", "Please add items to cart first.")
+            return
+        }
+
+        if (refresh_cart) {
+            getCartItems(cart)
+        }
+        if (refresh_order) {
+            getOrderItems(orders)
+        }
+
+    }
+
+    function refetchCartOrder(milisecond = 10000) {
+        setInterval(function () {
+            getSelectedItems(true, true)
+        }, milisecond);
     }
 
     // Public methods
     return {
         getProducts: getProducts,
         getSelectedItems: getSelectedItems,
+        refetchCartOrder: refetchCartOrder,
     };
 })();
