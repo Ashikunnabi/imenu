@@ -303,7 +303,7 @@ class Order {
             $(`#order_detail tbody`).append(cart_item)
         });
 
-        $(`#status`).val(order.status)
+        $(`input[name="status"][value="${order.status}"]`).prop('checked', true);
     };
 
     /*
@@ -316,7 +316,7 @@ class Order {
         // edit user
         $(document).on('click', '#submit_changes', function (e) {
             e.preventDefault();
-            let status = $(`#status`).val();
+            let status = $('input[name="status"]:checked').val();
 
             let data = {
                 status: status,
