@@ -80,3 +80,9 @@ class UsefulLinksSerializer(serializers.ModelSerializer):
     class Meta:
         model = UsefulLinks
         fields = '__all__'
+
+
+class DashboardSummarySerializer(serializers.Serializer):
+    code = serializers.CharField()
+    title = serializers.CharField()
+    count = serializers.IntegerField()

@@ -35,6 +35,7 @@ from apps.inventory.models import (
 )
 from apps.home.api.v1.serializers import (
     CarouselSerializer,
+    DashboardSummarySerializer,
     PromoSectionSerializer,
     PageSerializer,
     BannerSerializer,
@@ -1096,3 +1097,23 @@ def login_page_banners_list(request):
 
     return Response({'data': data})
 
+
+class DashboardSummaryViewSet(APIView):
+    permission_classes = [AuthenticatedStaffOrReadOnly]
+    serializer_class = DashboardSummarySerializer
+
+    def get(self, request, *args, **kwargs):
+        data = [
+            {
+                "code": "total_products",
+                "title": "Total Products",
+                "count": 100
+            },
+            {
+                "code": "total_orders",
+                "title": "Total Orders",
+                "count": 1000
+            }
+        ]
+        serializer = self.serializer_class(data, many=True)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)

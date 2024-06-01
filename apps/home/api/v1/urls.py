@@ -28,6 +28,12 @@ urlpatterns = [
         name='login_page_banners_list'
     ),
 
+    path(
+        'dashboard-summary/',
+        DashboardSummaryViewSet.as_view(),
+        name='dashboard_summary'
+    ),
+
     path('home-page/', include([
         path(
             'available-category-list/',
