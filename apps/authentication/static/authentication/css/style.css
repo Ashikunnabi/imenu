@@ -5,31 +5,42 @@ header {
 
 .contain {
     width: 100%;
-    height: 95vH;
+    min-height: 100vh;
     display:flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
+    
 }
 .aa-head-top-nav-right li a {
     color: white !important;
 }
 
 .text-yellow {
-    color: #ffeb3b;
+    color: #f5f101;
 }
 
 #login-page {
-    width: 70%;
-    padding: 20px;
-    background-color: white;
+    width: 420px;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    background-color: white;
+    backdrop-filter: blur(40px);
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 30px 40px;
 }
 
+
 #login_page_body {
-    width: 30%;
+    width: 420px;
+}
+
+#login_page_body h4 {
+    font-size: 36px;
+    text-align: center;
 }
 
 #login_page_body img {
@@ -39,6 +50,33 @@ header {
 }
 #login_page_body .aa-Register-now a {
     color: #ff6666
+}
+#login_page_body .aa-Register-now a:hover {
+    text-decoration: underline;
+}
+#login_page_body .aa-lost-password a:hover {
+    text-decoration: underline;
+}
+#login_page_body .aa-lost-password{
+    padding: 0 0 0 20px;
+}
+#login_page_body .aa-browse-btn {
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    height: 45px;
+}
+.contain input {
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: rgb(17, 2, 2);
+    padding: 20px 45px 20px 20px; 
 }
 
 .login-failed {
@@ -68,7 +106,7 @@ header {
 }
 
 .promotional-section {
-    width: 65%;
+    width: 0%;
 }
 
 .promotional-section a{
